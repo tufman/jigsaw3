@@ -1,0 +1,6 @@
+https://github.com/tufman/jigsaw
+tufman/Aa123456
+
+"C:\Program Files\Git\cmd\git.exe" fetch --progress "https://github.com/tufman/jigsaw1" 
+fatal: unable to access 'https://github.com/tufman/jigsaw1/': Couldn't resolve proxy 'one.proxy.att.com'
+Done
