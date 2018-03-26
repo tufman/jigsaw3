@@ -1,0 +1,2 @@
+Jigsaw Questions:
+Explained why the 1st shape in page 1 is -1 0 1 1 (missing understanding regarding the bottom...)
