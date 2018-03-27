@@ -39,9 +39,15 @@ public class Puzzle {
     private void readDataFromFile(BufferedReader br) throws IOException {
         String line;
         while ((line = br.readLine()) != null){
+            System.out.println("line: " + line);
+            if (line.trim().length() == 0){
+                continue;
+            }
+
             if (line.charAt(0) == '#'){
                 continue;
             }
+
             if(line.contains("NumElements")){
                 String [] numElementArr = line.split("=");
                 expectedNumOfElementsFromFirstLine = Integer.parseInt(numElementArr[1].trim());

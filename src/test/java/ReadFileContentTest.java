@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -171,6 +170,23 @@ public class ReadFileContentTest {
         assertTrue(readFileContent.verifyErrorExistInList("L/T/R/B Number should be between -1 to 1 please fix line 2 0 -2 0 0"));
         assertTrue(readFileContent.verifyErrorExistInList("L/T/R/B Number should be between -1 to 1 please fix line 3 -1 1 2 1"));
         assertTrue(readFileContent.verifyErrorExistInList("L/T/R/B Number should be between -1 to 1 please fix line 4 1 0 1 -2"));
+    }
+
+    @ParameterizedTest
+    @CsvSource({"validateEmptyLineAndSpaces"})
+    @DisplayName("ignore Empty Lines and Lines with Spaces")
+    public void validateFileWithEmptyLineAndSpaces (String inputFile) throws IOException {
+        String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
+
+        Puzzle readFileContent = new Puzzle();
+        readFileContent.readInputFile(filePath);
+        readFileContent.printListOfElements();
+
+        assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
+//        assertTrue(readFileContent.verifyErrorExistInList("L/T/R/B Number should be between -1 to 1 please fix line 1 2 1 1 1"));
+//        assertTrue(readFileContent.verifyErrorExistInList("L/T/R/B Number should be between -1 to 1 please fix line 2 0 -2 0 0"));
+//        assertTrue(readFileContent.verifyErrorExistInList("L/T/R/B Number should be between -1 to 1 please fix line 3 -1 1 2 1"));
+//        assertTrue(readFileContent.verifyErrorExistInList("L/T/R/B Number should be between -1 to 1 please fix line 4 1 0 1 -2"));
     }
 
 }
