@@ -26,4 +26,11 @@ public class Element {
                 ((Element) obj).right == this.right &&
                 ((Element) obj).bottom == this.bottom);
     }
+
+    @Override
+    public String toString() {
+//        String temp = String.format("Element ID: %d [LEFT %d] [UP %d] [RIGHT %d] [BOTTOM %d]", id, left, top, right, bottom);
+//        return temp;
+        return String.format("Element ID: %d [LEFT %d] [UP %d] [RIGHT %d] [BOTTOM %d]", id, left, top, right, bottom);
+    }
 }

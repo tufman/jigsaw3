@@ -107,6 +107,19 @@ public class ReadFileContentTest {
         ReadFileContent readFileContent = new ReadFileContent(filePath);
         readFileContent.readInputFile();
 
+        //verify that message exist in list of errors from ReadFileContent
+        assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
+    }
+
+    @ParameterizedTest
+    @CsvSource({"validInputFileTestElementsAsExpected"})
+    @DisplayName("print All Elemens From List")
+    public void printAllElemensFromList(String inputFile) throws IOException {
+        String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\" + inputFile;
+
+        ReadFileContent readFileContent = new ReadFileContent(filePath);
+        readFileContent.readInputFile();
+        readFileContent.printListOfElements();
         assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
     }
 

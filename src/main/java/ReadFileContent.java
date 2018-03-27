@@ -58,7 +58,21 @@ public class ReadFileContent {
 
         if (expectedNumOfElementsFromFirstLine != jigsawElementList.size()){
             errorsReadingInputFile.add(prop.getProperty("missingElementInConfigurationFile"));
+            //TODO should we stop or throw exception?
         }
+
+        //TODO check if a valid result is available
+
+        //TODO in case (valid result) send jigsawElementList to Find solution
+        JigsawSolver jigsawSolver = new JigsawSolver(jigsawElementList);
+    }
+
+
+        public void printListOfElements(){
+            for (Element element: jigsawElementList){
+                System.out.println(element);
+            }
+
 
         for (String errorMsg : errorsReadingInputFile){
             System.out.println(errorMsg);
@@ -74,7 +88,9 @@ public class ReadFileContent {
 //        for (Map.Entry<String, String> map : configuration.entrySet()){
 //            System.out.print("Parameter: " + map.getKey() + " Value: " + map.getValue() + "\n");
 //        }
-
+        System.out.println("####################################");
+        System.out.println("Existing Errors in config.properties");
+        System.out.println("####################################");
         prop.forEach((key, value) -> System.out.println(key + " : " + value));
     }
 
