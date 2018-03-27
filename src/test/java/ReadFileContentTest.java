@@ -5,6 +5,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -68,7 +70,14 @@ public class ReadFileContentTest {
             osr.write(elementRepresentation);
         }
 
-        PuzzleElement expectedElement = new PuzzleElement(id, left, top, right, bottom);
+        ArrayList<Integer> ids = new ArrayList<>();
+        ids.add(1);
+        ids.add(-1);
+        ids.add(0);
+        ids.add(1);
+        ids.add(1);
+        //PuzzleElement expectedElement = new PuzzleElement(id, left, top, right, bottom);
+        PuzzleElement expectedElement = new PuzzleElement(ids);
 
         Puzzle readFileContent = new Puzzle();
         readFileContent.readInputFile(filePath);
@@ -128,6 +137,21 @@ public class ReadFileContentTest {
         readFileContent.readInputFile(filePath);
         readFileContent.printListOfElements();
         assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
+    }
+
+
+
+    @ParameterizedTest
+    @CsvSource({"invalid_IDElement_input"})
+    @DisplayName("Validate element in input file - not int")
+    public void validateInvalidIDElementInput (String inputFile) throws IOException {
+        //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\" + inputFile;
+        String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
+
+        Puzzle readFileContent = new Puzzle();
+        readFileContent.readInputFile(filePath);
+        readFileContent.printListOfElements();
+        assertTrue(readFileContent.verifyErrorExistInList("odedtest"));
     }
 
 

@@ -48,14 +48,22 @@ public class Puzzle {
                 continue;
             }
             String [] stringsFromLineArr = line.split(" ");
-            int [] numFromLine = new int[stringsFromLineArr.length];
-            int startLocation = 0;
+            ArrayList<Integer> numFromLine = new ArrayList<>();
             for (String str : stringsFromLineArr){
-                numFromLine[startLocation] = Integer.parseInt(str);
-                startLocation++;
+                try {
+                    numFromLine.add( Integer.parseInt(str));
+                }catch (NumberFormatException e ) {
+                    errorsReadingInputFile.add("odedtest");
+
+                }
+
             }
-            PuzzleElement element = new PuzzleElement(numFromLine[0], numFromLine[1], numFromLine[2],numFromLine[3],numFromLine[4]);
-            jigsawElementList.add(element);
+
+            if(numFromLine.size()==5) {
+                // PuzzleElement element = new PuzzleElement(numFromLine[0], numFromLine[1], numFromLine[2],numFromLine[3],numFromLine[4]);
+                PuzzleElement element = new PuzzleElement(numFromLine);
+                jigsawElementList.add(element);
+            }
         }
 
         if (expectedNumOfElementsFromFirstLine != jigsawElementList.size()){

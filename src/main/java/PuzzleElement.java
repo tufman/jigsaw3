@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class PuzzleElement {
 
     int id;
@@ -6,12 +8,13 @@ public class PuzzleElement {
     int right;
     int bottom;
 
-    public PuzzleElement(int id, int left, int top, int right, int bottom){
-        this.id = id;
-        this.left = left;
-        this.top = top;
-        this.right = right;
-        this.bottom = bottom;
+    //public PuzzleElement(int id, int left, int top, int right, int bottom){
+    public PuzzleElement(ArrayList<Integer> numFromLine){
+        this.id = numFromLine.get(0);
+        this.left = numFromLine.get(1);
+        this.top = numFromLine.get(2);
+        this.right =numFromLine.get(3);;
+        this.bottom = numFromLine.get(4);
     }
 
     @Override
