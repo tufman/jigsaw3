@@ -26,8 +26,8 @@ public class ReadFileContentTest {
         }
 
 
-        Puzzle readFileContent = new Puzzle(filePath);
-        readFileContent.readInputFile();
+        Puzzle readFileContent = new Puzzle();
+        readFileContent.readInputFile(filePath);
         assertEquals(expectedVal,readFileContent.getNumOfElementsFromFirstLine());
 
 
@@ -47,10 +47,10 @@ public class ReadFileContentTest {
             osr.write(textToWrite);
         }
 
-        Puzzle readFileContent = new Puzzle(filePath);
+        Puzzle readFileContent = new Puzzle();
 
         assertThrows(NumberFormatException.class, () ->{
-            readFileContent.readInputFile();
+            readFileContent.readInputFile(filePath);
         });
     }
 
@@ -70,8 +70,8 @@ public class ReadFileContentTest {
 
         PuzzleElement expectedElement = new PuzzleElement(id, left, top, right, bottom);
 
-        Puzzle readFileContent = new Puzzle(filePath);
-        readFileContent.readInputFile();
+        Puzzle readFileContent = new Puzzle();
+        readFileContent.readInputFile(filePath);
         PuzzleElement responseElement = readFileContent.getElementByIndex(0);
 
         assertTrue(expectedElement.equals(responseElement));
@@ -96,8 +96,8 @@ public class ReadFileContentTest {
         //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\" + inputFile;
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
 
-        Puzzle readFileContent = new Puzzle(filePath);
-        readFileContent.readInputFile();
+        Puzzle readFileContent = new Puzzle();
+        readFileContent.readInputFile(filePath);
 
         assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
     }
@@ -109,8 +109,8 @@ public class ReadFileContentTest {
         //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\" + inputFile;
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
 
-        Puzzle readFileContent = new Puzzle(filePath);
-        readFileContent.readInputFile();
+        Puzzle readFileContent = new Puzzle();
+        readFileContent.readInputFile(filePath);
 
         //verify that message exist in list of errors from Puzzle
         //assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
@@ -124,8 +124,8 @@ public class ReadFileContentTest {
         //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\" + inputFile;
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
 
-        Puzzle readFileContent = new Puzzle(filePath);
-        readFileContent.readInputFile();
+        Puzzle readFileContent = new Puzzle();
+        readFileContent.readInputFile(filePath);
         readFileContent.printListOfElements();
         assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
     }
