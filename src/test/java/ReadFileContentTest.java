@@ -151,7 +151,7 @@ public class ReadFileContentTest {
         Puzzle readFileContent = new Puzzle();
         readFileContent.readInputFile(filePath);
         readFileContent.printListOfElements();
-        assertTrue(readFileContent.verifyErrorExistInList("odedtest"));
+        assertTrue(readFileContent.verifyErrorExistInList("Puzzle ID <id> has wrong data: <complete line from file including ID>"));
     }
 
 
