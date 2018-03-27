@@ -5,6 +5,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -17,7 +18,8 @@ public class ReadFileContentTest {
     @DisplayName("Read number of Elements with Spaces")
     //@Test
     public void validNumOfElement(String textToWrite, int expectedVal) throws IOException {
-        String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\inputFileTest";
+        //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\inputFileTest";
+        String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\inputFileTest";
 
         try(FileOutputStream fos = new FileOutputStream(filePath);
             OutputStreamWriter osr = new OutputStreamWriter(fos)){
@@ -38,7 +40,8 @@ public class ReadFileContentTest {
     @DisplayName("Invalid Num Of Element -> throws Exception")
     //@Test
     public void notvalidNumOfElement(String textToWrite, int expectedVal) throws IOException {
-        String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\inputFileTest";
+        //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\inputFileTest";
+        String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\inputFileTest";
 
         try(FileOutputStream fos = new FileOutputStream(filePath);
             OutputStreamWriter osr = new OutputStreamWriter(fos)){
@@ -58,7 +61,8 @@ public class ReadFileContentTest {
     @DisplayName("Init one Elemnt from file ")
     //@Test
     public void validLineRepresentingElement(String elementRepresentation, int id, int left, int top, int right, int bottom) throws IOException {
-        String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\inputFileTest";
+        //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\inputFileTest";
+        String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\inputFileTest";
 
         try(FileOutputStream fos = new FileOutputStream(filePath);
             OutputStreamWriter osr = new OutputStreamWriter(fos)){
@@ -90,7 +94,8 @@ public class ReadFileContentTest {
     @CsvSource({"validInputFileTestElementsAsExpected"})
     @DisplayName("Valid num of elements in file is as expected and Ignore lines with #")
     public void validNumOfElementsInFileAsExpectedInNumElements(String inputFile) throws IOException {
-        String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\" + inputFile;
+        //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\" + inputFile;
+        String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
 
         ReadFileContent readFileContent = new ReadFileContent(filePath);
         readFileContent.readInputFile();
@@ -102,7 +107,8 @@ public class ReadFileContentTest {
     @CsvSource({"notValidinputFileTestElementsAsExpected"})
     @DisplayName("NOT Valid num of elements in file is as expected and Ignore lines with #")
     public void notValidNumOfElementsInFileAsExpectedInNumElements(String inputFile) throws IOException {
-        String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\" + inputFile;
+        //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\" + inputFile;
+        String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
 
         ReadFileContent readFileContent = new ReadFileContent(filePath);
         readFileContent.readInputFile();
@@ -116,7 +122,8 @@ public class ReadFileContentTest {
     @CsvSource({"validInputFileTestElementsAsExpected"})
     @DisplayName("print All Elemens From List")
     public void printAllElemensFromList(String inputFile) throws IOException {
-        String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\" + inputFile;
+        //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\" + inputFile;
+        String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
 
         ReadFileContent readFileContent = new ReadFileContent(filePath);
         readFileContent.readInputFile();

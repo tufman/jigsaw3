@@ -9,7 +9,6 @@ public class ReadFileContent {
     private int expectedNumOfElementsFromFirstLine;
     private List<Element> jigsawElementList = new ArrayList<>();
     private List<String> errorsReadingInputFile = new ArrayList<>();
-    private HashMap<String, String> configuration;
     Properties prop = null;
 
     public ReadFileContent(){
