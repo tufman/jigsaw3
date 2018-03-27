@@ -1,13 +1,18 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class JigsawSolver {
 
-    List<Element> jigsawElementInputList = new ArrayList<>();
-    List<Element> jigsawElementResultList = new ArrayList<>();
+    private List<Element> jigsawElementInputList = new ArrayList<>();
+    private List<Element> jigsawElementResultList = new ArrayList<>();
+    private int [] numOfAvailableLineForSolution;
+    private Map<String, List<Integer>> cornersMap;
 
-    public JigsawSolver(List<Element> jigsawElementList) {
-        jigsawElementInputList = jigsawElementList;
+    public JigsawSolver(List<Element> jigsawElementList, int [] numOfAvailableLineForSolution, Map<String, List<Integer>> cornersMap) {
+        this.jigsawElementInputList = jigsawElementList;
+        this.numOfAvailableLineForSolution = numOfAvailableLineForSolution;
+        this.cornersMap = cornersMap;
 
         printSolverInputList();
     }

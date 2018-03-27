@@ -63,7 +63,11 @@ public class ReadFileContent {
         //TODO check if a valid result is available
 
         //TODO in case (valid result) send jigsawElementList to Find solution
-        JigsawSolver jigsawSolver = new JigsawSolver(jigsawElementList);
+
+        //public JigsawSolver(List<Element> jigsawElementList, int [] numOfAvailableLineForSolution, Map<String, List<Integer>> cornersMap)
+        Map<String, List<Integer>> cornersMap = new HashMap<>();
+        int [] numOfAvailableLineForSolution = null;
+        JigsawSolver jigsawSolver = new JigsawSolver(jigsawElementList, numOfAvailableLineForSolution,cornersMap);
     }
 
 
