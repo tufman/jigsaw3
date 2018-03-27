@@ -1,1 +1,4 @@
 workspace.xml
+
+*.class
+.idea/workspace.xml
