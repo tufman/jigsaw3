@@ -13,15 +13,18 @@ public class Puzzle {
     Properties prop = null;
 
     public Puzzle(){
-        this.filePath = filePath;
     }
 
-    public Puzzle(String filePath){
-        this.filePath = filePath;
+//    public Puzzle(){
+//        this.filePath = filePath;
+//    }
 
-    }
+//    public Puzzle(String filePath){
+//        this.filePath = filePath;
+//
+//    }
 
-    public void readInputFile() throws IOException {
+    public void readInputFile(String filePath) throws IOException {
         try(FileInputStream fis = new FileInputStream(filePath);
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader br = new BufferedReader(isr)){
