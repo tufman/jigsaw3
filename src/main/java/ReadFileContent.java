@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ReadFileContent {
     String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\main\\resources\\inputFile";
-    int numElements;
+    int numElementsFromFirstLine;
     List<Element> jigsawElementList = new ArrayList<>();
 
     public ReadFileContent(){
@@ -25,10 +25,13 @@ public class ReadFileContent {
 
             String line;
             while ((line = br.readLine()) != null){
+                if (line.charAt(0) == '#'){
+                    continue;
+                }
                 if(line.contains("NumElements")){
                     String [] numElementArr = line.split("=");
                     //String tempValue = numElementArr[1].trim();
-                    numElements = Integer.parseInt(numElementArr[1].trim());
+                    numElementsFromFirstLine = Integer.parseInt(numElementArr[1].trim());
                     continue;
                 }
                 String [] stringsFromLineArr = line.split(" ");
@@ -44,12 +47,16 @@ public class ReadFileContent {
         }
     }
 
-    public int getNumOfElements(){
-        return numElements;
+    public int getNumOfElementsFromFirstLine(){
+        return numElementsFromFirstLine;
     }
 
     public Element getFirstElement() {
         return jigsawElementList.get(0);
+    }
+
+    public int getActualNumOfElementsReadFromInputFile(){
+        return jigsawElementList.size();
     }
 
     //Comment
