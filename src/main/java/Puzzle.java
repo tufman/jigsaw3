@@ -4,18 +4,19 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-public class ReadFileContent {
+public class Puzzle {
+
     private String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\main\\resources\\inputFile";
     private int expectedNumOfElementsFromFirstLine;
-    private List<Element> jigsawElementList = new ArrayList<>();
+    private List<PuzzleElement> jigsawElementList = new ArrayList<>();
     private List<String> errorsReadingInputFile = new ArrayList<>();
     Properties prop = null;
 
-    public ReadFileContent(){
+    public Puzzle(){
         this.filePath = filePath;
     }
 
-    public ReadFileContent(String filePath){
+    public Puzzle(String filePath){
         this.filePath = filePath;
 
     }
@@ -40,7 +41,6 @@ public class ReadFileContent {
             }
             if(line.contains("NumElements")){
                 String [] numElementArr = line.split("=");
-                //String tempValue = numElementArr[1].trim();
                 expectedNumOfElementsFromFirstLine = Integer.parseInt(numElementArr[1].trim());
                 continue;
             }
@@ -51,7 +51,7 @@ public class ReadFileContent {
                 numFromLine[startLocation] = Integer.parseInt(str);
                 startLocation++;
             }
-            Element element = new Element(numFromLine[0], numFromLine[1], numFromLine[2],numFromLine[3],numFromLine[4]);
+            PuzzleElement element = new PuzzleElement(numFromLine[0], numFromLine[1], numFromLine[2],numFromLine[3],numFromLine[4]);
             jigsawElementList.add(element);
         }
 
@@ -64,7 +64,6 @@ public class ReadFileContent {
 
         //TODO in case (valid result) send jigsawElementList to Find solution
 
-        //public JigsawSolver(List<Element> jigsawElementList, int [] numOfAvailableLineForSolution, Map<String, List<Integer>> cornersMap)
         Map<String, List<Integer>> cornersMap = new HashMap<>();
         int [] numOfAvailableLineForSolution = null;
         JigsawSolver jigsawSolver = new JigsawSolver(jigsawElementList, numOfAvailableLineForSolution,cornersMap);
@@ -72,7 +71,7 @@ public class ReadFileContent {
 
 
         public void printListOfElements(){
-            for (Element element: jigsawElementList){
+            for (PuzzleElement element: jigsawElementList){
                 System.out.println(element);
             }
 
@@ -85,12 +84,8 @@ public class ReadFileContent {
 
     private void initConfiguration() throws IOException {
         GetPropertyValues properties = new GetPropertyValues();
-        //configuration = properties.getPropValues();
         prop = properties.getPropValues();
 
-//        for (Map.Entry<String, String> map : configuration.entrySet()){
-//            System.out.print("Parameter: " + map.getKey() + " Value: " + map.getValue() + "\n");
-//        }
         System.out.println("####################################");
         System.out.println("Existing Errors in config.properties");
         System.out.println("####################################");
@@ -106,8 +101,8 @@ public class ReadFileContent {
         return errorsReadingInputFile.contains(error);
     }
 
-    public Element getFirstElement() {
-        return jigsawElementList.get(0);
+    public PuzzleElement getElementByIndex(int index) {
+        return jigsawElementList.get(index);
     }
 
     public int getActualNumOfElementsReadFromInputFile(){

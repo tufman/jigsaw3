@@ -5,7 +5,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -27,7 +26,7 @@ public class ReadFileContentTest {
         }
 
 
-        ReadFileContent readFileContent = new ReadFileContent(filePath);
+        Puzzle readFileContent = new Puzzle(filePath);
         readFileContent.readInputFile();
         assertEquals(expectedVal,readFileContent.getNumOfElementsFromFirstLine());
 
@@ -37,7 +36,7 @@ public class ReadFileContentTest {
 
     @ParameterizedTest
     @CsvSource({"NumElements=AAA,22"})
-    @DisplayName("Invalid Num Of Element -> throws Exception")
+    @DisplayName("Invalid Num Of PuzzleElement -> throws Exception")
     //@Test
     public void notvalidNumOfElement(String textToWrite, int expectedVal) throws IOException {
         //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\inputFileTest";
@@ -48,7 +47,7 @@ public class ReadFileContentTest {
             osr.write(textToWrite);
         }
 
-        ReadFileContent readFileContent = new ReadFileContent(filePath);
+        Puzzle readFileContent = new Puzzle(filePath);
 
         assertThrows(NumberFormatException.class, () ->{
             readFileContent.readInputFile();
@@ -69,11 +68,11 @@ public class ReadFileContentTest {
             osr.write(elementRepresentation);
         }
 
-        Element expectedElement = new Element(id, left, top, right, bottom);
+        PuzzleElement expectedElement = new PuzzleElement(id, left, top, right, bottom);
 
-        ReadFileContent readFileContent = new ReadFileContent(filePath);
+        Puzzle readFileContent = new Puzzle(filePath);
         readFileContent.readInputFile();
-        Element responseElement = readFileContent.getFirstElement();
+        PuzzleElement responseElement = readFileContent.getElementByIndex(0);
 
         assertTrue(expectedElement.equals(responseElement));
     }
@@ -84,7 +83,7 @@ public class ReadFileContentTest {
 //    public void validIgnoreLinesWithDiaz(String inputFile, int expectedValidElements) throws IOException {
 //        String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\" + inputFile;
 //
-//        ReadFileContent readFileContent = new ReadFileContent(filePath);
+//        Puzzle readFileContent = new Puzzle(filePath);
 //        readFileContent.readInputFile();
 //
 //        assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == expectedValidElements);
@@ -97,7 +96,7 @@ public class ReadFileContentTest {
         //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\" + inputFile;
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
 
-        ReadFileContent readFileContent = new ReadFileContent(filePath);
+        Puzzle readFileContent = new Puzzle(filePath);
         readFileContent.readInputFile();
 
         assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
@@ -110,10 +109,10 @@ public class ReadFileContentTest {
         //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\" + inputFile;
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
 
-        ReadFileContent readFileContent = new ReadFileContent(filePath);
+        Puzzle readFileContent = new Puzzle(filePath);
         readFileContent.readInputFile();
 
-        //verify that message exist in list of errors from ReadFileContent
+        //verify that message exist in list of errors from Puzzle
         //assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
         assertTrue(readFileContent.verifyErrorExistInList("Missing puzzle element(s) with the following ID's: TBD elevant ID's"));
     }
@@ -125,7 +124,7 @@ public class ReadFileContentTest {
         //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\" + inputFile;
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
 
-        ReadFileContent readFileContent = new ReadFileContent(filePath);
+        Puzzle readFileContent = new Puzzle(filePath);
         readFileContent.readInputFile();
         readFileContent.printListOfElements();
         assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
