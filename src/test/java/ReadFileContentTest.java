@@ -26,7 +26,7 @@ public class ReadFileContentTest {
 
 
         ReadFileContent readFileContent = new ReadFileContent(filePath);
-        readFileContent.readContentFromFile();
+        readFileContent.readInputFile();
         assertEquals(expectedVal,readFileContent.getNumOfElementsFromFirstLine());
 
 
@@ -48,7 +48,7 @@ public class ReadFileContentTest {
         ReadFileContent readFileContent = new ReadFileContent(filePath);
 
         assertThrows(NumberFormatException.class, () ->{
-            readFileContent.readContentFromFile();
+            readFileContent.readInputFile();
         });
     }
 
@@ -68,22 +68,46 @@ public class ReadFileContentTest {
         Element expectedElement = new Element(id, left, top, right, bottom);
 
         ReadFileContent readFileContent = new ReadFileContent(filePath);
-        readFileContent.readContentFromFile();
+        readFileContent.readInputFile();
         Element responseElement = readFileContent.getFirstElement();
 
         assertTrue(expectedElement.equals(responseElement));
     }
 
+//    @ParameterizedTest
+//    @CsvSource({"inputFileTestWithDiaz,4"})
+//    @DisplayName("Ignore lines with #")
+//    public void validIgnoreLinesWithDiaz(String inputFile, int expectedValidElements) throws IOException {
+//        String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\" + inputFile;
+//
+//        ReadFileContent readFileContent = new ReadFileContent(filePath);
+//        readFileContent.readInputFile();
+//
+//        assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == expectedValidElements);
+//    }
+
     @ParameterizedTest
-    @CsvSource({"inputFileTestWithDiaz,4"})
-    @DisplayName("Ignore lines with #")
-    public void validIgnoreLinesWithDiaz(String inputFile, int expectedValidElements) throws IOException {
+    @CsvSource({"validInputFileTestElementsAsExpected"})
+    @DisplayName("Valid num of elements in file is as expected and Ignore lines with #")
+    public void validNumOfElementsInFileAsExpectedInNumElements(String inputFile) throws IOException {
         String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\" + inputFile;
 
         ReadFileContent readFileContent = new ReadFileContent(filePath);
-        readFileContent.readContentFromFile();
+        readFileContent.readInputFile();
 
-        assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == expectedValidElements);
+        assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
+    }
+
+    @ParameterizedTest
+    @CsvSource({"notValidinputFileTestElementsAsExpected"})
+    @DisplayName("NOT Valid num of elements in file is as expected and Ignore lines with #")
+    public void notValidNumOfElementsInFileAsExpectedInNumElements(String inputFile) throws IOException {
+        String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\" + inputFile;
+
+        ReadFileContent readFileContent = new ReadFileContent(filePath);
+        readFileContent.readInputFile();
+
+        assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
     }
 
 
