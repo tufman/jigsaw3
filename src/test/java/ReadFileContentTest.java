@@ -132,4 +132,19 @@ public class ReadFileContentTest {
     }
 
 
+
+    @ParameterizedTest
+    @CsvSource({"invalid_IDElement_input"})
+    @DisplayName("Validate element in input file - not int")
+    public void validateInvalidIDElementInput (String inputFile) throws IOException {
+        //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\" + inputFile;
+        String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
+
+        ReadFileContent readFileContent = new ReadFileContent(filePath);
+        readFileContent.readInputFile();
+        readFileContent.printListOfElements();
+        assertTrue(readFileContent.verifyErrorExistInList("odedtest"));
+    }
+
+
 }

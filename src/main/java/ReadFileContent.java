@@ -48,8 +48,14 @@ public class ReadFileContent {
             int [] numFromLine = new int[stringsFromLineArr.length];
             int startLocation = 0;
             for (String str : stringsFromLineArr){
-                numFromLine[startLocation] = Integer.parseInt(str);
-                startLocation++;
+                try {
+                    numFromLine[startLocation] = Integer.parseInt(str);
+                    startLocation++;
+                }catch (NumberFormatException e ) {
+                    errorsReadingInputFile.add("odedtest");
+                    continue;
+                }
+
             }
             Element element = new Element(numFromLine[0], numFromLine[1], numFromLine[2],numFromLine[3],numFromLine[4]);
             jigsawElementList.add(element);
