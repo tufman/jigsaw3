@@ -139,7 +139,7 @@ public class ReadFileContentTest {
         //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\" + inputFile;
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
 
-        ReadFileContent readFileContent = new ReadFileContent(filePath);
+        Puzzle readFileContent = new Puzzle(filePath);
         readFileContent.readInputFile();
         readFileContent.printListOfElements();
         assertTrue(readFileContent.verifyErrorExistInList("odedtest"));
