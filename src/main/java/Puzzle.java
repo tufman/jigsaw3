@@ -53,7 +53,7 @@ public class Puzzle {
                 try {
                     numFromLine.add( Integer.parseInt(str));
                 }catch (NumberFormatException e ) {
-                    errorsReadingInputFile.add("odedtest");
+                    errorsReadingInputFile.add(prop.getProperty("wrongElementsFormat"));
 
                 }
 
