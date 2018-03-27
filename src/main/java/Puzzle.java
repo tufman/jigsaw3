@@ -47,6 +47,7 @@ public class Puzzle {
                 expectedNumOfElementsFromFirstLine = Integer.parseInt(numElementArr[1].trim());
                 continue;
             }
+            //Validate that a line that represents a PuzzleElement is valid (integers)
             String [] stringsFromLineArr = line.split(" ");
             ArrayList<Integer> numFromLine = new ArrayList<>();
             for (String str : stringsFromLineArr){
@@ -54,15 +55,21 @@ public class Puzzle {
                     numFromLine.add( Integer.parseInt(str));
                 }catch (NumberFormatException e ) {
                     errorsReadingInputFile.add("odedtest");
-
                 }
-
             }
 
+
+
+
             if(numFromLine.size()==5) {
-                // PuzzleElement element = new PuzzleElement(numFromLine[0], numFromLine[1], numFromLine[2],numFromLine[3],numFromLine[4]);
-                PuzzleElement element = new PuzzleElement(numFromLine);
-                jigsawElementList.add(element);
+                //Validate that a Left, Top, Right & Bottom between -1 to 1
+                if (allNumbersInRange(numFromLine)){
+                    PuzzleElement element = new PuzzleElement(numFromLine);
+                    jigsawElementList.add(element);
+                    continue;
+                }else{
+                    errorsReadingInputFile.add(prop.getProperty("numberNotInRange") + line);
+                }
             }
         }
 
@@ -80,8 +87,17 @@ public class Puzzle {
         JigsawSolver jigsawSolver = new JigsawSolver(jigsawElementList, numOfAvailableLineForSolution,cornersMap);
     }
 
+    private boolean allNumbersInRange(ArrayList<Integer> numFromLine) {
+        for (int i =1; i < numFromLine.size(); i++){
+            if (!(numFromLine.get(i)>=-1 && numFromLine.get(i) <= 1)){
+                return false;
+            }
+        }
+        return true;
+    }
 
-        public void printListOfElements(){
+
+    public void printListOfElements(){
             for (PuzzleElement element: jigsawElementList){
                 System.out.println(element);
             }
