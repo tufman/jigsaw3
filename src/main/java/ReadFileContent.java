@@ -98,6 +98,11 @@ public class ReadFileContent {
         return expectedNumOfElementsFromFirstLine;
     }
 
+
+    public boolean verifyErrorExistInList(String error){
+        return errorsReadingInputFile.contains(error);
+    }
+
     public Element getFirstElement() {
         return jigsawElementList.get(0);
     }

@@ -108,7 +108,8 @@ public class ReadFileContentTest {
         readFileContent.readInputFile();
 
         //verify that message exist in list of errors from ReadFileContent
-        assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
+        //assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
+        assertTrue(readFileContent.verifyErrorExistInList("Missing puzzle element(s) with the following ID's: TBD elevant ID's"));
     }
 
     @ParameterizedTest

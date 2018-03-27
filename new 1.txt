@@ -4,3 +4,7 @@ Explained why the 1st shape in page 1 is -1 0 1 1 (missing understanding regardi
 On solution verification:
 Verify that n*m ==>> there is n pieces with upper = 0 && n pieces with bottom =0;
 		     there is m pieces with left = 0 && n pieces with right =0;
+
+verify at least 4 corners (TL, TR, UL, UR)
+
+prime number => can have or 1 row or 1 column
