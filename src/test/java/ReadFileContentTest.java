@@ -194,16 +194,11 @@ public class ReadFileContentTest {
     @DisplayName("Find Solution for 2 Puzzle Elements - All Zero")
     @Test
     public void SolvePuzzleWith2Pieces () throws IOException {
-//        String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
-//
-//        Puzzle readFileContent = new Puzzle();
-//        readFileContent.readInputFile(filePath);
-//        readFileContent.printListOfElements();
-//
-//        assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
 
+        //Create Elements
         ArrayList<Integer> tempElement1 = new ArrayList<>();
         ArrayList<Integer> tempElement2 = new ArrayList<>();
+
         tempElement1.add(1);
         tempElement1.add(0);
         tempElement1.add(0);
@@ -219,18 +214,100 @@ public class ReadFileContentTest {
         PuzzleElement element1 = new PuzzleElement(tempElement1);
         PuzzleElement element2 = new PuzzleElement(tempElement2);
 
+        //Add the Elements to a List -
+        // This is teh 1st argument in PuzzleSolver Construction
         List<PuzzleElement> puzzleElementList = new ArrayList<>();
         puzzleElementList.add(element1);
         puzzleElementList.add(element2);
 
+
+        //Build the array of int that contains the available num of rows for the solution
+        //This is the 2nd argument in PuzzleSolver Construction
         int [] numOfAvailableLineForSolution = {1,2};
 
-        Map<String, List<Integer>> cornersMap = new HashMap<>();
+
+        //Build a Map that will contains all the possiblities that exist
+        //The keys will be:
+        //TOP_LEFT_CORNER
+        //BOTTOM_LEFT_CORNER
+        //TOP_RIGHT_CORNER
+        //BOTTOM_RIGHT_CORNER
+        //LEFT_0
+        //LEFT_1
+        //LEFT_-1
+        //TOP_0
+        //TOP_1
+        //TOP_-1
+        //RIGHT_0
+        //RIGHT_1
+        //RIGHT_-1
+        //BOTTOM_0
+        //BOTTOM_1
+        //BOTTOM_-1
+
+        //The value will be the location in the List (Parameter 1)
+        Map<String, List<Integer>> availableOptionsForSolution = new HashMap<>();
+        List<Integer> topLeftCornerList = new ArrayList<>();
+        List<Integer> bottomLeftCornerList = new ArrayList<>();
+        List<Integer> topRightCornerList = new ArrayList<>();
+        List<Integer> bottomRightCornerList = new ArrayList<>();
+
+        topLeftCornerList.add(0);
+        topLeftCornerList.add(1);
+
+        bottomLeftCornerList.add(0);
+        bottomLeftCornerList.add(1);
+
+        topRightCornerList.add(0);
+        topRightCornerList.add(1);
+
+        bottomRightCornerList.add(0);
+        bottomRightCornerList.add(1);
+
+        List<Integer> leff_0 = new ArrayList<>();
+        List<Integer> left_Minus = new ArrayList<>();
+        List<Integer> left_1 = new ArrayList<>();
+
+        leff_0.add(0);
+        leff_0.add(1);
+
+        List<Integer> top_0 = new ArrayList<>();
+        List<Integer> top_Minus = new ArrayList<>();
+        List<Integer> top_1 = new ArrayList<>();
+
+        top_0.add(0);
+        top_0.add(1);
+
+        List<Integer> right_0 = new ArrayList<>();
+        List<Integer> right_Minus = new ArrayList<>();
+        List<Integer> right_1 = new ArrayList<>();
+
+        right_0.add(0);
+        right_0.add(1);
+
+        List<Integer> bottom_0 = new ArrayList<>();
+        List<Integer> bottom_Minus = new ArrayList<>();
+        List<Integer> bottom_1 = new ArrayList<>();
+
+        bottom_0.add(0);
+        bottom_0.add(1);
+
+        availableOptionsForSolution.put("TOP_LEFT_CORNER", topLeftCornerList);
+        availableOptionsForSolution.put("BOTTOM_LEFT_CORNER", bottomLeftCornerList);
+        availableOptionsForSolution.put("TOP_RIGHT_CORNER", topRightCornerList);
+        availableOptionsForSolution.put("BOTTOM_RIGHT_CORNER", bottomRightCornerList);
+
+        availableOptionsForSolution.put("LEFT_0", leff_0);
+        availableOptionsForSolution.put("TOP_0", top_0);
+        availableOptionsForSolution.put("RIGHT_0", right_0);
+        availableOptionsForSolution.put("BOTTOM_0", bottom_0);
+
+        //Map<String, List<Integer>> cornersMap = new HashMap<>();
         List<Integer> listOfInteger = new ArrayList<>();
         listOfInteger.add(1);
-        cornersMap.put("TopLeft", listOfInteger);
+        //cornersMap.put("TopLeft", listOfInteger);
 
-        PuzzleSolver puzzleSolver = new PuzzleSolver(puzzleElementList, numOfAvailableLineForSolution,cornersMap);
+        PuzzleSolver puzzleSolver = new PuzzleSolver(puzzleElementList, numOfAvailableLineForSolution, availableOptionsForSolution);
 
 
     }

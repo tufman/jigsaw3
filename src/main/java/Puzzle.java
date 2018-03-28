@@ -88,9 +88,9 @@ public class Puzzle {
 
         //TODO in case (valid result) send puzzleElementList to Find solution
 
-        Map<String, List<Integer>> cornersMap = new HashMap<>();
+        Map<String, List<Integer>> availableOptionsForSolution = new HashMap<>();
         int [] numOfAvailableLineForSolution = null;
-        PuzzleSolver puzzleSolver = new PuzzleSolver(puzzleElementList, numOfAvailableLineForSolution,cornersMap);
+        PuzzleSolver puzzleSolver = new PuzzleSolver(puzzleElementList, numOfAvailableLineForSolution, availableOptionsForSolution);
     }
 
     private boolean allNumbersInRange(ArrayList<Integer> numFromLine) {
