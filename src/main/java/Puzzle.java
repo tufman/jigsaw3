@@ -8,7 +8,7 @@ public class Puzzle {
 
     private String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\main\\resources\\inputFile";
     private int expectedNumOfElementsFromFirstLine;
-    private List<PuzzleElement> jigsawElementList = new ArrayList<>();
+    private List<PuzzleElement> puzzleElementList = new ArrayList<>();
     private List<String> errorsReadingInputFile = new ArrayList<>();
     Properties prop = null;
 
@@ -71,7 +71,7 @@ public class Puzzle {
                 //Validate that a Left, Top, Right & Bottom between -1 to 1
                 if (allNumbersInRange(numFromLine)){
                     PuzzleElement element = new PuzzleElement(numFromLine);
-                    jigsawElementList.add(element);
+                    puzzleElementList.add(element);
                     continue;
                 }else{
                     errorsReadingInputFile.add(prop.getProperty("numberNotInRange") + line);
@@ -79,18 +79,18 @@ public class Puzzle {
             }
         }
 
-        if (expectedNumOfElementsFromFirstLine != jigsawElementList.size()){
+        if (expectedNumOfElementsFromFirstLine != puzzleElementList.size()){
             errorsReadingInputFile.add(prop.getProperty("missingElementInConfigurationFile"));
             //TODO should we stop or throw exception?
         }
 
         //TODO check if a valid result is available
 
-        //TODO in case (valid result) send jigsawElementList to Find solution
+        //TODO in case (valid result) send puzzleElementList to Find solution
 
         Map<String, List<Integer>> cornersMap = new HashMap<>();
         int [] numOfAvailableLineForSolution = null;
-        JigsawSolver jigsawSolver = new JigsawSolver(jigsawElementList, numOfAvailableLineForSolution,cornersMap);
+        PuzzleSolver puzzleSolver = new PuzzleSolver(puzzleElementList, numOfAvailableLineForSolution,cornersMap);
     }
 
     private boolean allNumbersInRange(ArrayList<Integer> numFromLine) {
@@ -104,7 +104,7 @@ public class Puzzle {
 
 
     public void printListOfElements(){
-            for (PuzzleElement element: jigsawElementList){
+            for (PuzzleElement element: puzzleElementList){
                 System.out.println(element);
             }
 
@@ -135,11 +135,11 @@ public class Puzzle {
     }
 
     public PuzzleElement getElementByIndex(int index) {
-        return jigsawElementList.get(index);
+        return puzzleElementList.get(index);
     }
 
     public int getActualNumOfElementsReadFromInputFile(){
-        return jigsawElementList.size();
+        return puzzleElementList.size();
     }
 
 }

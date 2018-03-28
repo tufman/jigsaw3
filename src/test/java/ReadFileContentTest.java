@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -6,6 +7,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -183,10 +187,52 @@ public class ReadFileContentTest {
         readFileContent.printListOfElements();
 
         assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
-//        assertTrue(readFileContent.verifyErrorExistInList("L/T/R/B Number should be between -1 to 1 please fix line 1 2 1 1 1"));
-//        assertTrue(readFileContent.verifyErrorExistInList("L/T/R/B Number should be between -1 to 1 please fix line 2 0 -2 0 0"));
-//        assertTrue(readFileContent.verifyErrorExistInList("L/T/R/B Number should be between -1 to 1 please fix line 3 -1 1 2 1"));
-//        assertTrue(readFileContent.verifyErrorExistInList("L/T/R/B Number should be between -1 to 1 please fix line 4 1 0 1 -2"));
+    }
+
+    //@ParameterizedTest
+    //@CsvSource({"SolvePuzzleWith2Pieces_All_Zero"})
+    @DisplayName("Find Solution for 2 Puzzle Elements - All Zero")
+    @Test
+    public void SolvePuzzleWith2Pieces () throws IOException {
+//        String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
+//
+//        Puzzle readFileContent = new Puzzle();
+//        readFileContent.readInputFile(filePath);
+//        readFileContent.printListOfElements();
+//
+//        assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
+
+        ArrayList<Integer> tempElement1 = new ArrayList<>();
+        ArrayList<Integer> tempElement2 = new ArrayList<>();
+        tempElement1.add(1);
+        tempElement1.add(0);
+        tempElement1.add(0);
+        tempElement1.add(0);
+        tempElement1.add(0);
+
+        tempElement2.add(2);
+        tempElement2.add(0);
+        tempElement2.add(0);
+        tempElement2.add(0);
+        tempElement2.add(0);
+
+        PuzzleElement element1 = new PuzzleElement(tempElement1);
+        PuzzleElement element2 = new PuzzleElement(tempElement2);
+
+        List<PuzzleElement> puzzleElementList = new ArrayList<>();
+        puzzleElementList.add(element1);
+        puzzleElementList.add(element2);
+
+        int [] numOfAvailableLineForSolution = {1,2};
+
+        Map<String, List<Integer>> cornersMap = new HashMap<>();
+        List<Integer> listOfInteger = new ArrayList<>();
+        listOfInteger.add(1);
+        cornersMap.put("TopLeft", listOfInteger);
+
+        PuzzleSolver puzzleSolver = new PuzzleSolver(puzzleElementList, numOfAvailableLineForSolution,cornersMap);
+
+
     }
 
 }
