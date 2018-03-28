@@ -10,6 +10,17 @@ public class Puzzle {
     private int expectedNumOfElementsFromFirstLine;
     private List<PuzzleElement> puzzleElementList = new ArrayList<>();
     private List<String> errorsReadingInputFile = new ArrayList<>();
+    Map<String, List<Integer>> availableOptionsForSolution = new HashMap<>();
+
+    //I think it will be easier to fill the list as part of the file reading,
+    // and in the end before we will send it to Solver, to put it in the relevant Map
+    List<Integer> leftPlus = new ArrayList<>();
+    List<Integer> leftZero = new ArrayList<>();
+    List<Integer> leftMinus = new ArrayList<>();
+    List<Integer> topPlus = new ArrayList<>();
+    List<Integer> topZero = new ArrayList<>();
+    List<Integer> topMinus = new ArrayList<>();
+
     Properties prop = null;
 
     public Puzzle(){
@@ -72,6 +83,8 @@ public class Puzzle {
                 if (allNumbersInRange(numFromLine)){
                     PuzzleElement element = new PuzzleElement(numFromLine);
                     puzzleElementList.add(element);
+                    //TODO calculate the edges and add it to optionsOfSolution
+                    addOptionsToSolution(element, puzzleElementList.size());
                     continue;
                 }else{
                     errorsReadingInputFile.add(prop.getProperty("numberNotInRange") + line);
@@ -88,9 +101,43 @@ public class Puzzle {
 
         //TODO in case (valid result) send puzzleElementList to Find solution
 
-        Map<String, List<Integer>> availableOptionsForSolution = new HashMap<>();
+        //TODO - add the leftPlus, leftZero leftMinus topPlus, topZero topMinus and Right & bottom and corners to the Array List
         int [] numOfAvailableLineForSolution = null;
         PuzzleSolver puzzleSolver = new PuzzleSolver(puzzleElementList, numOfAvailableLineForSolution, availableOptionsForSolution);
+    }
+
+    private void addOptionsToSolution(PuzzleElement element, int indexInPuzzleElementList) {
+        //Map<String, List<Integer>> availableOptionsForSolution
+        switch(element.left){
+            case -1:  {
+                leftMinus.add(indexInPuzzleElementList);
+                break;
+            }
+            case 0: {
+                leftZero.add(indexInPuzzleElementList);
+                break;
+            }
+            case 1: {
+                leftPlus.add(indexInPuzzleElementList);
+                break;
+            }
+            default: //Currently do nothing
+        }
+        switch(element.top){
+            case -1:  {
+                topMinus.add(indexInPuzzleElementList);
+                break;
+            }
+            case 0: {
+                topZero.add(indexInPuzzleElementList);
+                break;
+            }
+            case 1: {
+                topPlus.add(indexInPuzzleElementList);
+                break;
+            }
+            default: //Currently do nothing
+        }
     }
 
     private boolean allNumbersInRange(ArrayList<Integer> numFromLine) {
