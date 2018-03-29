@@ -10,26 +10,29 @@ public class Puzzle {
     private int expectedNumOfElementsFromFirstLine;
     private List<PuzzleElement> puzzleElementList = new ArrayList<>();
     private List<String> errorsReadingInputFile = new ArrayList<>();
-    Map<String, List<Integer>> availableOptionsForSolution = new HashMap<>();
+    private Map<String, List<Integer>> availableOptionsForSolution = new HashMap<>();
+
+    Utils utils = new Utils();
+    //Map<String, List<Integer>> availableOptionsForSolution = new HashMap<>();
 
     //I think it will be easier to fill the list as part of the file reading,
     // and in the end before we will send it to Solver, to put it in the relevant Map
-    List<Integer> leftPlus = new ArrayList<>();
-    List<Integer> leftZero = new ArrayList<>();
-    List<Integer> leftMinus = new ArrayList<>();
-    List<Integer> topPlus = new ArrayList<>();
-    List<Integer> topZero = new ArrayList<>();
-    List<Integer> topMinus = new ArrayList<>();
-    List<Integer> rightPlus = new ArrayList<>();
-    List<Integer> rightZero = new ArrayList<>();
-    List<Integer> rightMinus = new ArrayList<>();
-    List<Integer> bottomPlus = new ArrayList<>();
-    List<Integer> bottomZero = new ArrayList<>();
-    List<Integer> bottomMinus = new ArrayList<>();
-    List<Integer> topLeftCorner = new ArrayList<>();
-    List<Integer> bottomLeftCorner = new ArrayList<>();
-    List<Integer> topRightCorner = new ArrayList<>();
-    List<Integer> bottomRightCorner = new ArrayList<>();
+//    List<Integer> leftPlus = new ArrayList<>();
+//    List<Integer> leftZero = new ArrayList<>();
+//    List<Integer> leftMinus = new ArrayList<>();
+//    List<Integer> topPlus = new ArrayList<>();
+//    List<Integer> topZero = new ArrayList<>();
+//    List<Integer> topMinus = new ArrayList<>();
+//    List<Integer> rightPlus = new ArrayList<>();
+//    List<Integer> rightZero = new ArrayList<>();
+//    List<Integer> rightMinus = new ArrayList<>();
+//    List<Integer> bottomPlus = new ArrayList<>();
+//    List<Integer> bottomZero = new ArrayList<>();
+//    List<Integer> bottomMinus = new ArrayList<>();
+//    List<Integer> topLeftCorner = new ArrayList<>();
+//    List<Integer> bottomLeftCorner = new ArrayList<>();
+//    List<Integer> topRightCorner = new ArrayList<>();
+//    List<Integer> bottomRightCorner = new ArrayList<>();
 
     Properties prop = null;
 
@@ -94,7 +97,8 @@ public class Puzzle {
                     PuzzleElement element = new PuzzleElement(numFromLine);
                     puzzleElementList.add(element);
                     //TODO calculate the edges and add it to optionsOfSolution
-                    addOptionsToSolution(element, puzzleElementList.size()-1);
+                    utils.mapElementToSolutionList(element, puzzleElementList.size()-1);
+                    //addOptionsToSolution(element, puzzleElementList.size()-1);
                     continue;
                 }else{
                     errorsReadingInputFile.add(prop.getProperty("numberNotInRange") + line);
@@ -111,111 +115,112 @@ public class Puzzle {
 
         //TODO in case (valid result) send puzzleElementList to Find solution
 
-        
-        initSolutionMap();
+
+        this.availableOptionsForSolution = utils.getSolutionMap();
+        //initSolutionMap();
 
         int [] numOfAvailableLineForSolution = null;
         PuzzleSolver puzzleSolver = new PuzzleSolver(puzzleElementList, numOfAvailableLineForSolution, availableOptionsForSolution);
     }
 
-    private void initSolutionMap() {
-        availableOptionsForSolution.put("TOP_LEFT_CORNER", topLeftCorner);
-        availableOptionsForSolution.put("BOTTOM_LEFT_CORNER", bottomLeftCorner);
-        availableOptionsForSolution.put("TOP_RIGHT_CORNER", topRightCorner);
-        availableOptionsForSolution.put("BOTTOM_RIGHT_CORNER", bottomRightCorner);
+//    private void initSolutionMap() {
+//        availableOptionsForSolution.put("TOP_LEFT_CORNER", topLeftCorner);
+//        availableOptionsForSolution.put("BOTTOM_LEFT_CORNER", bottomLeftCorner);
+//        availableOptionsForSolution.put("TOP_RIGHT_CORNER", topRightCorner);
+//        availableOptionsForSolution.put("BOTTOM_RIGHT_CORNER", bottomRightCorner);
+//
+//        availableOptionsForSolution.put("LEFT_0", leftZero);
+//        availableOptionsForSolution.put("LEFT_PLUS", leftPlus);
+//        availableOptionsForSolution.put("LEFT_MINUS", leftMinus);
+//
+//        availableOptionsForSolution.put("TOP_0", topZero);
+//        availableOptionsForSolution.put("TOP_PLUS", topPlus);
+//        availableOptionsForSolution.put("TOP_MINUS", topMinus);
+//
+//        availableOptionsForSolution.put("RIGHT_0", rightZero);
+//        availableOptionsForSolution.put("RIGHT_PLUS", rightPlus);
+//        availableOptionsForSolution.put("RIGHT_MINUS", rightMinus);
+//
+//        availableOptionsForSolution.put("BOTTOM_0", bottomZero);
+//        availableOptionsForSolution.put("BOTTOM_PLUS", bottomPlus);
+//        availableOptionsForSolution.put("BOTTOM_MINUS", bottomMinus);
+//    }
 
-        availableOptionsForSolution.put("LEFT_0", leftZero);
-        availableOptionsForSolution.put("LEFT_PLUS", leftPlus);
-        availableOptionsForSolution.put("LEFT_MINUS", leftMinus);
-
-        availableOptionsForSolution.put("TOP_0", topZero);
-        availableOptionsForSolution.put("TOP_PLUS", topPlus);
-        availableOptionsForSolution.put("TOP_MINUS", topMinus);
-
-        availableOptionsForSolution.put("RIGHT_0", rightZero);
-        availableOptionsForSolution.put("RIGHT_PLUS", rightPlus);
-        availableOptionsForSolution.put("RIGHT_MINUS", rightMinus);
-
-        availableOptionsForSolution.put("BOTTOM_0", bottomZero);
-        availableOptionsForSolution.put("BOTTOM_PLUS", bottomPlus);
-        availableOptionsForSolution.put("BOTTOM_MINUS", bottomMinus);
-    }
-
-    private void addOptionsToSolution(PuzzleElement element, int indexInPuzzleElementList) {
-        //Map<String, List<Integer>> availableOptionsForSolution
-        switch(element.left){
-            case -1:  {
-                leftMinus.add(indexInPuzzleElementList);
-                break;
-            }
-            case 0: {
-                leftZero.add(indexInPuzzleElementList);
-                break;
-            }
-            case 1: {
-                leftPlus.add(indexInPuzzleElementList);
-                break;
-            }
-            default: //Currently do nothing
-        }
-        switch(element.top){
-            case -1:  {
-                topMinus.add(indexInPuzzleElementList);
-                break;
-            }
-            case 0: {
-                topZero.add(indexInPuzzleElementList);
-                break;
-            }
-            case 1: {
-                topPlus.add(indexInPuzzleElementList);
-                break;
-            }
-            default: //Currently do nothing
-        }
-        switch(element.right){
-            case -1:  {
-                rightMinus.add(indexInPuzzleElementList);
-                break;
-            }
-            case 0: {
-                rightZero.add(indexInPuzzleElementList);
-                break;
-            }
-            case 1: {
-                rightPlus.add(indexInPuzzleElementList);
-                break;
-            }
-            default: //Currently do nothing
-        }
-        switch(element.bottom){
-            case -1:  {
-                bottomMinus.add(indexInPuzzleElementList);
-                break;
-            }
-            case 0: {
-                bottomZero.add(indexInPuzzleElementList);
-                break;
-            }
-            case 1: {
-                bottomPlus.add(indexInPuzzleElementList);
-                break;
-            }
-            default: //Currently do nothing
-        }
-        if (element.left == 0 && element.top == 0){
-            topLeftCorner.add(indexInPuzzleElementList);
-        }
-        if (element.left == 0 && element.bottom == 0){
-            bottomLeftCorner.add(indexInPuzzleElementList);
-        }
-        if (element.right == 0 && element.top == 0){
-            topRightCorner.add(indexInPuzzleElementList);
-        }
-        if (element.right == 0 && element.bottom == 0){
-            bottomRightCorner.add(indexInPuzzleElementList);
-        }
-    }
+//    private void mapElementToSolutionList(PuzzleElement element, int indexInPuzzleElementList) {
+//        //Map<String, List<Integer>> availableOptionsForSolution
+//        switch(element.left){
+//            case -1:  {
+//                leftMinus.add(indexInPuzzleElementList);
+//                break;
+//            }
+//            case 0: {
+//                leftZero.add(indexInPuzzleElementList);
+//                break;
+//            }
+//            case 1: {
+//                leftPlus.add(indexInPuzzleElementList);
+//                break;
+//            }
+//            default: //Currently do nothing
+//        }
+//        switch(element.top){
+//            case -1:  {
+//                topMinus.add(indexInPuzzleElementList);
+//                break;
+//            }
+//            case 0: {
+//                topZero.add(indexInPuzzleElementList);
+//                break;
+//            }
+//            case 1: {
+//                topPlus.add(indexInPuzzleElementList);
+//                break;
+//            }
+//            default: //Currently do nothing
+//        }
+//        switch(element.right){
+//            case -1:  {
+//                rightMinus.add(indexInPuzzleElementList);
+//                break;
+//            }
+//            case 0: {
+//                rightZero.add(indexInPuzzleElementList);
+//                break;
+//            }
+//            case 1: {
+//                rightPlus.add(indexInPuzzleElementList);
+//                break;
+//            }
+//            default: //Currently do nothing
+//        }
+//        switch(element.bottom){
+//            case -1:  {
+//                bottomMinus.add(indexInPuzzleElementList);
+//                break;
+//            }
+//            case 0: {
+//                bottomZero.add(indexInPuzzleElementList);
+//                break;
+//            }
+//            case 1: {
+//                bottomPlus.add(indexInPuzzleElementList);
+//                break;
+//            }
+//            default: //Currently do nothing
+//        }
+//        if (element.left == 0 && element.top == 0){
+//            topLeftCorner.add(indexInPuzzleElementList);
+//        }
+//        if (element.left == 0 && element.bottom == 0){
+//            bottomLeftCorner.add(indexInPuzzleElementList);
+//        }
+//        if (element.right == 0 && element.top == 0){
+//            topRightCorner.add(indexInPuzzleElementList);
+//        }
+//        if (element.right == 0 && element.bottom == 0){
+//            bottomRightCorner.add(indexInPuzzleElementList);
+//        }
+//    }
 
     private boolean allNumbersInRange(ArrayList<Integer> numFromLine) {
         for (int i =1; i < numFromLine.size(); i++){
