@@ -12,14 +12,14 @@ public class Puzzle {
     private List<String> errorsReadingInputFile = new ArrayList<>();
     private Map<String, List<Integer>> availableOptionsForSolution = new HashMap<>();
 
-    Utils utils = new Utils();
+    //Utils utils = new Utils();
 
 
     Properties prop = null;
 
     public Puzzle(){
     }
-    
+
 
     public void readInputFile(String filePath) throws IOException {
         try(FileInputStream fis = new FileInputStream(filePath);
@@ -70,7 +70,8 @@ public class Puzzle {
                     PuzzleElement element = new PuzzleElement(numFromLine);
                     puzzleElementList.add(element);
                     //TODO calculate the edges and add it to optionsOfSolution
-                    utils.mapElementToSolutionList(element, puzzleElementList.size()-1);
+                    //utils.mapElementToSolutionList(element, puzzleElementList.size()-1);
+                    Utils.mapElementToSolutionList(element, puzzleElementList.size()-1);
                     //addOptionsToSolution(element, puzzleElementList.size()-1);
                     continue;
                 }else{
@@ -89,7 +90,8 @@ public class Puzzle {
         //TODO in case (valid result) send puzzleElementList to Find solution
 
 
-        this.availableOptionsForSolution = utils.getSolutionMap();
+        //this.availableOptionsForSolution = utils.getSolutionMap();
+        this.availableOptionsForSolution = Utils.getSolutionMap();
         //initSolutionMap();
 
         int [] numOfAvailableLineForSolution = null;

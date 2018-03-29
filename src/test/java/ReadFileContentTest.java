@@ -312,4 +312,33 @@ public class ReadFileContentTest {
 
     }
 
+    @ParameterizedTest
+    @CsvSource({"validTestForUtilsGetSolutionMap"})
+    @DisplayName("Validate Utils Solution Map")
+    //@Test
+    public void validTestForUtilsGetSolutionMap (String inputFile) throws IOException {
+    //public void validTestForUtilsGetSolutionMap () throws IOException {
+        String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
+        //String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\validTestForUtilsGetSolutionMap";
+
+        Utils.claenSolutionMap();
+
+        Puzzle readFileContent = new Puzzle();
+        readFileContent.readInputFile(filePath);
+        readFileContent.printListOfElements();
+
+        Map<String, List<Integer>> solutionMap = Utils.getSolutionMap();
+
+        assertTrue(solutionMap.get("TOP_LEFT_CORNER").size() == 1);
+        assertTrue(solutionMap.get("TOP_LEFT_CORNER").get(0) == 0);
+
+        assertTrue(solutionMap.get("LEFT_PLUS").size() == 2, String.format("LEFT_PLUS size -> Expected %d, actuall %d",2,solutionMap.get("LEFT_PLUS").size()));
+        assertTrue(solutionMap.get("LEFT_PLUS").get(0) == 2, String.format("LEFT_PLUS(0) -> Expected %d, actuall %d",2,solutionMap.get("LEFT_PLUS").get(0)));
+        assertTrue(solutionMap.get("LEFT_PLUS").get(1) == 4, String.format("LEFT_PLUS(1) -> Expected %d, actuall %d",4,solutionMap.get("LEFT_PLUS").get(1)));
+
+
+        System.out.println("My Break");
+
+    }
+
 }

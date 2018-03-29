@@ -7,31 +7,31 @@ public class Utils {
 
     //I think it will be easier to fill the list as part of the file reading,
     // and in the end before we will send it to Solver, to put it in the relevant Map
-    private List<Integer> leftPlus = new ArrayList<>();
-    private List<Integer> leftZero = new ArrayList<>();
-    private List<Integer> leftMinus = new ArrayList<>();
-    private List<Integer> topPlus = new ArrayList<>();
-    private List<Integer> topZero = new ArrayList<>();
-    private List<Integer> topMinus = new ArrayList<>();
-    private List<Integer> rightPlus = new ArrayList<>();
-    private List<Integer> rightZero = new ArrayList<>();
-    private List<Integer> rightMinus = new ArrayList<>();
-    private List<Integer> bottomPlus = new ArrayList<>();
-    private List<Integer> bottomZero = new ArrayList<>();
-    private List<Integer> bottomMinus = new ArrayList<>();
-    private List<Integer> topLeftCorner = new ArrayList<>();
-    private List<Integer> bottomLeftCorner = new ArrayList<>();
-    private List<Integer> topRightCorner = new ArrayList<>();
-    private List<Integer> bottomRightCorner = new ArrayList<>();
+    private static List<Integer> leftPlus = new ArrayList<>();
+    private static List<Integer> leftZero = new ArrayList<>();
+    private static List<Integer> leftMinus = new ArrayList<>();
+    private static List<Integer> topPlus = new ArrayList<>();
+    private static List<Integer> topZero = new ArrayList<>();
+    private static List<Integer> topMinus = new ArrayList<>();
+    private static List<Integer> rightPlus = new ArrayList<>();
+    private static List<Integer> rightZero = new ArrayList<>();
+    private static List<Integer> rightMinus = new ArrayList<>();
+    private static List<Integer> bottomPlus = new ArrayList<>();
+    private static List<Integer> bottomZero = new ArrayList<>();
+    private static List<Integer> bottomMinus = new ArrayList<>();
+    private static List<Integer> topLeftCorner = new ArrayList<>();
+    private static List<Integer> bottomLeftCorner = new ArrayList<>();
+    private static List<Integer> topRightCorner = new ArrayList<>();
+    private static List<Integer> bottomRightCorner = new ArrayList<>();
 
     //Map that will hold all the Keys "TopLeft", "BottomPlus" and the relevant List of integers that will point to their reference in the Puzzle List<PuzzleElement> puzzleElementList
-    private Map<String, List<Integer>> availableOptionsForSolution = new HashMap<>();
+    private static Map<String, List<Integer>> availableOptionsForSolution = new HashMap<>();
 
 
 
 
 
-    public Map<String, List<Integer>> getSolutionMap() {
+    public static Map<String, List<Integer>> getSolutionMap() {
         availableOptionsForSolution.put("TOP_LEFT_CORNER", topLeftCorner);
         availableOptionsForSolution.put("BOTTOM_LEFT_CORNER", bottomLeftCorner);
         availableOptionsForSolution.put("TOP_RIGHT_CORNER", topRightCorner);
@@ -56,7 +56,7 @@ public class Utils {
         return availableOptionsForSolution;
     }
 
-    public void mapElementToSolutionList(PuzzleElement element, int indexInPuzzleElementList) {
+    public static void mapElementToSolutionList(PuzzleElement element, int indexInPuzzleElementList) {
         //Map<String, List<Integer>> availableOptionsForSolution
         switch(element.left){
             case -1:  {
@@ -130,5 +130,26 @@ public class Utils {
         if (element.right == 0 && element.bottom == 0){
             bottomRightCorner.add(indexInPuzzleElementList);
         }
+    }
+
+    public static void claenSolutionMap() {
+        availableOptionsForSolution.clear();
+        leftPlus.clear();
+        leftZero.clear();
+        leftMinus.clear();
+        topPlus.clear();
+        topZero.clear();
+        topMinus.clear();
+        rightPlus.clear();
+        rightZero.clear();
+        rightMinus.clear();
+        bottomPlus.clear();
+        bottomZero.clear();
+        bottomMinus.clear();
+        topLeftCorner.clear();
+        bottomLeftCorner.clear();
+        topRightCorner.clear();
+        bottomRightCorner.clear();
+
     }
 }
