@@ -30,7 +30,7 @@ public class PuzzleSolver {
         findSolutionFor(startWithTopLeftCorner);
     }
 
-    private void findSolutionFor(PuzzleElement startWithTopLeftCorner) {
+    private void findSolutionFor(PuzzleElement topLeftCorenrTofinSolution) {
         System.out.println("Recursive Function - As appear below:");
         System.out.println("Since TopLeftCorner always should exist -> In case not, no available solution!!!");
         System.out.println("Upon given the NumOfElements, and num of rows ==>> num of columns can be calculated");
@@ -39,6 +39,27 @@ public class PuzzleSolver {
         System.out.println("Than, for each element for the 1st row, we will try to fill its column");
         System.out.println("keep in mind to \"save\" LEFT_0 for the 1st column, and RIGHT_0 for last column");
         System.out.println("1st Row, with TOP_0, and last row BOTTOM_0");
+
+        System.out.println("=====================================================");
+        System.out.println("Start findSolutionFor " + topLeftCorenrTofinSolution);
+        System.out.println("Total Num Of Elements " + this.jigsawElementInputList.size());
+        System.out.print("Available potential rows for solution ");
+        for (int j = 0; j <   numOfAvailableLineForSolution.length ; j++){
+            System.out.print(" " + numOfAvailableLineForSolution[j]);
+        }
+        System.out.println();
+        for (int i =0; i < numOfAvailableLineForSolution.length; i ++){
+            System.out.println("#################################################");
+            System.out.println();
+            System.out.println("Looking for solution for row with " +((this.jigsawElementInputList.size())/(numOfAvailableLineForSolution[i]))  + " Puzzle elemnets");
+            System.out.println();
+            System.out.println("#################################################");
+        }
+
+        //int currentRows = this.jigsawElementInputList.size() / availableOptionsForSolution.get(PUZZLEDIRECTIONS.TOP_LEFT_CORNER).get(0);
+
+
+
     }
 
     private void printOptionsForResults() {
