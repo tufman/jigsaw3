@@ -25,33 +25,34 @@ public class Utils {
     private static List<Integer> bottomRightCorner = new ArrayList<>();
 
     //Map that will hold all the Keys "TopLeft", "BottomPlus" and the relevant List of integers that will point to their reference in the Puzzle List<PuzzleElement> puzzleElementList
-    private static Map<String, List<Integer>> availableOptionsForSolution = new HashMap<>();
+    private static Map<Enum, List<Integer>> availableOptionsForSolution = new HashMap<>();
 
 
 
 
 
-    public static Map<String, List<Integer>> getSolutionMap() {
-        availableOptionsForSolution.put("TOP_LEFT_CORNER", topLeftCorner);
-        availableOptionsForSolution.put("BOTTOM_LEFT_CORNER", bottomLeftCorner);
-        availableOptionsForSolution.put("TOP_RIGHT_CORNER", topRightCorner);
-        availableOptionsForSolution.put("BOTTOM_RIGHT_CORNER", bottomRightCorner);
+    //public static Map<String, List<Integer>> getSolutionMap() {
+    public static Map<Enum, List<Integer>> getSolutionMap() {
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.TOP_LEFT_CORNER, topLeftCorner);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.BOTTOM_LEFT_CORNER, bottomLeftCorner);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.TOP_RIGHT_CORNER, topRightCorner);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.BOTTOM_RIGHT_CORNER, bottomRightCorner);
 
-        availableOptionsForSolution.put("LEFT_0", leftZero);
-        availableOptionsForSolution.put("LEFT_PLUS", leftPlus);
-        availableOptionsForSolution.put("LEFT_MINUS", leftMinus);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.LEFT_ZERO, leftZero);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.LEFT_PLUS, leftPlus);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.LEFT_MINUS, leftMinus);
 
-        availableOptionsForSolution.put("TOP_0", topZero);
-        availableOptionsForSolution.put("TOP_PLUS", topPlus);
-        availableOptionsForSolution.put("TOP_MINUS", topMinus);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.TOP_ZERO, topZero);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.TOP_PLUS, topPlus);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.TOP_MINUS, topMinus);
 
-        availableOptionsForSolution.put("RIGHT_0", rightZero);
-        availableOptionsForSolution.put("RIGHT_PLUS", rightPlus);
-        availableOptionsForSolution.put("RIGHT_MINUS", rightMinus);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.RIGHT_ZERO, rightZero);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.RIGHT_PLUS, rightPlus);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.RIGHT_MINUS, rightMinus);
 
-        availableOptionsForSolution.put("BOTTOM_0", bottomZero);
-        availableOptionsForSolution.put("BOTTOM_PLUS", bottomPlus);
-        availableOptionsForSolution.put("BOTTOM_MINUS", bottomMinus);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.BOTTOM_ZERO, bottomZero);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.BOTTOM_PLUS, bottomPlus);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.BOTTOM_MINUS, bottomMinus);
 
         return availableOptionsForSolution;
     }

@@ -21,4 +21,8 @@ public enum PUZZLEDIRECTIONS {
     PUZZLEDIRECTIONS(String direction){
         this.direction = direction;
     }
+
+    public String getDirection(){
+        return this.direction;
+    }
 }

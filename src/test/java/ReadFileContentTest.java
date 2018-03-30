@@ -133,7 +133,6 @@ public class ReadFileContentTest {
     @CsvSource({"validInputFileTestElementsAsExpected"})
     @DisplayName("print All Elemens From List")
     public void printAllElemensFromList(String inputFile) throws IOException {
-        //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\" + inputFile;
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
 
         Puzzle readFileContent = new Puzzle();
@@ -148,7 +147,6 @@ public class ReadFileContentTest {
     @CsvSource({"invalid_IDElement_input"})
     @DisplayName("Validate element in input file - not int")
     public void validateInvalidIDElementInput (String inputFile) throws IOException {
-        //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\" + inputFile;
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
 
         Puzzle readFileContent = new Puzzle();
@@ -162,7 +160,6 @@ public class ReadFileContentTest {
     @CsvSource({"LTRBValidation"})
     @DisplayName("Left Top right and Bottom not in range -1 to 1")
     public void validateTheLTRBHasCorrectValues (String inputFile) throws IOException {
-        //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\" + inputFile;
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
 
         Puzzle readFileContent = new Puzzle();
@@ -246,7 +243,7 @@ public class ReadFileContentTest {
         //BOTTOM_-1
 
         //The value will be the location in the List (Parameter 1)
-        Map<String, List<Integer>> availableOptionsForSolution = new HashMap<>();
+        Map<Enum, List<Integer>> availableOptionsForSolution = new HashMap<>();
         List<Integer> topLeftCornerList = new ArrayList<>();
         List<Integer> bottomLeftCornerList = new ArrayList<>();
         List<Integer> topRightCornerList = new ArrayList<>();
@@ -292,20 +289,18 @@ public class ReadFileContentTest {
         bottom_0.add(0);
         bottom_0.add(1);
 
-        availableOptionsForSolution.put("TOP_LEFT_CORNER", topLeftCornerList);
-        availableOptionsForSolution.put("BOTTOM_LEFT_CORNER", bottomLeftCornerList);
-        availableOptionsForSolution.put("TOP_RIGHT_CORNER", topRightCornerList);
-        availableOptionsForSolution.put("BOTTOM_RIGHT_CORNER", bottomRightCornerList);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.TOP_LEFT_CORNER, topLeftCornerList);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.BOTTOM_LEFT_CORNER, bottomLeftCornerList);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.TOP_RIGHT_CORNER, topRightCornerList);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.BOTTOM_RIGHT_CORNER, bottomRightCornerList);
 
-        availableOptionsForSolution.put("LEFT_0", leff_0);
-        availableOptionsForSolution.put("TOP_0", top_0);
-        availableOptionsForSolution.put("RIGHT_0", right_0);
-        availableOptionsForSolution.put("BOTTOM_0", bottom_0);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.LEFT_ZERO, leff_0);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.TOP_ZERO, top_0);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.RIGHT_ZERO, right_0);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.BOTTOM_ZERO, bottom_0);
 
-        //Map<String, List<Integer>> cornersMap = new HashMap<>();
         List<Integer> listOfInteger = new ArrayList<>();
         listOfInteger.add(1);
-        //cornersMap.put("TopLeft", listOfInteger);
 
         PuzzleSolver puzzleSolver = new PuzzleSolver(puzzleElementList, numOfAvailableLineForSolution, availableOptionsForSolution);
 
@@ -315,11 +310,8 @@ public class ReadFileContentTest {
     @ParameterizedTest
     @CsvSource({"validTestForUtilsGetSolutionMap"})
     @DisplayName("Validate Utils Solution Map")
-    //@Test
     public void validTestForUtilsGetSolutionMap (String inputFile) throws IOException {
-    //public void validTestForUtilsGetSolutionMap () throws IOException {
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
-        //String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\validTestForUtilsGetSolutionMap";
 
         Utils.claenSolutionMap();
 
@@ -327,14 +319,14 @@ public class ReadFileContentTest {
         readFileContent.readInputFile(filePath);
         readFileContent.printListOfElements();
 
-        Map<String, List<Integer>> solutionMap = Utils.getSolutionMap();
+        Map<Enum, List<Integer>> solutionMap = Utils.getSolutionMap();
 
-        assertTrue(solutionMap.get("TOP_LEFT_CORNER").size() == 1);
-        assertTrue(solutionMap.get("TOP_LEFT_CORNER").get(0) == 0);
+        assertTrue(solutionMap.get(PUZZLEDIRECTIONS.TOP_LEFT_CORNER).size() == 1);
+        assertTrue(solutionMap.get(PUZZLEDIRECTIONS.TOP_LEFT_CORNER).get(0) == 0);
 
-        assertTrue(solutionMap.get("LEFT_PLUS").size() == 2, String.format("LEFT_PLUS size -> Expected %d, actuall %d",2,solutionMap.get("LEFT_PLUS").size()));
-        assertTrue(solutionMap.get("LEFT_PLUS").get(0) == 2, String.format("LEFT_PLUS(0) -> Expected %d, actuall %d",2,solutionMap.get("LEFT_PLUS").get(0)));
-        assertTrue(solutionMap.get("LEFT_PLUS").get(1) == 4, String.format("LEFT_PLUS(1) -> Expected %d, actuall %d",4,solutionMap.get("LEFT_PLUS").get(1)));
+        assertTrue(solutionMap.get(PUZZLEDIRECTIONS.LEFT_PLUS).size() == 2, String.format("LEFT_PLUS size -> Expected %d, actuall %d",2,solutionMap.get(PUZZLEDIRECTIONS.LEFT_PLUS).size()));
+        assertTrue(solutionMap.get(PUZZLEDIRECTIONS.LEFT_PLUS).get(0) == 2, String.format("LEFT_PLUS(0) -> Expected %d, actuall %d",2,solutionMap.get(PUZZLEDIRECTIONS.LEFT_PLUS).get(0)));
+        assertTrue(solutionMap.get(PUZZLEDIRECTIONS.LEFT_PLUS).get(1) == 4, String.format("LEFT_PLUS(1) -> Expected %d, actuall %d",4,solutionMap.get(PUZZLEDIRECTIONS.LEFT_PLUS).get(1)));
 
 
         System.out.println("My Break");

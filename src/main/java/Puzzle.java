@@ -10,7 +10,7 @@ public class Puzzle {
     private int expectedNumOfElementsFromFirstLine;
     private List<PuzzleElement> puzzleElementList = new ArrayList<>();
     private List<String> errorsReadingInputFile = new ArrayList<>();
-    private Map<String, List<Integer>> availableOptionsForSolution = new HashMap<>();
+    private Map<Enum, List<Integer>> availableOptionsForSolution = new HashMap<>();
 
     //Utils utils = new Utils();
 

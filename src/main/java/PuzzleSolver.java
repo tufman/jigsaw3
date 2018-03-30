@@ -6,12 +6,11 @@ import java.util.Map;
 public class PuzzleSolver {
 
     private List<PuzzleElement> jigsawElementInputList = new ArrayList<>();
-    //private List<PuzzleElement> jigsawElementResultList = new ArrayList<>();
     private List<List<String>> jigsawElementResultList = new ArrayList<List<String>>();
     private int [] numOfAvailableLineForSolution;
-    private Map<String, List<Integer>> availableOptionsForSolution;
+    private Map<Enum, List<Integer>> availableOptionsForSolution;
 
-    public PuzzleSolver(List<PuzzleElement> jigsawElementList, int [] numOfAvailableLineForSolution, Map<String, List<Integer>> availableOptionsForSolution) {
+    public PuzzleSolver(List<PuzzleElement> jigsawElementList, int [] numOfAvailableLineForSolution, Map<Enum, List<Integer>> availableOptionsForSolution) {
         this.jigsawElementInputList = jigsawElementList;
         this.numOfAvailableLineForSolution = numOfAvailableLineForSolution;
         this.availableOptionsForSolution = availableOptionsForSolution;
