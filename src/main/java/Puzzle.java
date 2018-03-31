@@ -95,7 +95,12 @@ public class Puzzle {
         //initSolutionMap();
 
         int [] numOfAvailableLineForSolution = null;
-        PuzzleSolver puzzleSolver = new PuzzleSolver(puzzleElementList, numOfAvailableLineForSolution, availableOptionsForSolution);
+
+        //Call to Solver, only if there are NO Error in the parsing that was executed, and there is at least 1 available row for solution
+        if (errorsReadingInputFile.size() !=0 && numOfAvailableLineForSolution != null){
+            PuzzleSolver puzzleSolver = new PuzzleSolver(puzzleElementList, numOfAvailableLineForSolution, availableOptionsForSolution);
+        }
+
     }
 
 

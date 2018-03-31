@@ -10,6 +10,7 @@ public class PuzzleSolver {
     private int [] numOfAvailableLineForSolution;
     private Map<Enum, List<Integer>> availableOptionsForSolution;
 
+
     public PuzzleSolver(List<PuzzleElement> jigsawElementList, int [] numOfAvailableLineForSolution, Map<Enum, List<Integer>> availableOptionsForSolution) {
         this.jigsawElementInputList = jigsawElementList;
         this.numOfAvailableLineForSolution = numOfAvailableLineForSolution;
