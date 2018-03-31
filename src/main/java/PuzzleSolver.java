@@ -6,10 +6,13 @@ import java.util.Map;
 public class PuzzleSolver {
 
     private List<PuzzleElement> jigsawElementInputList = new ArrayList<>();
-    private List<List<String>> jigsawElementResultList = new ArrayList<List<String>>();
+    private List<List<PuzzleElement>> jigsawElementResultList = new ArrayList<List<PuzzleElement>>();
     private int [] numOfAvailableRowsForSolution;
     private Map<Enum, List<Integer>> availableOptionsForSolution;
     private List<Integer> indexesOfTopLowerLetfCorners = new ArrayList<>();
+    boolean [] usedElements = new boolean[jigsawElementInputList.size()];
+    int usedPuzzleElements;
+    int totalPuzzleElements;
 
 
 
@@ -27,26 +30,66 @@ public class PuzzleSolver {
         startWithTopLeftCorner = jigsawElementInputList.get(availableOptionsForSolution.get(PUZZLEDIRECTIONS.TOP_LEFT_CORNER).get(0));
 
         //I think it will be better to call findSolution with all the available Top Left Corners
-        findSolutionFor(availableOptionsForSolution.get(PUZZLEDIRECTIONS.TOP_LEFT_CORNER));
+
+        usedElements = new boolean[jigsawElementInputList.size()];
+        usedPuzzleElements = 0;
+        jigsawElementResultList.clear();
+
+        for (Integer currentTopLeftCornerIndex :availableOptionsForSolution.get(PUZZLEDIRECTIONS.TOP_LEFT_CORNER)){
+            System.out.println();
+            System.out.println("=======START=======");
+            totalPuzzleElements = jigsawElementInputList.size();
+            System.out.println("Total Puzzle Elements are : " + totalPuzzleElements);
+            System.out.println("currentTopLeftCornerIndex " + currentTopLeftCornerIndex);
+            findSolutionFor(jigsawElementList.get(currentTopLeftCornerIndex));
+            System.out.println();
+        }
+
 
         //In case we wouldl ike to start with the 1st Top Left Corenr
         //findSolutionFor(startWithTopLeftCorner);
     }
 
-    private void findSolutionFor(List<Integer> topLeftCornerIndexesInPuzzleElementList) {
-        int totalPuzzleElements = jigsawElementInputList.size();
-        System.out.println("Total Puzzle Elements are : " + totalPuzzleElements);
-        for (Integer currentTopLeftCornerIndex : topLeftCornerIndexesInPuzzleElementList){
-            System.out.println("Search solution for Top Left Corner " + jigsawElementInputList.get(currentTopLeftCornerIndex));
+    private void findSolutionFor(PuzzleElement puzzleElement) {
+
+        boolean solutionFound = false;
+        while (!(solutionFound)){
+
+            markElementAsUsed(puzzleElement);
+            markElementResultList(puzzleElement);
+            System.out.println("Start search solution for Top Left Corner " + puzzleElement);
+            //usedElements[] = true;
             for (int serachForSolutionWithRows : numOfAvailableRowsForSolution){
                 System.out.println("Search solution for number of rows " + serachForSolutionWithRows +
                         " number of columns " + totalPuzzleElements/serachForSolutionWithRows);
-                int usedPuzzleElements = 1;
+                //int usedPuzzleElements = 1;
                 int notUsedPuzzleElements = totalPuzzleElements - usedPuzzleElements;
                 System.out.println("Used so far " + usedPuzzleElements + " Puzzle Elements");
                 System.out.println("Not used so far " + notUsedPuzzleElements + " Puzzle Elements");
+                //egdesForNextPuzzleElement("LEFT", "TOP", "RIGHT", "BOTTOM");
+                //TODO look for left comapre to 0 to my right edge
+                //TODO Once all will be used, check the frame of all is 0
+                //egdesForNextPuzzleElement(0-);
+
             }
         }
+    }
+
+    private void markElementResultList(PuzzleElement currentElement) {
+        //List<List<PuzzleElement>> jigsawElementResultList
+        List<PuzzleElement> list = (List<PuzzleElement>) currentElement;
+        jigsawElementResultList.add(list);
+    }
+
+    private void markElementAsUsed(PuzzleElement currentElement) {
+        usedElements[currentElement.id-1] = true;
+        usedPuzzleElements++;
+        System.out.println("Current Status of usedElements[]");
+        String usedElementsStatus = "";
+        for (int i=0; i < usedElements.length; i++){
+            usedElementsStatus += (usedElements[i]) ? " " + i + ":T |" : " " + i + ":F |";
+        }
+        System.out.println(usedElementsStatus);
     }
 
     private void printAvailableLeftCorners() {
