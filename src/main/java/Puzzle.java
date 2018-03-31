@@ -96,8 +96,12 @@ public class Puzzle {
 
         int [] numOfAvailableLineForSolution = null;
 
-        //Call to Solver, only if there are NO Error in the parsing that was executed, and there is at least 1 available row for solution
-        if (errorsReadingInputFile.size() !=0 && numOfAvailableLineForSolution != null){
+        //Call to Solver, only if there are NO Error in the parsing that was executed,
+        // and there is at least 1 available row for solution
+        // and there are elements in puzzleElementList
+        // and there is at least 1 Top Left Corner
+        if (errorsReadingInputFile.size() !=0 && numOfAvailableLineForSolution != null &&
+                puzzleElementList != null && availableOptionsForSolution.get(PUZZLEDIRECTIONS.TOP_LEFT_CORNER).size() > 0){
             PuzzleSolver puzzleSolver = new PuzzleSolver(puzzleElementList, numOfAvailableLineForSolution, availableOptionsForSolution);
         }
 
