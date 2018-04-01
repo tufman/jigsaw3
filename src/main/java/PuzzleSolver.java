@@ -65,29 +65,38 @@ public class PuzzleSolver {
         int tempCounter = 0;
         while(usedPuzzleElements < totalPuzzleElements && row < jigsawElementResultList.length && column <  jigsawElementResultList[0].length){
 
-
+                //TODO remove print debug...
                 System.out.println("Used so far " + usedPuzzleElements + " Puzzle Elements");
                 System.out.println("Not used so far " + (totalPuzzleElements - usedPuzzleElements) + " Puzzle Elements");
                 System.out.println("Puzzle Element: " + puzzleElement);
-                    System.out.println("row =" + row);
-                    System.out.println("column = " + column);
-                    jigsawElementResultList[row][column++] = puzzleElement;
-                    markElementAsUsed(puzzleElement);
+                System.out.println("row =" + row);
+                System.out.println("column = " + column);
+                jigsawElementResultList[row][column++] = puzzleElement;
+                markElementAsUsed(puzzleElement);
 
 
 
                 if (usedPuzzleElements == totalPuzzleElements){
+                    //TODO remove print debug...
                     System.out.println("Used all " + totalPuzzleElements + " Puzzle elements");
                     System.out.println("Should check the all frame if a valid soultion ===== TDB ======");
+                    if(checkFrameForSolve()){
+                        //TODO print solve or what defined in spec...
+                        System.out.println("Great, puzzle was solved :)");
+                    }else{
+                        System.out.println("Sorry, might try another solution... :)");
+                    }
                     break;
                 }
                 if (column ==  jigsawElementResultList[0].length) {
+                    //TODO remove print debug...
                     System.out.println("End of columns in row " + row + " Move o next Row");
                     row++;
                     column = 0;
                 }
 
                 if (row == jigsawElementResultList.length) {
+                    //TODO remove print debug...
                     System.out.println("End of rows and colums...");
                     break;
                 }
@@ -99,8 +108,46 @@ public class PuzzleSolver {
 
     }
 
+    private boolean checkFrameForSolve() {
+        System.out.println("If all row 0 -> TOP_ZERO ");
+        System.out.println("AND");
+        System.out.println("If all row " + (jigsawElementResultList.length -1) + " -> BOTTOM_ZERO ");
+        System.out.println("AND");
+        System.out.println("If all colums 0 -> LEFT_ZERO ");
+        System.out.println("AND");
+        System.out.println("If all column " + (jigsawElementResultList[0].length -1) + " -> RIGHT_ZERO ");
+        System.out.println("!!! SOLVED !!!");
 
-        //TODO look for left comapre to 0 to my right edge
+        for (int col = 0; col < jigsawElementResultList[0].length; col++){
+            System.out.println("Checking (TOP_ZERO) for (0," + col + ")" + jigsawElementResultList[0][col]);
+            if (!(jigsawElementResultList[0][col].top==0)){
+                return false;
+            }
+            System.out.println("Checking (BOTTOM_ZERO) for (" + (jigsawElementResultList.length-1) + "," + col + " )" + jigsawElementResultList[jigsawElementResultList.length-1][col]);
+            if (!(jigsawElementResultList[jigsawElementResultList.length-1][col].bottom==0)){
+                return false;
+            }
+        }
+
+        System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+        for (int row = 0; row < jigsawElementResultList.length; row++){
+            System.out.println("Checking (LEFT_ZERO) for (" + row + ",0) " + jigsawElementResultList[row][0]);
+            if (!(jigsawElementResultList[row][0].left==0)){
+                return false;
+            }
+            System.out.println("Checking (RIGHT_ZERO) for (" + row + "," + (jigsawElementResultList.length-1) + ")" + jigsawElementResultList[row][(jigsawElementResultList.length-1)]);
+            if (!(jigsawElementResultList[row][(jigsawElementResultList.length-1)].right==0)){
+                return false;
+            }
+        }
+        return true;
+
+
+
+    }
+
+
+    //TODO look for left comapre to 0 to my right edge
         //TODO Once all will be used, check the frame of all is 0
 
 

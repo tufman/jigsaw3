@@ -202,7 +202,7 @@ public class ReadFileContentTest {
         tempElement1.add(0);
         tempElement1.add(0);
         tempElement1.add(0);
-        tempElement1.add(1);
+        tempElement1.add(0);
 
         tempElement2.add(2);
         tempElement2.add(0);
@@ -213,12 +213,12 @@ public class ReadFileContentTest {
         tempElement3.add(3);
         tempElement3.add(0);
         tempElement3.add(0);
-        tempElement3.add(1);
-        tempElement3.add(1);
+        tempElement3.add(0);
+        tempElement3.add(0);
 
         tempElement4.add(4);
         tempElement4.add(0);
-        tempElement4.add(1);
+        tempElement4.add(0);
         tempElement4.add(0);
         tempElement4.add(0);
 
