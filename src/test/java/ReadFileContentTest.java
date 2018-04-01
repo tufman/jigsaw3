@@ -195,27 +195,45 @@ public class ReadFileContentTest {
         //Create Elements
         ArrayList<Integer> tempElement1 = new ArrayList<>();
         ArrayList<Integer> tempElement2 = new ArrayList<>();
+        ArrayList<Integer> tempElement3 = new ArrayList<>();
+        ArrayList<Integer> tempElement4 = new ArrayList<>();
 
         tempElement1.add(1);
         tempElement1.add(0);
         tempElement1.add(0);
         tempElement1.add(0);
-        tempElement1.add(0);
+        tempElement1.add(1);
 
         tempElement2.add(2);
         tempElement2.add(0);
         tempElement2.add(0);
+        tempElement2.add(1);
         tempElement2.add(0);
-        tempElement2.add(0);
+
+        tempElement3.add(3);
+        tempElement3.add(0);
+        tempElement3.add(0);
+        tempElement3.add(1);
+        tempElement3.add(1);
+
+        tempElement4.add(4);
+        tempElement4.add(0);
+        tempElement4.add(1);
+        tempElement4.add(0);
+        tempElement4.add(0);
 
         PuzzleElement element1 = new PuzzleElement(tempElement1);
         PuzzleElement element2 = new PuzzleElement(tempElement2);
+        PuzzleElement element3 = new PuzzleElement(tempElement3);
+        PuzzleElement element4 = new PuzzleElement(tempElement4);
 
         //Add the Elements to a List -
         // This is teh 1st argument in PuzzleSolver Construction
         List<PuzzleElement> puzzleElementList = new ArrayList<>();
         puzzleElementList.add(element1);
         puzzleElementList.add(element2);
+        puzzleElementList.add(element3);
+        puzzleElementList.add(element4);
 
 
         //Build the array of int that contains the available num of rows for the solution
