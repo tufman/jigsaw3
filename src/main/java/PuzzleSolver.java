@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PuzzleSolver {
 
@@ -11,10 +8,13 @@ public class PuzzleSolver {
     private int [] numOfAvailableRowsForSolution;
     private Map<Enum, List<Integer>> availableOptionsForSolution;
     private List<Integer> indexesOfTopLowerLetfCorners = new ArrayList<>();
-    boolean [] usedElements = new boolean[jigsawElementInputList.size()];
-    int usedPuzzleElements;
-    int totalPuzzleElements;
-
+    private boolean [] usedElements = new boolean[jigsawElementInputList.size()];
+    private int usedPuzzleElements;
+    private int totalPuzzleElements;
+    private int nomOfRowsForSolution;
+    private int nomOfColumnsForSolution;
+    private int row = 0;
+    private int column = 0;
 
 
     public PuzzleSolver(List<PuzzleElement> jigsawElementList, int [] numOfAvailableLineForSolution, Map<Enum, List<Integer>> availableOptionsForSolution) {
@@ -43,15 +43,15 @@ public class PuzzleSolver {
             System.out.println("Start search solution for Top Left Corner " + jigsawElementInputList.get(availableOptionsForSolution.get(PUZZLEDIRECTIONS.TOP_LEFT_CORNER).get(currentTopLeftCornerIndex)));
 
             for (int serachForSolutionWithRows : numOfAvailableRowsForSolution) {
+                nomOfRowsForSolution = serachForSolutionWithRows;
+                nomOfColumnsForSolution = totalPuzzleElements / serachForSolutionWithRows;
                 System.out.println("#########################################################");
                 System.out.println("Search solution for number of rows " + serachForSolutionWithRows +
-                        " number of columns " + totalPuzzleElements / serachForSolutionWithRows);
+                        " number of columns " + nomOfColumnsForSolution);
                 System.out.println("#########################################################");
                 jigsawElementResultList = new PuzzleElement[serachForSolutionWithRows][totalPuzzleElements / serachForSolutionWithRows];
                 usedElements = new boolean[jigsawElementInputList.size()];
                 usedPuzzleElements = 0;
-                int row = 0;
-                int column = 0;
                 findSolutionFor(jigsawElementList.get(currentTopLeftCornerIndex));
             }
             System.out.println();
@@ -59,11 +59,14 @@ public class PuzzleSolver {
     }
 
     private void findSolutionFor(PuzzleElement puzzleElement) {
-        int row = 0;
-        int column = 0;
+        row = 0;
+        column = 0;
 
-        int tempCounter = 0;
         while(usedPuzzleElements < totalPuzzleElements && row < jigsawElementResultList.length && column <  jigsawElementResultList[0].length){
+
+            if(puzzleElement == null){
+                break;
+            }
 
                 //TODO remove print debug...
                 System.out.println("Used so far " + usedPuzzleElements + " Puzzle Elements");
@@ -79,7 +82,7 @@ public class PuzzleSolver {
                 if (usedPuzzleElements == totalPuzzleElements){
                     //TODO remove print debug...
                     System.out.println("Used all " + totalPuzzleElements + " Puzzle elements");
-                    System.out.println("Should check the all frame if a valid soultion ===== TDB ======");
+                    System.out.println("CHECKING SOLUTION");
                     if(checkFrameForSolve()){
                         //TODO print solve or what defined in spec...
                         System.out.println("Great, puzzle was solved :)");
@@ -102,41 +105,87 @@ public class PuzzleSolver {
                 }
 
 
-                puzzleElement = jigsawElementInputList.get(++tempCounter);
+                //puzzleElement = jigsawElementInputList.get(++tempCounter);
+                puzzleElement = getElementByIndex(puzzleElement);
 
         }
 
     }
 
+    private PuzzleElement getElementByIndex(PuzzleElement currentPuzzleElement) {
+        Set<Integer> cutOfIndexes = new HashSet<>();
+        PuzzleElement nextPuzzleElement = null;
+
+        //TODO add the left checks & what required from next Puzzle Element
+        if (row == 0) {
+            for (int index : availableOptionsForSolution.get(PUZZLEDIRECTIONS.TOP_ZERO)){
+                cutOfIndexes.add(index);
+            }
+
+
+        }
+        if (column == 0){
+            for (int index : availableOptionsForSolution.get(PUZZLEDIRECTIONS.LEFT_ZERO)){
+                cutOfIndexes.add(index);
+            }
+
+        }
+        if (column == nomOfColumnsForSolution -1){
+            for (int index : availableOptionsForSolution.get(PUZZLEDIRECTIONS.RIGHT_ZERO)){
+                cutOfIndexes.add(index);
+            }
+
+        }
+        if (row == nomOfRowsForSolution -1){
+            for (int index : availableOptionsForSolution.get(PUZZLEDIRECTIONS.BOTTOM_ZERO)){
+                cutOfIndexes.add(index);
+            }
+
+        }
+        //return nextPuzzleElement;
+        //TODO if corner required...
+        //TODO - usedElements[x] to true...
+        for (int candidateIndexToReturn : cutOfIndexes){
+            if (!(usedElements[candidateIndexToReturn])){
+                nextPuzzleElement = jigsawElementInputList.get(candidateIndexToReturn);
+            }
+        }
+        return nextPuzzleElement;
+    }
+
     private boolean checkFrameForSolve() {
-        System.out.println("If all row 0 -> TOP_ZERO ");
-        System.out.println("AND");
-        System.out.println("If all row " + (jigsawElementResultList.length -1) + " -> BOTTOM_ZERO ");
-        System.out.println("AND");
-        System.out.println("If all colums 0 -> LEFT_ZERO ");
-        System.out.println("AND");
-        System.out.println("If all column " + (jigsawElementResultList[0].length -1) + " -> RIGHT_ZERO ");
-        System.out.println("!!! SOLVED !!!");
+//        System.out.println("If all row 0 -> TOP_ZERO ");
+//        System.out.println("AND");
+//        System.out.println("If all row " + (jigsawElementResultList.length -1) + " -> BOTTOM_ZERO ");
+//        System.out.println("AND");
+//        System.out.println("If all colums 0 -> LEFT_ZERO ");
+//        System.out.println("AND");
+//        System.out.println("If all column " + (jigsawElementResultList[0].length -1) + " -> RIGHT_ZERO ");
+//        System.out.println("!!! SOLVED !!!");
 
         for (int col = 0; col < jigsawElementResultList[0].length; col++){
-            System.out.println("Checking (TOP_ZERO) for (0," + col + ")" + jigsawElementResultList[0][col]);
+            System.out.print("\nChecking (TOP_ZERO) for (0," + col + ")" + jigsawElementResultList[0][col]);
             if (!(jigsawElementResultList[0][col].top==0)){
+                System.out.print(" ==>> FAILED\n\n");
                 return false;
             }
-            System.out.println("Checking (BOTTOM_ZERO) for (" + (jigsawElementResultList.length-1) + "," + col + " )" + jigsawElementResultList[jigsawElementResultList.length-1][col]);
+            System.out.print("\nChecking (BOTTOM_ZERO) for (" + (jigsawElementResultList.length-1) + "," + col + " )" + jigsawElementResultList[jigsawElementResultList.length-1][col]);
             if (!(jigsawElementResultList[jigsawElementResultList.length-1][col].bottom==0)){
+                System.out.print(" ==>> FAILED\n\n");
                 return false;
             }
         }
 
         System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
         for (int row = 0; row < jigsawElementResultList.length; row++){
-            System.out.println("Checking (LEFT_ZERO) for (" + row + ",0) " + jigsawElementResultList[row][0]);
+            System.out.print("\nChecking (LEFT_ZERO) for (" + row + ",0) " + jigsawElementResultList[row][0]);
             if (!(jigsawElementResultList[row][0].left==0)){
+                System.out.print(" ==>> FAILED\n\n");
                 return false;
             }
-            System.out.println("Checking (RIGHT_ZERO) for (" + row + "," + (jigsawElementResultList.length-1) + ")" + jigsawElementResultList[row][(jigsawElementResultList.length-1)]);
+            System.out.print("\nChecking (RIGHT_ZERO) for (" + row + "," + (jigsawElementResultList.length-1) + ")" + jigsawElementResultList[row][(jigsawElementResultList.length-1)]);
             if (!(jigsawElementResultList[row][(jigsawElementResultList.length-1)].right==0)){
+                System.out.print(" ==>> FAILED\n\n");
                 return false;
             }
         }
@@ -163,6 +212,15 @@ public class PuzzleSolver {
             usedElementsStatus += (usedElements[i]) ? " " + i + ":T |" : " " + i + ":F |";
         }
         System.out.println(usedElementsStatus);
+
+        System.out.println("Current Puzzle IDs jigsawElementResultList [][]");
+        for (int ii = 0; ii<= jigsawElementResultList.length-1; ii++){
+            for (int jj =0; jj <= jigsawElementResultList[0].length-1; jj++){
+//                System.out.print("(" + ii + "," + jj + ")" + jigsawElementResultList[ii][jj] + " ; ");
+                System.out.print("[" + jigsawElementResultList[ii][jj] + "],");
+            }
+            System.out.println();
+        }
     }
 
     private void printAvailableLeftCorners() {

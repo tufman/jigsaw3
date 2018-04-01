@@ -32,24 +32,24 @@ public class TestForSolverLogic {
         tempElement1.add(1);
         tempElement1.add(0);
         tempElement1.add(0);
-        tempElement1.add(0);
-        tempElement1.add(0);
+        tempElement1.add(-1);
+        tempElement1.add(1);
 
         tempElement2.add(2);
-        tempElement2.add(0);
-        tempElement2.add(0);
         tempElement2.add(1);
         tempElement2.add(0);
+        tempElement2.add(0);
+        tempElement2.add(-1);
 
         tempElement3.add(3);
         tempElement3.add(0);
-        tempElement3.add(0);
+        tempElement3.add(-1);
         tempElement3.add(0);
         tempElement3.add(0);
 
         tempElement4.add(4);
         tempElement4.add(0);
-        tempElement4.add(0);
+        tempElement4.add(1);
         tempElement4.add(0);
         tempElement4.add(0);
 
@@ -98,24 +98,25 @@ public class TestForSolverLogic {
         List<Integer> topRightCornerList = new ArrayList<>();
         List<Integer> bottomRightCornerList = new ArrayList<>();
 
+        //Corners
         topLeftCornerList.add(0);
-        topLeftCornerList.add(1);
+        bottomLeftCornerList.add(2);
+        bottomLeftCornerList.add(3);
+        topRightCornerList.add(2);
+        bottomRightCornerList.add(2);
+        bottomRightCornerList.add(3);
 
-        bottomLeftCornerList.add(0);
-        bottomLeftCornerList.add(1);
 
-        topRightCornerList.add(0);
-        topRightCornerList.add(1);
-
-        bottomRightCornerList.add(0);
-        bottomRightCornerList.add(1);
 
         List<Integer> leff_0 = new ArrayList<>();
         List<Integer> left_Minus = new ArrayList<>();
         List<Integer> left_1 = new ArrayList<>();
 
         leff_0.add(0);
-        leff_0.add(1);
+        leff_0.add(2);
+        leff_0.add(3);
+        left_1.add(1);
+
 
         List<Integer> top_0 = new ArrayList<>();
         List<Integer> top_Minus = new ArrayList<>();
@@ -123,20 +124,26 @@ public class TestForSolverLogic {
 
         top_0.add(0);
         top_0.add(1);
+        top_Minus.add(2);
+        top_1.add(3);
 
         List<Integer> right_0 = new ArrayList<>();
         List<Integer> right_Minus = new ArrayList<>();
         List<Integer> right_1 = new ArrayList<>();
 
-        right_0.add(0);
         right_0.add(1);
+        right_0.add(2);
+        right_0.add(3);
+        right_Minus.add(0);
 
         List<Integer> bottom_0 = new ArrayList<>();
         List<Integer> bottom_Minus = new ArrayList<>();
         List<Integer> bottom_1 = new ArrayList<>();
 
-        bottom_0.add(0);
-        bottom_0.add(1);
+        bottom_0.add(2);
+        bottom_0.add(3);
+        bottom_1.add(0);
+        bottom_Minus.add(1);
 
         availableOptionsForSolution.put(PUZZLEDIRECTIONS.TOP_LEFT_CORNER, topLeftCornerList);
         availableOptionsForSolution.put(PUZZLEDIRECTIONS.BOTTOM_LEFT_CORNER, bottomLeftCornerList);
@@ -144,9 +151,20 @@ public class TestForSolverLogic {
         availableOptionsForSolution.put(PUZZLEDIRECTIONS.BOTTOM_RIGHT_CORNER, bottomRightCornerList);
 
         availableOptionsForSolution.put(PUZZLEDIRECTIONS.LEFT_ZERO, leff_0);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.LEFT_PLUS, left_1);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.LEFT_MINUS, left_Minus);
+
         availableOptionsForSolution.put(PUZZLEDIRECTIONS.TOP_ZERO, top_0);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.TOP_PLUS, top_1);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.TOP_MINUS, top_Minus);
+
         availableOptionsForSolution.put(PUZZLEDIRECTIONS.RIGHT_ZERO, right_0);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.RIGHT_PLUS, right_1);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.RIGHT_MINUS, right_Minus);
+
         availableOptionsForSolution.put(PUZZLEDIRECTIONS.BOTTOM_ZERO, bottom_0);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.BOTTOM_PLUS, bottom_1);
+        availableOptionsForSolution.put(PUZZLEDIRECTIONS.BOTTOM_MINUS, bottom_Minus);
 
         List<Integer> listOfInteger = new ArrayList<>();
         listOfInteger.add(1);
