@@ -8,21 +8,18 @@ public class Puzzle {
 
     private String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\main\\resources\\inputFile";
     private int expectedNumOfElementsFromFirstLine;
-    private List<PuzzleElement> jigsawElementList = new ArrayList<>();
+    private List<PuzzleElement> puzzleElementList = new ArrayList<>();
     private List<String> errorsReadingInputFile = new ArrayList<>();
+    private Map<Enum, List<Integer>> availableOptionsForSolution = new HashMap<>();
+
+    //Utils utils = new Utils();
+
+
     Properties prop = null;
 
     public Puzzle(){
     }
 
-//    public Puzzle(){
-//        this.filePath = filePath;
-//    }
-
-//    public Puzzle(String filePath){
-//        this.filePath = filePath;
-//
-//    }
 
     public void readInputFile(String filePath) throws IOException {
         try(FileInputStream fis = new FileInputStream(filePath);
@@ -39,9 +36,15 @@ public class Puzzle {
     private void readDataFromFile(BufferedReader br) throws IOException {
         String line;
         while ((line = br.readLine()) != null){
+            System.out.println("line: " + line);
+            if (line.trim().length() == 0){
+                continue;
+            }
+
             if (line.charAt(0) == '#'){
                 continue;
             }
+
             if(line.contains("NumElements")){
                 String [] numElementArr = line.split("=");
                 expectedNumOfElementsFromFirstLine = Integer.parseInt(numElementArr[1].trim());
@@ -65,7 +68,11 @@ public class Puzzle {
                 //Validate that a Left, Top, Right & Bottom between -1 to 1
                 if (allNumbersInRange(numFromLine)){
                     PuzzleElement element = new PuzzleElement(numFromLine);
-                    jigsawElementList.add(element);
+                    puzzleElementList.add(element);
+                    //TODO calculate the edges and add it to optionsOfSolution
+                    //utils.mapElementToSolutionList(element, puzzleElementList.size()-1);
+                    Utils.mapElementToSolutionList(element, puzzleElementList.size()-1);
+                    //addOptionsToSolution(element, puzzleElementList.size()-1);
                     continue;
                 }else{
                     errorsReadingInputFile.add(prop.getProperty("numberNotInRange") + line);
@@ -73,19 +80,34 @@ public class Puzzle {
             }
         }
 
-        if (expectedNumOfElementsFromFirstLine != jigsawElementList.size()){
+        if (expectedNumOfElementsFromFirstLine != puzzleElementList.size()){
             errorsReadingInputFile.add(prop.getProperty("missingElementInConfigurationFile"));
             //TODO should we stop or throw exception?
         }
 
         //TODO check if a valid result is available
 
-        //TODO in case (valid result) send jigsawElementList to Find solution
+        //TODO in case (valid result) send puzzleElementList to Find solution
 
-        Map<String, List<Integer>> cornersMap = new HashMap<>();
+
+        //this.availableOptionsForSolution = utils.getSolutionMap();
+        this.availableOptionsForSolution = Utils.getSolutionMap();
+        //initSolutionMap();
+
         int [] numOfAvailableLineForSolution = null;
-        JigsawSolver jigsawSolver = new JigsawSolver(jigsawElementList, numOfAvailableLineForSolution,cornersMap);
+
+        //Call to Solver, only if there are NO Error in the parsing that was executed,
+        // and there is at least 1 available row for solution
+        // and there are elements in puzzleElementList
+        // and there is at least 1 Top Left Corner
+        if (errorsReadingInputFile.size() !=0 && numOfAvailableLineForSolution != null &&
+                puzzleElementList != null && availableOptionsForSolution.get(PUZZLEDIRECTIONS.TOP_LEFT_CORNER).size() > 0){
+            PuzzleSolver puzzleSolver = new PuzzleSolver(puzzleElementList, numOfAvailableLineForSolution, availableOptionsForSolution);
+        }
+
     }
+
+
 
     private boolean allNumbersInRange(ArrayList<Integer> numFromLine) {
         for (int i =1; i < numFromLine.size(); i++){
@@ -98,7 +120,7 @@ public class Puzzle {
 
 
     public void printListOfElements(){
-            for (PuzzleElement element: jigsawElementList){
+            for (PuzzleElement element: puzzleElementList){
                 System.out.println(element);
             }
 
@@ -129,11 +151,11 @@ public class Puzzle {
     }
 
     public PuzzleElement getElementByIndex(int index) {
-        return jigsawElementList.get(index);
+        return puzzleElementList.get(index);
     }
 
     public int getActualNumOfElementsReadFromInputFile(){
-        return jigsawElementList.size();
+        return puzzleElementList.size();
     }
 
 }
