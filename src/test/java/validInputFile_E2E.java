@@ -2,9 +2,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -89,7 +87,7 @@ public class validInputFile_E2E {
     }
 
     @ParameterizedTest
-    @CsvSource({"validNumOfLines1Or2"})
+    @CsvSource({"validNumOfLines3"})
     @DisplayName("Validate Utils Solution Map - all options")
     public void validTestForNumberOfRows (String inputFile) throws IOException {
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
@@ -100,9 +98,11 @@ public class validInputFile_E2E {
         readFileContent.readInputFile(filePath);
         readFileContent.printListOfElements();
 
-        int[] numOfRowsForSolution = Utils.getNumOfRowsForSolution();
+        ArrayList<Integer> numOfRowsForSolution = Utils.getNumOfRowsForSolution();
 
-        assertTrue(numOfRowsForSolution.length == 2, String.format("numOfRowsForSolution -> Expected %d, actuall %d",2,numOfRowsForSolution.length));
+        assertTrue(numOfRowsForSolution.size() == 2, String.format("numOfRowsForSolution.size() -> Expected %d, actuall %d",2,numOfRowsForSolution.size()));
+        assertTrue(numOfRowsForSolution.get(0) == 1, String.format("numOfRowsForSolution.get(0) -> Expected %d, actuall %d",1,numOfRowsForSolution.get(0)));
+        assertTrue(numOfRowsForSolution.get(1) == 3, String.format("numOfRowsForSolution.get(1) -> Expected %d, actuall %d",3,numOfRowsForSolution.get(1)));
 
     }
 
