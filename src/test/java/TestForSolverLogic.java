@@ -69,7 +69,10 @@ public class TestForSolverLogic {
 
         //Build the array of int that contains the available num of rows for the solution
         //This is the 2nd argument in PuzzleSolver Construction
-        int [] numOfAvailableLineForSolution = {1,2};
+        //int [] numOfAvailableLineForSolution = {1,2};
+        ArrayList<Integer> numOfAvailableLineForSolution = new ArrayList<>();
+        numOfAvailableLineForSolution.add(1);
+        numOfAvailableLineForSolution.add(2);
 
 
         //Build a Map that will contains all the possiblities that exist

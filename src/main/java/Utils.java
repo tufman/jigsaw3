@@ -168,8 +168,8 @@ public class Utils {
 
 
         boolean isPrime = true;
-        for(int divisor = 2; divisor <= commonLeftZeroAndRightZero / 2; divisor++) {
-            if (commonLeftZeroAndRightZero % divisor == 0) {
+        for(int divisor = 2; divisor <= counterOfPuzzleElements / 2; divisor++) {
+            if (counterOfPuzzleElements % divisor == 0) {
                 isPrime = false;
                 break; // num is not a prime, no reason to continue checking
             }
@@ -178,14 +178,14 @@ public class Utils {
 
 
         if (isPrime){
-            retVal.add(commonLeftZeroAndRightZero);
+            retVal.add(counterOfPuzzleElements);
             return retVal;
         }
 
 
 
         for (int i = 2; i < commonLeftZeroAndRightZero; i++){
-            if ((commonLeftZeroAndRightZero % i) == 0){
+            if ((counterOfPuzzleElements % i) == 0){
                 retVal.add(i);
             }
         }

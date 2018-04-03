@@ -102,7 +102,7 @@ public class validInputFile_E2E {
 
         assertTrue(numOfRowsForSolution.size() == 2, String.format("numOfRowsForSolution.size() -> Expected %d, actuall %d",2,numOfRowsForSolution.size()));
         assertTrue(numOfRowsForSolution.get(0) == 1, String.format("numOfRowsForSolution.get(0) -> Expected %d, actuall %d",1,numOfRowsForSolution.get(0)));
-        assertTrue(numOfRowsForSolution.get(1) == 3, String.format("numOfRowsForSolution.get(1) -> Expected %d, actuall %d",3,numOfRowsForSolution.get(1)));
+        assertTrue(numOfRowsForSolution.get(1) == 2, String.format("numOfRowsForSolution.get(1) -> Expected %d, actuall %d",2,numOfRowsForSolution.get(1)));
 
     }
 

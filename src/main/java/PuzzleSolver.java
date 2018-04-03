@@ -5,7 +5,7 @@ public class PuzzleSolver {
     private List<PuzzleElement> jigsawElementInputList = new ArrayList<>();
     //private List<List<PuzzleElement>> jigsawElementResultList = new ArrayList<List<PuzzleElement>>();
     private PuzzleElement [][]  jigsawElementResultList;
-    private int [] numOfAvailableRowsForSolution;
+    private ArrayList<Integer> numOfAvailableRowsForSolution;
     private Map<Enum, List<Integer>> availableOptionsForSolution;
     private List<Integer> indexesOfTopLowerLetfCorners = new ArrayList<>();
     private boolean [] usedElements = new boolean[jigsawElementInputList.size()];
@@ -17,7 +17,7 @@ public class PuzzleSolver {
     private int column = 0;
 
 
-    public PuzzleSolver(List<PuzzleElement> jigsawElementList, int [] numOfAvailableLineForSolution, Map<Enum, List<Integer>> availableOptionsForSolution) {
+    public PuzzleSolver(List<PuzzleElement> jigsawElementList, ArrayList<Integer> numOfAvailableLineForSolution, Map<Enum, List<Integer>> availableOptionsForSolution) {
         this.jigsawElementInputList = jigsawElementList;
         this.numOfAvailableRowsForSolution = numOfAvailableLineForSolution;
         this.availableOptionsForSolution = availableOptionsForSolution;
@@ -281,7 +281,7 @@ public class PuzzleSolver {
         System.out.println("==========================================================================");
         System.out.println("    Optional rows for solution (int [] numOfAvailableRowsForSolution):    ");
         System.out.println("==========================================================================");
-        System.out.println(Arrays.toString(numOfAvailableRowsForSolution));
+        System.out.println(numOfAvailableRowsForSolution);
     }
 
     private void printJigsawElementInputList() {

@@ -72,7 +72,7 @@ public class Puzzle {
                     //TODO calculate the edges and add it to optionsOfSolution
                     //utils.mapElementToSolutionList(element, puzzleElementList.size()-1);
                     Utils.mapElementToSolutionList(element, puzzleElementList.size()-1);
-                    //addOptionsToSolution(element, puzzleElementList.size()-1);
+
                     continue;
                 }else{
                     errorsReadingInputFile.add(prop.getProperty("numberNotInRange") + line);
@@ -102,7 +102,8 @@ public class Puzzle {
         // and there is at least 1 Top Left Corner
         if (errorsReadingInputFile.size() !=0 && numOfAvailableLineForSolution != null &&
                 puzzleElementList != null && availableOptionsForSolution.get(PUZZLEDIRECTIONS.TOP_LEFT_CORNER).size() > 0){
-            PuzzleSolver puzzleSolver = new PuzzleSolver(puzzleElementList, numOfAvailableLineForSolution, availableOptionsForSolution);
+            ArrayList<Integer> numOfRowsForSolution = Utils.getNumOfRowsForSolution();
+            PuzzleSolver puzzleSolver = new PuzzleSolver(puzzleElementList, numOfRowsForSolution, availableOptionsForSolution);
         }
 
     }
