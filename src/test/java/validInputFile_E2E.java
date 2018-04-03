@@ -85,7 +85,24 @@ public class validInputFile_E2E {
         assertTrue(solutionMap.get(PUZZLEDIRECTIONS.BOTTOM_MINUS).size() == 1, String.format("BOTTOM_MINUS size -> Expected %d, actuall %d",1,solutionMap.get(PUZZLEDIRECTIONS.BOTTOM_MINUS).size()));
         assertTrue(solutionMap.get(PUZZLEDIRECTIONS.BOTTOM_MINUS).get(0) == 1, String.format("BOTTOM_MINUS(0) -> Expected %d, actuall %d",1,solutionMap.get(PUZZLEDIRECTIONS.BOTTOM_MINUS).get(0)));
 
-        //System.out.println("My Break");
+
+    }
+
+    @ParameterizedTest
+    @CsvSource({"validNumOfLines1Or2"})
+    @DisplayName("Validate Utils Solution Map - all options")
+    public void validTestForNumberOfRows (String inputFile) throws IOException {
+        String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
+
+        Utils.claenSolutionMap();
+
+        Puzzle readFileContent = new Puzzle();
+        readFileContent.readInputFile(filePath);
+        readFileContent.printListOfElements();
+
+        int[] numOfRowsForSolution = Utils.getNumOfRowsForSolution();
+
+        assertTrue(numOfRowsForSolution.length == 2, String.format("numOfRowsForSolution -> Expected %d, actuall %d",2,numOfRowsForSolution.length));
 
     }
 

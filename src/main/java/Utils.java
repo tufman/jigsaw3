@@ -153,4 +153,8 @@ public class Utils {
         bottomRightCorner.clear();
 
     }
+
+    public static int [] getNumOfRowsForSolution() {
+        return new int [] {0};
+    }
 }
