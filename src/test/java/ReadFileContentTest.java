@@ -1,5 +1,4 @@
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -7,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -102,7 +100,7 @@ public class ReadFileContentTest {
 //    }
 
     @ParameterizedTest
-    @CsvSource({"validInputFileTestElementsAsExpected"})
+    @CsvSource({"1"})
     @DisplayName("Valid num of elements in file is as expected and Ignore lines with #")
     public void validNumOfElementsInFileAsExpectedInNumElements(String inputFile) throws IOException {
         //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\" + inputFile;
@@ -115,7 +113,7 @@ public class ReadFileContentTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"notValidinputFileTestElementsAsExpected"})
+    @CsvSource({"2"})
     @DisplayName("NOT Valid num of elements in file is as expected and Ignore lines with #")
     public void notValidNumOfElementsInFileAsExpectedInNumElements(String inputFile) throws IOException {
         //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\" + inputFile;
@@ -130,7 +128,7 @@ public class ReadFileContentTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"validInputFileTestElementsAsExpected"})
+    @CsvSource({"1"})
     @DisplayName("print All Elemens From List")
     public void printAllElemensFromList(String inputFile) throws IOException {
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
@@ -144,7 +142,7 @@ public class ReadFileContentTest {
 
 
     @ParameterizedTest
-    @CsvSource({"invalid_IDElement_input"})
+    @CsvSource({"3"})
     @DisplayName("Validate element in input file - not int")
     public void validateInvalidIDElementInput (String inputFile) throws IOException {
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
@@ -157,7 +155,7 @@ public class ReadFileContentTest {
 
 
     @ParameterizedTest
-    @CsvSource({"LTRBValidation"})
+    @CsvSource({"4"})
     @DisplayName("Left Top right and Bottom not in range -1 to 1")
     public void validateTheLTRBHasCorrectValues (String inputFile) throws IOException {
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
@@ -174,7 +172,7 @@ public class ReadFileContentTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"validateEmptyLineAndSpaces"})
+    @CsvSource({"5"})
     @DisplayName("ignore Empty Lines and Lines with Spaces")
     public void validateFileWithEmptyLineAndSpaces (String inputFile) throws IOException {
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
@@ -189,7 +187,7 @@ public class ReadFileContentTest {
     
 
     @ParameterizedTest
-    @CsvSource({"validTestForUtilsGetSolutionMap"})
+    @CsvSource({"6"})
     @DisplayName("Validate Utils Solution Map")
     public void validTestForUtilsGetSolutionMap (String inputFile) throws IOException {
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
