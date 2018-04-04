@@ -94,13 +94,13 @@ public class Puzzle {
         this.availableOptionsForSolution = Utils.getSolutionMap();
         //initSolutionMap();
 
-        int [] numOfAvailableLineForSolution = null;
-
+        //int [] numOfAvailableLineForSolution = null;
+        ArrayList<Integer> numOfAvailableRowsForSolution = Utils.getNumOfRowsForSolution();
         //Call to Solver, only if there are NO Error in the parsing that was executed,
         // and there is at least 1 available row for solution
         // and there are elements in puzzleElementList
         // and there is at least 1 Top Left Corner
-        if (errorsReadingInputFile.size() !=0 && numOfAvailableLineForSolution != null &&
+        if (errorsReadingInputFile.size() ==0 && numOfAvailableRowsForSolution != null &&
                 puzzleElementList != null && availableOptionsForSolution.get(PUZZLEDIRECTIONS.TOP_LEFT_CORNER).size() > 0){
             ArrayList<Integer> numOfRowsForSolution = Utils.getNumOfRowsForSolution();
             PuzzleSolver puzzleSolver = new PuzzleSolver(puzzleElementList, numOfRowsForSolution, availableOptionsForSolution);
