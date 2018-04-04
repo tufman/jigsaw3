@@ -13,7 +13,7 @@ public class validInputFile_E2E {
 
 
     @ParameterizedTest
-    @CsvSource({"validFourPuzzleElementsForSolver"})
+    @CsvSource({"E2E_1"})
     @DisplayName("Validate Utils Solution Map - all options")
     public void validTestForUtilsGetSolutionMap (String inputFile) throws IOException {
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
@@ -87,7 +87,7 @@ public class validInputFile_E2E {
     }
 
     @ParameterizedTest
-    @CsvSource({"validNumOfLines3"})
+    @CsvSource({"E2E_2"})
     @DisplayName("Validate Utils Solution Map - all options")
     public void validTestForNumberOfRows (String inputFile) throws IOException {
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
