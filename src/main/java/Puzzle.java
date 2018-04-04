@@ -47,7 +47,13 @@ public class Puzzle {
 
             if(line.contains("NumElements")){
                 String [] numElementArr = line.split("=");
-                expectedNumOfElementsFromFirstLine = Integer.parseInt(numElementArr[1].trim());
+                try{
+                    expectedNumOfElementsFromFirstLine = Integer.parseInt(numElementArr[1].trim());
+                }catch (NumberFormatException e ){
+                    String errMsg = prop.getProperty("wrongFirstLineFormat");
+                    errorsReadingInputFile.add(errMsg + line);
+                }
+
                 continue;
             }
             //Validate that a line that represents a PuzzleElement is valid (integers)
@@ -106,8 +112,19 @@ public class Puzzle {
             PuzzleSolver puzzleSolver = new PuzzleSolver(puzzleElementList, numOfRowsForSolution, availableOptionsForSolution);
         }
 
+        printErrorsFromReadingInputFile();
+
     }
 
+    public void printErrorsFromReadingInputFile() {
+        System.out.println("----------------------------------");
+        System.out.println("--- All Errors from Input File ---");
+        if (errorsReadingInputFile.size() > 0){
+            for (String error : errorsReadingInputFile){
+                System.out.println(error);
+            }
+        }
+    }
 
 
     private boolean allNumbersInRange(ArrayList<Integer> numFromLine) {

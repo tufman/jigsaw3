@@ -38,23 +38,29 @@ public class ReadFileContentTest {
 
 
     @ParameterizedTest
-    @CsvSource({"NumElements=AAA,22"})
+    //@CsvSource({"NumElements=AAA,22"})
+    @CsvSource({"7"})
     @DisplayName("Invalid Num Of PuzzleElement -> throws Exception")
     //@Test
-    public void notvalidNumOfElement(String textToWrite, int expectedVal) throws IOException {
+    public void notvalidNumOfElement() throws IOException {
         //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\inputFileTest";
-        String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\inputFileTest";
+        String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\7";
 
-        try(FileOutputStream fos = new FileOutputStream(filePath);
-            OutputStreamWriter osr = new OutputStreamWriter(fos)){
-            osr.write(textToWrite);
-        }
+//        try(FileOutputStream fos = new FileOutputStream(filePath);
+//            OutputStreamWriter osr = new OutputStreamWriter(fos)){
+//            osr.write(textToWrite);
+//        }
 
-        Puzzle readFileContent = new Puzzle();
+        Puzzle puzzle = new Puzzle();
+        //puzzle.readInputFile(filePath);
 
-        assertThrows(NumberFormatException.class, () ->{
-            readFileContent.readInputFile(filePath);
-        });
+        //assertThrows(NumberFormatException.class, () ->{
+            puzzle.readInputFile(filePath);
+        //assertTrue(puzzle.verifyErrorExistInList("Missing puzzle element(s) with the following ID's: TBD elevant ID's"));
+        assertTrue(puzzle.verifyErrorExistInList("The 1st line contains wrong value " + "NumElements=AAA,22"));
+        //});
+
+        //puzzle.printErrorsFromReadingInputFile();
     }
 
     @ParameterizedTest
@@ -125,6 +131,8 @@ public class ReadFileContentTest {
         //verify that message exist in list of errors from Puzzle
         //assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
         assertTrue(readFileContent.verifyErrorExistInList("Missing puzzle element(s) with the following ID's: TBD elevant ID's"));
+
+        readFileContent.printErrorsFromReadingInputFile();
     }
 
     @ParameterizedTest
@@ -151,6 +159,8 @@ public class ReadFileContentTest {
         readFileContent.readInputFile(filePath);
         readFileContent.printListOfElements();
         assertTrue(readFileContent.verifyErrorExistInList("Puzzle ID <id> has wrong data: <complete line from file including ID>"));
+
+        readFileContent.printErrorsFromReadingInputFile();
     }
 
 
@@ -169,6 +179,8 @@ public class ReadFileContentTest {
         assertTrue(readFileContent.verifyErrorExistInList("L/T/R/B Number should be between -1 to 1 please fix line 2 0 -2 0 0"));
         assertTrue(readFileContent.verifyErrorExistInList("L/T/R/B Number should be between -1 to 1 please fix line 3 -1 1 2 1"));
         assertTrue(readFileContent.verifyErrorExistInList("L/T/R/B Number should be between -1 to 1 please fix line 4 1 0 1 -2"));
+
+        readFileContent.printErrorsFromReadingInputFile();
     }
 
     @ParameterizedTest
