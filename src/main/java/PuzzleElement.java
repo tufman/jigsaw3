@@ -32,6 +32,6 @@ public class PuzzleElement {
 
     @Override
     public String toString() {
-        return String.format("PuzzleElement ID: %d [LEFT %d] [UP %d] [RIGHT %d] [BOTTOM %d]", id, left, top, right, bottom);
+        return String.format("[PuzzleElement ID %d] [LEFT %d] [TOP %d] [RIGHT %d] [BOTTOM %d]", id, left, top, right, bottom);
     }
 }
