@@ -130,7 +130,7 @@ public class ReadFileContentTest {
 
         //verify that message exist in list of errors from Puzzle
         //assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
-        assertTrue(readFileContent.verifyErrorExistInList("Missing puzzle element(s) with the following ID's: TBD elevant ID's"));
+        assertTrue(readFileContent.verifyErrorExistInList("Number of puzzle elements does not fit the actual that exist in the file."));
 
         readFileContent.printErrorsFromReadingInputFile();
     }
@@ -158,7 +158,7 @@ public class ReadFileContentTest {
         Puzzle readFileContent = new Puzzle();
         readFileContent.readInputFile(filePath);
         readFileContent.printListOfElements();
-        assertTrue(readFileContent.verifyErrorExistInList("Puzzle ID <id> has wrong data: <complete line from file including ID>"));
+        assertTrue(readFileContent.verifyErrorExistInList("Please correct this line (should contain int ) D 1 1 1 1"));
 
         readFileContent.printErrorsFromReadingInputFile();
     }

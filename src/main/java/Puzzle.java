@@ -63,7 +63,8 @@ public class Puzzle {
                 try {
                     numFromLine.add( Integer.parseInt(str));
                 }catch (NumberFormatException e ) {
-                    errorsReadingInputFile.add(prop.getProperty("wrongElementsFormat"));
+                    String errMsg = prop.getProperty("wrongElementsFormat");
+                    errorsReadingInputFile.add(errMsg + line);
                 }
             }
 
@@ -87,7 +88,7 @@ public class Puzzle {
         }
 
         if (expectedNumOfElementsFromFirstLine != puzzleElementList.size()){
-            errorsReadingInputFile.add(prop.getProperty("missingElementInConfigurationFile"));
+            errorsReadingInputFile.add(prop.getProperty("mismatchNumAndAcutalPuzzleElements"));
             //TODO should we stop or throw exception?
         }
 
