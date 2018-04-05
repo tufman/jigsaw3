@@ -196,7 +196,26 @@ public class ReadFileContentTest {
         assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
     }
 
-    
+
+
+    @ParameterizedTest
+    @CsvSource({"8"})
+    @DisplayName("folderNotFound")
+
+    public void folderNotFound (String inputFile) throws IOException {
+        String filePath = System.getProperty("user.dir") + "\\src\\test\\java1\\" + inputFile;
+
+        Puzzle readFileContent = new Puzzle();
+       try {
+           readFileContent.readInputFile(filePath);
+       }catch (IOException e ) {
+
+       }
+
+
+    }
+
+
 
     @ParameterizedTest
     @CsvSource({"6"})

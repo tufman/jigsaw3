@@ -22,16 +22,24 @@ public class Puzzle {
 
 
     public void readInputFile(String filePath) throws IOException {
-        try(FileInputStream fis = new FileInputStream(filePath);
-            InputStreamReader isr = new InputStreamReader(fis);
-            BufferedReader br = new BufferedReader(isr)){
-
-            initConfiguration();
-
-            readDataFromFile(br);
-
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(filePath);
+        } catch (IOException e) {
+            e.getMessage();
+            System.out.println("Puzzle Fail to Init");
         }
+        if (fis == null) {
+            return;
+        }
+        InputStreamReader isr = new InputStreamReader(fis);
+        BufferedReader br = new BufferedReader(isr);
+        initConfiguration();
+        readDataFromFile(br);
     }
+
+
+
 
     private void readDataFromFile(BufferedReader br) throws IOException {
         String line;
