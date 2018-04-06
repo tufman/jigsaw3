@@ -63,35 +63,35 @@ public class ReadFileContentTest {
         //puzzle.printErrorsFromReadingInputFile();
     }
 
-    @ParameterizedTest
-    //@CsvSource({"1 -1 0 1 1,1,-1,0,1,1", "3 1 1 1 1,3 ,1 ,1 ,1 ,1", "6 -1 -1 -1 -1,6 ,-1 ,-1 ,-1 ,-1", "1 0 0 0 0,1 ,0 ,0 ,0 ,0"})
-    @CsvSource({"1 -1 0 1 1,1,-1,0,1,1"})
-    @DisplayName("Init one Elemnt from file ")
-    //@Test
-    public void validLineRepresentingElement(String elementRepresentation, int id, int left, int top, int right, int bottom) throws IOException {
-        //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\inputFileTest";
-        String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\inputFileTest";
-
-        try(FileOutputStream fos = new FileOutputStream(filePath);
-            OutputStreamWriter osr = new OutputStreamWriter(fos)){
-            osr.write(elementRepresentation);
-        }
-
-        ArrayList<Integer> ids = new ArrayList<>();
-        ids.add(1);
-        ids.add(-1);
-        ids.add(0);
-        ids.add(1);
-        ids.add(1);
-        //PuzzleElement expectedElement = new PuzzleElement(id, left, top, right, bottom);
-        PuzzleElement expectedElement = new PuzzleElement(ids);
-
-        Puzzle readFileContent = new Puzzle();
-        readFileContent.readInputFile(filePath);
-        PuzzleElement responseElement = readFileContent.getElementByIndex(0);
-
-        assertTrue(expectedElement.equals(responseElement));
-    }
+//    @ParameterizedTest
+//    //@CsvSource({"1 -1 0 1 1,1,-1,0,1,1", "3 1 1 1 1,3 ,1 ,1 ,1 ,1", "6 -1 -1 -1 -1,6 ,-1 ,-1 ,-1 ,-1", "1 0 0 0 0,1 ,0 ,0 ,0 ,0"})
+//    @CsvSource({"1 -1 0 1 1,1,-1,0,1,1"})
+//    @DisplayName("Init one Elemnt from file ")
+//    //@Test
+//    public void validLineRepresentingElement(String elementRepresentation, int id, int left, int top, int right, int bottom) throws IOException {
+//        //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\inputFileTest";
+//        String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\inputFileTest";
+//
+//        try(FileOutputStream fos = new FileOutputStream(filePath);
+//            OutputStreamWriter osr = new OutputStreamWriter(fos)){
+//            osr.write(elementRepresentation);
+//        }
+//
+//        ArrayList<Integer> ids = new ArrayList<>();
+//        ids.add(1);
+//        ids.add(-1);
+//        ids.add(0);
+//        ids.add(1);
+//        ids.add(1);
+//        //PuzzleElement expectedElement = new PuzzleElement(id, left, top, right, bottom);
+//        PuzzleElement expectedElement = new PuzzleElement(ids);
+//
+//        Puzzle readFileContent = new Puzzle();
+//        readFileContent.readInputFile(filePath);
+//        PuzzleElement responseElement = readFileContent.getElementByIndex(0);
+//
+//        assertTrue(expectedElement.equals(responseElement));
+//    }
 
 //    @ParameterizedTest
 //    @CsvSource({"inputFileTestWithDiaz,4"})
@@ -115,7 +115,11 @@ public class ReadFileContentTest {
         Puzzle readFileContent = new Puzzle();
         readFileContent.readInputFile(filePath);
 
-        assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
+        //assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle of size <4> cannot have the following IDs: 6,8,"));
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Missing puzzle element(s) with the following IDs: 1,3,"));
+
+
     }
 
     @ParameterizedTest
@@ -128,11 +132,12 @@ public class ReadFileContentTest {
         Puzzle readFileContent = new Puzzle();
         readFileContent.readInputFile(filePath);
 
-        //verify that message exist in list of errors from Puzzle
-        //assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
-        assertTrue(readFileContent.verifyErrorExistInList("Number of puzzle elements does not fit the actual that exist in the file."));
+        //assertTrue(readFileContent.verifyErrorExistInList("Number of puzzle elements does not fit the actual that exist in the file."));
 
-        readFileContent.printErrorsFromReadingInputFile();
+        //readFileContent.printErrorsFromReadingInputFile();
+
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle of size <5> cannot have the following IDs: 6,8,"));
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Missing puzzle element(s) with the following IDs: 1,3,5,"));
     }
 
     @ParameterizedTest
@@ -144,7 +149,10 @@ public class ReadFileContentTest {
         Puzzle readFileContent = new Puzzle();
         readFileContent.readInputFile(filePath);
         readFileContent.printListOfElements();
-        assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
+        assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() != readFileContent.getNumOfElementsFromFirstLine());
+
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle of size <4> cannot have the following IDs: 6,8,"));
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Missing puzzle element(s) with the following IDs: 1,3,"));
     }
 
 
