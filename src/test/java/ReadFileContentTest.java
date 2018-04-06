@@ -196,6 +196,18 @@ public class ReadFileContentTest {
         assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
     }
 
+    @ParameterizedTest
+    @CsvSource({"8"})
+    @DisplayName("ID's must be in range")
+    public void idNotInRange (String inputFile) throws IOException {
+        String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
+
+        Puzzle readFileContent = new Puzzle();
+        readFileContent.readInputFile(filePath);
+        //readFileContent.printListOfElements();
+
+        //assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
+    }
 
 
     @ParameterizedTest
