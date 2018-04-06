@@ -62,24 +62,11 @@ public class ReadFileContentTest {
         readFileContent.readInputFile(filePath);
 
 
-        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle of size <5> cannot have the following IDs: 6,8,"));
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle of size <5> cannot have the following IDs: 6,8,9,"));
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle ID <id> has wrong data: 9 1 0 1 -   1"));
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Missing puzzle element(s) with the following IDs: 1,3,5,"));
     }
 
-    @ParameterizedTest
-    @CsvSource({"1"})
-    @DisplayName("print All Elemens From List")
-    public void printAllElemensFromList(String inputFile) throws IOException {
-        String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
-
-        Puzzle readFileContent = new Puzzle();
-        readFileContent.readInputFile(filePath);
-        readFileContent.printListOfElements();
-        assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() != readFileContent.getNumOfElementsFromFirstLine());
-        assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == 2);
-
-        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle of size <4> cannot have the following IDs: 6,8,"));
-        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Missing puzzle element(s) with the following IDs: 1,3,"));
-    }
 
 
 
@@ -109,7 +96,7 @@ public class ReadFileContentTest {
 
     @ParameterizedTest
     @CsvSource({"4"})
-    @DisplayName("Range -1 to 1")
+    @DisplayName("Edge Range -1 to 1")
     public void validateTheLTRBHasCorrectValues (String inputFile) throws IOException {
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
 
@@ -143,7 +130,7 @@ public class ReadFileContentTest {
 
     @ParameterizedTest
     @CsvSource({"8"})
-    @DisplayName("ID's must be in range")
+    @DisplayName("ID's not in NumElement range")
     public void idNotInRange (String inputFile) throws IOException {
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
 
