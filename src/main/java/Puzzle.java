@@ -85,10 +85,10 @@ public class Puzzle {
             }
 
 
-
+            int id = numFromLine.get(0);
 
             if(numFromLine.size()==5) {
-                int id = numFromLine.get(0);
+//                int id = numFromLine.get(0);
                 if (idInRange(id)) {
                     if (allNumbersInRange(numFromLine)) {
                         PuzzleElement element = new PuzzleElement(numFromLine);
@@ -110,6 +110,9 @@ public class Puzzle {
                     idsForErrorsNotInRange.add(id);
                 }
 
+            }
+            else{
+                wrongElementFormat(id, line);
             }
         }
         //}

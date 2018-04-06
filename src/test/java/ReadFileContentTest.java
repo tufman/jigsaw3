@@ -5,12 +5,10 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ReadFileContentTest {
@@ -18,9 +16,7 @@ public class ReadFileContentTest {
     @ParameterizedTest
     @CsvSource({"NumElements=22,22", "NumElements =23, 23", " NumElements =24,24", "NumElements = 25,25", "NumElements = 26 ,26"})
     @DisplayName("Read number of Elements with Spaces")
-    //@Test
     public void validNumOfElement(String textToWrite, int expectedVal) throws IOException {
-        //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\inputFileTest";
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\inputFileTest";
 
         try(FileOutputStream fos = new FileOutputStream(filePath);
@@ -38,29 +34,20 @@ public class ReadFileContentTest {
 
 
     @ParameterizedTest
-    //@CsvSource({"NumElements=AAA,22"})
     @CsvSource({"7"})
     @DisplayName("Invalid Num Of PuzzleElement -> throws Exception")
-    //@Test
-    public void notvalidNumOfElement() throws IOException {
-        //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\test\\java\\inputFileTest";
+    public void notValidNumOfElement() throws IOException {
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\7";
 
-//        try(FileOutputStream fos = new FileOutputStream(filePath);
-//            OutputStreamWriter osr = new OutputStreamWriter(fos)){
-//            osr.write(textToWrite);
-//        }
 
         Puzzle puzzle = new Puzzle();
-        //puzzle.readInputFile(filePath);
 
-        //assertThrows(NumberFormatException.class, () ->{
-            puzzle.readInputFile(filePath);
-        //assertTrue(puzzle.verifyErrorExistInList("Missing puzzle element(s) with the following ID's: TBD elevant ID's"));
-        assertTrue(puzzle.verifyErrorExistInList("The 1st line contains wrong value " + "NumElements=AAA,22"));
-        //});
+        puzzle.readInputFile(filePath);
 
-        //puzzle.printErrorsFromReadingInputFile();
+        assertTrue(puzzle.verifyErrorExistInList("ERROR: NUm Of Elements is not valid NumElements=AAA,22"));
+        assertTrue(puzzle.verifyErrorExistInList("ERROR: NUm Of Elements is not valid NumElements=AAA"));
+        assertTrue(puzzle.verifyErrorExistInList("ERROR: Missing puzzle element(s) with the following IDs: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,"));
+
     }
 
 //    @ParameterizedTest
@@ -159,7 +146,7 @@ public class ReadFileContentTest {
 
     @ParameterizedTest
     @CsvSource({"3"})
-    @DisplayName("Validate element in input file - not int")
+    @DisplayName("Validate element in input file - not int, range and num of Edges")
     public void validateInvalidIDElementInput (String inputFile) throws IOException {
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
 
@@ -167,9 +154,14 @@ public class ReadFileContentTest {
         readFileContent.readInputFile(filePath);
         //readFileContent.printListOfElements();
         //assertTrue(readFileContent.verifyErrorExistInList("Please correct this line (should contain int ) D 1 1 1 1"));
-
+        //Range 1 to -1
         assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle ID 8 has wrong data: 8 1 1 1 -2"));
+        //Puzzle ID
         assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle ID <id> has wrong data: D 1 1 1 1"));
+        //5 edges
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle ID 10 has wrong data: 10 1 1 1 1 1"));
+        //3 edges
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle ID 11 has wrong data: 11 1 1 1"));
 
 
         readFileContent.printErrorsFromReadingInputFile();
