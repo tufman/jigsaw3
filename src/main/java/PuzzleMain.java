@@ -8,6 +8,7 @@ public class PuzzleMain {
         //String filePath = "C:\\t1\\t1.txt";
         Puzzle puzzle = new Puzzle();
         puzzle.readInputFile(filePath);
+        puzzle.printErrorsFromReadingInputFile();
 
     }
 }

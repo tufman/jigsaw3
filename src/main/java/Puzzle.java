@@ -12,8 +12,8 @@ public class Puzzle {
     private List<String> errorsReadingInputFile = new ArrayList<>();
     private Map<Enum, List<Integer>> availableOptionsForSolution = new HashMap<>();
     private List<Integer> idsForErrorsNotInRange = new ArrayList<>();
+    private ArrayList<Integer> splittedLineToInt = new ArrayList<>();
     private boolean [] puzzleElementIDs;
-    //Utils utils = new Utils();
 
 
     Properties prop = null;
@@ -61,37 +61,34 @@ public class Puzzle {
                     expectedNumOfElementsFromFirstLine = Integer.parseInt(numElementArr[1].trim());
                     puzzleElementIDs = new boolean [expectedNumOfElementsFromFirstLine];
                 }catch (NumberFormatException e ){
-                    String errMsg = prop.getProperty("wrongFirstLineFormat");
-                    errorsReadingInputFile.add(errMsg + line);
+                    addErrorWrongFirstLine(line);
                 }
 
                 continue;
             }
-            //Validate that a line that represents a PuzzleElement is valid (integers)
             line = line.trim();
-            String [] stringsFromLineArr = line.split(" ");
-            ArrayList<Integer> numFromLine = new ArrayList<>();
-            for (String str : stringsFromLineArr){
+            String [] lineToArray = line.split(" ");
+            splittedLineToInt.clear();
+            for (String str : lineToArray){
                 if (str.length() == 0){
                     continue;
                 }
                 try {
-
-                    numFromLine.add( Integer.parseInt(str));
+                    splittedLineToInt.add( Integer.parseInt(str));
                 }catch (NumberFormatException e ) {
-                    String errMsg = prop.getProperty("wrongElementsFormat");
-                    errorsReadingInputFile.add(errMsg + line);
+                    //TODO - make it more elegant ...
+                    addErrorWrongElementFormat(-9999, line);
                 }
             }
 
 
-            int id = numFromLine.get(0);
+            int id = splittedLineToInt.get(0);
 
-            if(numFromLine.size()==5) {
+            if(splittedLineToInt.size()==5) {
 //                int id = numFromLine.get(0);
-                if (idInRange(id)) {
-                    if (allNumbersInRange(numFromLine)) {
-                        PuzzleElement element = new PuzzleElement(numFromLine);
+                if (verifyIdInRange(id)) {
+                    if (verifyAllEdgesInRange(splittedLineToInt)) {
+                        PuzzleElement element = new PuzzleElement(splittedLineToInt);
                         puzzleElementList.add(element);
                         //TODO calculate the edges and add it to optionsOfSolution
                         //utils.mapElementToSolutionList(element, puzzleElementList.size()-1);
@@ -101,21 +98,21 @@ public class Puzzle {
                     }
                     // left, top, right and bottom between -1 to 1
                     else {
-                        //errorsReadingInputFile.add(prop.getProperty("numberNotInRange") + line);
-                        wrongElementFormat(id, line);
+                        addErrorWrongElementFormat(id, line);
                     }
                 }
                 //ID is not in range
                  else{
-                    idsForErrorsNotInRange.add(id);
+                    addIDToNotInRangeList(id);
                 }
 
             }
+            //Num of edges is not 4 (id + 4 edges)
             else{
-                wrongElementFormat(id, line);
+                addErrorWrongElementFormat(id, line);
             }
         }
-        //}
+
 
         if (idsForErrorsNotInRange.size() > 0){
             String wrongElementID = prop.getProperty("wrongElementIDs");
@@ -136,24 +133,12 @@ public class Puzzle {
             String errorToAdd = (prop.getProperty("missingPuzzleElements"));
             errorToAdd += allIDs;
             errorsReadingInputFile.add(errorToAdd);
-            //TODO should we stop or throw exception?
         }
 
-        //TODO check if a valid result is available
 
-        //TODO in case (valid result) send puzzleElementList to Find solution
-
-
-        //this.availableOptionsForSolution = utils.getSolutionMap();
         this.availableOptionsForSolution = Utils.getSolutionMap();
-        //initSolutionMap();
-
-        //int [] numOfAvailableLineForSolution = null;
         ArrayList<Integer> numOfAvailableRowsForSolution = Utils.getNumOfRowsForSolution();
-        //Call to Solver, only if there are NO Error in the parsing that was executed,
-        // and there is at least 1 available row for solution
-        // and there are elements in puzzleElementList
-        // and there is at least 1 Top Left Corner
+
         if (errorsReadingInputFile.size() ==0 && numOfAvailableRowsForSolution != null &&
                 puzzleElementList != null && availableOptionsForSolution.get(PUZZLEDIRECTIONS.TOP_LEFT_CORNER).size() > 0){
             ArrayList<Integer> numOfRowsForSolution = Utils.getNumOfRowsForSolution();
@@ -164,11 +149,24 @@ public class Puzzle {
 
     }
 
-    private void wrongElementFormat(int id, String line) {
+    private void addErrorWrongFirstLine(String line) {
+        String errMsg = prop.getProperty("wrongFirstLineFormat");
+        errorsReadingInputFile.add(errMsg + line);
+    }
+
+    private void addIDToNotInRangeList(int id) {
+        idsForErrorsNotInRange.add(id);
+    }
+
+    private void addErrorWrongElementFormat(int id, String line) {
         String errorToAdd = (prop.getProperty("wrongElementsFormat"));
-        errorToAdd = errorToAdd.replace("<id>", String.valueOf(id));
-        //errorsReadingInputFile.add(prop.getProperty("numberNotInRange") + line);
-        errorsReadingInputFile.add(errorToAdd + line);
+        if (!(id == -9999)){
+            String errorToAdd1 = errorToAdd.replace("<id>", String.valueOf(id));
+            errorsReadingInputFile.add(errorToAdd1 + line);
+        }else{
+            errorsReadingInputFile.add(errorToAdd + line);
+        }
+
 
     }
 
@@ -176,7 +174,7 @@ public class Puzzle {
         puzzleElementIDs[id-1] = true;
     }
 
-    private boolean idInRange(Integer idToCheck) {
+    private boolean verifyIdInRange(Integer idToCheck) {
         return idToCheck <= expectedNumOfElementsFromFirstLine;
     }
 
@@ -194,7 +192,7 @@ public class Puzzle {
     }
 
 
-    private boolean allNumbersInRange(ArrayList<Integer> numFromLine) {
+    private boolean verifyAllEdgesInRange(ArrayList<Integer> numFromLine) {
         for (int i =1; i < numFromLine.size(); i++){
             if (!(numFromLine.get(i)>=-1 && numFromLine.get(i) <= 1)){
                 return false;
@@ -205,25 +203,19 @@ public class Puzzle {
 
 
     public void printListOfElements(){
-        System.out.println("### printListOfElements ###");
+        System.out.println("----------------------------------");
+        System.out.println("----   printListOfElements   ----");
             for (PuzzleElement element: puzzleElementList){
                 System.out.println(element);
             }
-
-
-        for (String errorMsg : errorsReadingInputFile){
-            System.out.println(errorMsg);
-        }
-
     }
 
     private void initConfiguration() throws IOException {
         GetPropertyValues properties = new GetPropertyValues();
         prop = properties.getPropValues();
 
-        System.out.println("####################################");
-        System.out.println("Existing Errors in config.properties");
-        System.out.println("####################################");
+        System.out.println("--------------------------------------------");
+        System.out.println("--- Existing Errors in config.properties ---");
         prop.forEach((key, value) -> System.out.println(key + " : " + value));
     }
 
