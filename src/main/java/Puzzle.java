@@ -65,10 +65,15 @@ public class Puzzle {
                 continue;
             }
             //Validate that a line that represents a PuzzleElement is valid (integers)
+            line = line.trim();
             String [] stringsFromLineArr = line.split(" ");
             ArrayList<Integer> numFromLine = new ArrayList<>();
             for (String str : stringsFromLineArr){
+                if (str.length() == 0){
+                    continue;
+                }
                 try {
+
                     numFromLine.add( Integer.parseInt(str));
                 }catch (NumberFormatException e ) {
                     String errMsg = prop.getProperty("wrongElementsFormat");
@@ -133,6 +138,9 @@ public class Puzzle {
                 System.out.println(error);
             }
         }
+        else{
+            System.out.println("NO ERRORS");
+        }
     }
 
 
@@ -147,6 +155,7 @@ public class Puzzle {
 
 
     public void printListOfElements(){
+        System.out.println("### printListOfElements ###");
             for (PuzzleElement element: puzzleElementList){
                 System.out.println(element);
             }
