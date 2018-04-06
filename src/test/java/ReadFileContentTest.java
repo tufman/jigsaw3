@@ -165,8 +165,12 @@ public class ReadFileContentTest {
 
         Puzzle readFileContent = new Puzzle();
         readFileContent.readInputFile(filePath);
-        readFileContent.printListOfElements();
-        assertTrue(readFileContent.verifyErrorExistInList("Please correct this line (should contain int ) D 1 1 1 1"));
+        //readFileContent.printListOfElements();
+        //assertTrue(readFileContent.verifyErrorExistInList("Please correct this line (should contain int ) D 1 1 1 1"));
+
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle ID 8 has wrong data: 8 1 1 1 -2"));
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle ID <id> has wrong data: D 1 1 1 1"));
+
 
         readFileContent.printErrorsFromReadingInputFile();
     }
@@ -183,10 +187,10 @@ public class ReadFileContentTest {
         readFileContent.printListOfElements();
 
 
-        assertTrue(readFileContent.verifyErrorExistInList("L/T/R/B Number should be between -1 to 1 please fix line 1 2 1 1 1"));
-        assertTrue(readFileContent.verifyErrorExistInList("L/T/R/B Number should be between -1 to 1 please fix line 2 0 -2 0 0"));
-        assertTrue(readFileContent.verifyErrorExistInList("L/T/R/B Number should be between -1 to 1 please fix line 3 -1 1 2 1"));
-        assertTrue(readFileContent.verifyErrorExistInList("L/T/R/B Number should be between -1 to 1 please fix line 4 1 0 1 -2"));
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle ID 1 has wrong data: 1 2 1 1 1"));
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle ID 2 has wrong data: 2 0 -2 0 0"));
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle ID 3 has wrong data: 3 -1 1 2 1"));
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle ID 4 has wrong data: 4 1 0 1 -2"));
 
         readFileContent.printErrorsFromReadingInputFile();
     }

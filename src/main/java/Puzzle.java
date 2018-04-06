@@ -101,7 +101,8 @@ public class Puzzle {
                     }
                     // left, top, right and bottom between -1 to 1
                     else {
-                        errorsReadingInputFile.add(prop.getProperty("numberNotInRange") + line);
+                        //errorsReadingInputFile.add(prop.getProperty("numberNotInRange") + line);
+                        wrongElementFormat(id, line);
                     }
                 }
                 //ID is not in range
@@ -157,6 +158,14 @@ public class Puzzle {
         }
 
         printErrorsFromReadingInputFile();
+
+    }
+
+    private void wrongElementFormat(int id, String line) {
+        String errorToAdd = (prop.getProperty("wrongElementsFormat"));
+        errorToAdd = errorToAdd.replace("<id>", String.valueOf(id));
+        //errorsReadingInputFile.add(prop.getProperty("numberNotInRange") + line);
+        errorsReadingInputFile.add(errorToAdd + line);
 
     }
 
