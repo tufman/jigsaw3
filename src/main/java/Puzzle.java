@@ -140,6 +140,7 @@ public class Puzzle {
 
         this.availableOptionsForSolution = Utils.getSolutionMap();
         verifyAllCornersExist();
+        verifyAtLeastOneLineAvailable();
 
         ArrayList<Integer> numOfAvailableRowsForSolution = Utils.getNumOfRowsForSolution();
 
@@ -151,6 +152,14 @@ public class Puzzle {
 
         printErrorsFromReadingInputFile();
 
+    }
+
+    private void verifyAtLeastOneLineAvailable() {
+        String error = prop.getProperty("wrongNumberOfStraighEdges");
+        if ((this.availableOptionsForSolution.get(PUZZLEDIRECTIONS.LEFT_ZERO).size() == 0) ||
+                (this.availableOptionsForSolution.get(PUZZLEDIRECTIONS.RIGHT_ZERO).size() == 0)){
+            errorsReadingInputFile.add(error);
+        }
     }
 
     private void verifyAllCornersExist() {

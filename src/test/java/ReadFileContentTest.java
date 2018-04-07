@@ -115,6 +115,22 @@ public class ReadFileContentTest {
     }
 
     @ParameterizedTest
+    @CsvSource({"1"})
+    @DisplayName("Missing Straight Edges")
+    public void missingStraightEdges (String inputFile) throws IOException {
+        String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
+
+        Utils.claenSolutionMap();
+
+        Puzzle readFileContent = new Puzzle();
+        readFileContent.readInputFile(filePath);
+
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Cannot solve puzzle: wrong number of straight edges"));
+
+    }
+
+
+    @ParameterizedTest
     @CsvSource({"4"})
     @DisplayName("Edge Range -1 to 1")
     public void validateTheLTRBHasCorrectValues (String inputFile) throws IOException {
