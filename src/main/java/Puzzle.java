@@ -136,7 +136,11 @@ public class Puzzle {
         }
 
 
+
+
         this.availableOptionsForSolution = Utils.getSolutionMap();
+        verifyAllCornersExist();
+
         ArrayList<Integer> numOfAvailableRowsForSolution = Utils.getNumOfRowsForSolution();
 
         if (errorsReadingInputFile.size() ==0 && numOfAvailableRowsForSolution != null &&
@@ -146,6 +150,27 @@ public class Puzzle {
         }
 
         printErrorsFromReadingInputFile();
+
+    }
+
+    private void verifyAllCornersExist() {
+        String error = prop.getProperty("missingCorner");
+        if (this.availableOptionsForSolution.get(PUZZLEDIRECTIONS.TOP_LEFT_CORNER).size() == 0){
+            String errorTopLeftCorner = error.replace("<>", "TL");
+            errorsReadingInputFile.add(errorTopLeftCorner);
+        }
+        if (this.availableOptionsForSolution.get(PUZZLEDIRECTIONS.TOP_RIGHT_CORNER).size() == 0){
+            String errorTopRightCorner = error.replace("<>", "TR");
+            errorsReadingInputFile.add(errorTopRightCorner);
+        }
+        if (this.availableOptionsForSolution.get(PUZZLEDIRECTIONS.BOTTOM_LEFT_CORNER).size() == 0){
+            String errorBottomLeftCorner = error.replace("<>", "BL");
+            errorsReadingInputFile.add(errorBottomLeftCorner);
+        }
+        if (this.availableOptionsForSolution.get(PUZZLEDIRECTIONS.BOTTOM_RIGHT_CORNER).size() == 0){
+            String errorBottomRight = error.replace("<>", "BR");
+            errorsReadingInputFile.add(errorBottomRight);
+        }
 
     }
 

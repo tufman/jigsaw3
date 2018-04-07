@@ -93,6 +93,26 @@ public class ReadFileContentTest {
         readFileContent.printErrorsFromReadingInputFile();
     }
 
+    @ParameterizedTest
+    @CsvSource({"1"})
+    @DisplayName("Missing Corners")
+    public void missingCorners (String inputFile) throws IOException {
+        String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
+
+        Utils.claenSolutionMap();
+
+        Puzzle readFileContent = new Puzzle();
+        readFileContent.readInputFile(filePath);
+        //readFileContent.printListOfElements();
+
+
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Cannot solve puzzle: missing corner element: TL"));
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Cannot solve puzzle: missing corner element: TR"));
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Cannot solve puzzle: missing corner element: BL"));
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Cannot solve puzzle: missing corner element: BR"));
+
+
+    }
 
     @ParameterizedTest
     @CsvSource({"4"})
@@ -110,7 +130,6 @@ public class ReadFileContentTest {
         assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle ID 3 has wrong data: 3 -1 1 2 1"));
         assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle ID 4 has wrong data: 4 1 0 1 -2"));
 
-        //readFileContent.printErrorsFromReadingInputFile();
     }
 
     @ParameterizedTest
