@@ -24,37 +24,35 @@ public class Utils {
     private static List<Integer> topRightCorner = new ArrayList<>();
     private static List<Integer> bottomRightCorner = new ArrayList<>();
 
-    private static int counterOfPuzzleElements = 0;
-
     //Map that will hold all the Keys "TopLeft", "BottomPlus" and the relevant List of integers that will point to their reference in the Puzzle List<PuzzleElement> puzzleElementList
-    private static Map<Enum, List<Integer>> availableOptionsForSolution = new HashMap<>();
+    private static Map<PuzzleDirections, List<Integer>> availableOptionsForSolution = new HashMap<>();
 
 
 
 
 
     //public static Map<String, List<Integer>> getSolutionMap() {
-    public static Map<Enum, List<Integer>> getSolutionMap() {
-        availableOptionsForSolution.put(PUZZLEDIRECTIONS.TOP_LEFT_CORNER, topLeftCorner);
-        availableOptionsForSolution.put(PUZZLEDIRECTIONS.BOTTOM_LEFT_CORNER, bottomLeftCorner);
-        availableOptionsForSolution.put(PUZZLEDIRECTIONS.TOP_RIGHT_CORNER, topRightCorner);
-        availableOptionsForSolution.put(PUZZLEDIRECTIONS.BOTTOM_RIGHT_CORNER, bottomRightCorner);
+    public static Map<PuzzleDirections, List<Integer>> getSolutionMap() {
+        availableOptionsForSolution.put(PuzzleDirections.TOP_LEFT_CORNER, topLeftCorner);
+        availableOptionsForSolution.put(PuzzleDirections.BOTTOM_LEFT_CORNER, bottomLeftCorner);
+        availableOptionsForSolution.put(PuzzleDirections.TOP_RIGHT_CORNER, topRightCorner);
+        availableOptionsForSolution.put(PuzzleDirections.BOTTOM_RIGHT_CORNER, bottomRightCorner);
 
-        availableOptionsForSolution.put(PUZZLEDIRECTIONS.LEFT_ZERO, leftZero);
-        availableOptionsForSolution.put(PUZZLEDIRECTIONS.LEFT_PLUS, leftPlus);
-        availableOptionsForSolution.put(PUZZLEDIRECTIONS.LEFT_MINUS, leftMinus);
+        availableOptionsForSolution.put(PuzzleDirections.LEFT_ZERO, leftZero);
+        availableOptionsForSolution.put(PuzzleDirections.LEFT_PLUS, leftPlus);
+        availableOptionsForSolution.put(PuzzleDirections.LEFT_MINUS, leftMinus);
 
-        availableOptionsForSolution.put(PUZZLEDIRECTIONS.TOP_ZERO, topZero);
-        availableOptionsForSolution.put(PUZZLEDIRECTIONS.TOP_PLUS, topPlus);
-        availableOptionsForSolution.put(PUZZLEDIRECTIONS.TOP_MINUS, topMinus);
+        availableOptionsForSolution.put(PuzzleDirections.TOP_ZERO, topZero);
+        availableOptionsForSolution.put(PuzzleDirections.TOP_PLUS, topPlus);
+        availableOptionsForSolution.put(PuzzleDirections.TOP_MINUS, topMinus);
 
-        availableOptionsForSolution.put(PUZZLEDIRECTIONS.RIGHT_ZERO, rightZero);
-        availableOptionsForSolution.put(PUZZLEDIRECTIONS.RIGHT_PLUS, rightPlus);
-        availableOptionsForSolution.put(PUZZLEDIRECTIONS.RIGHT_MINUS, rightMinus);
+        availableOptionsForSolution.put(PuzzleDirections.RIGHT_ZERO, rightZero);
+        availableOptionsForSolution.put(PuzzleDirections.RIGHT_PLUS, rightPlus);
+        availableOptionsForSolution.put(PuzzleDirections.RIGHT_MINUS, rightMinus);
 
-        availableOptionsForSolution.put(PUZZLEDIRECTIONS.BOTTOM_ZERO, bottomZero);
-        availableOptionsForSolution.put(PUZZLEDIRECTIONS.BOTTOM_PLUS, bottomPlus);
-        availableOptionsForSolution.put(PUZZLEDIRECTIONS.BOTTOM_MINUS, bottomMinus);
+        availableOptionsForSolution.put(PuzzleDirections.BOTTOM_ZERO, bottomZero);
+        availableOptionsForSolution.put(PuzzleDirections.BOTTOM_PLUS, bottomPlus);
+        availableOptionsForSolution.put(PuzzleDirections.BOTTOM_MINUS, bottomMinus);
 
         return availableOptionsForSolution;
     }
@@ -133,8 +131,6 @@ public class Utils {
         if (element.right == 0 && element.bottom == 0){
             bottomRightCorner.add(indexInPuzzleElementList);
         }
-
-        counterOfPuzzleElements++;
     }
 
     public static void claenSolutionMap() {
@@ -156,40 +152,5 @@ public class Utils {
         topRightCorner.clear();
         bottomRightCorner.clear();
 
-    }
-
-    public static ArrayList<Integer> getNumOfRowsForSolution() {
-        int numOfLeft = leftZero.size();
-        int numOfRight = rightZero.size();
-        int commonLeftZeroAndRightZero = Math.min(numOfLeft, numOfRight);
-
-        ArrayList<Integer> retVal = new ArrayList<>();
-        retVal.add(1);
-
-
-        boolean isPrime = true;
-        for(int divisor = 2; divisor <= counterOfPuzzleElements / 2; divisor++) {
-            if (counterOfPuzzleElements % divisor == 0) {
-                isPrime = false;
-                break; // num is not a prime, no reason to continue checking
-            }
-        }
-
-
-
-        if (isPrime){
-            retVal.add(counterOfPuzzleElements);
-            return retVal;
-        }
-
-
-
-        for (int i = 2; i < commonLeftZeroAndRightZero; i++){
-            if ((counterOfPuzzleElements % i) == 0){
-                retVal.add(i);
-            }
-        }
-
-        return retVal;
     }
 }
