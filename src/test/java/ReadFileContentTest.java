@@ -90,6 +90,11 @@ public class ReadFileContentTest {
         assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle ID 11 has wrong data: 11 1 1 1"));
 
 
+
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Missing puzzle element(s) with the following IDs: 1,2,3,4,5,6,9,"));
+
+        readFileContent.printListOfElements();
+
         readFileContent.printErrorsFromReadingInputFile();
     }
 

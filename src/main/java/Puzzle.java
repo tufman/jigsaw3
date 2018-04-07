@@ -139,8 +139,9 @@ public class Puzzle {
 
 
         this.availableOptionsForSolution = Utils.getSolutionMap();
-        verifyAllCornersExist();
+
         verifyAtLeastOneLineAvailable();
+        verifyAllCornersExist();
 
         ArrayList<Integer> numOfAvailableRowsForSolution = Utils.getNumOfRowsForSolution();
 
