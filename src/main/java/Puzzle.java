@@ -96,7 +96,7 @@ public class Puzzle {
                         puzzleElementList.add(element);
                         //TODO calculate the edges and add it to optionsOfSolution
                         //utils.mapElementToSolutionList(element, puzzleElementList.size()-1);
-                        Utils.mapElementToSolutionList(element, puzzleElementList.size());
+                        Utils.mapElementToSolutionList(element, element.id);//puzzleElementList.size());
                         markExistElement(id);
                         continue;
                     }
@@ -290,5 +290,30 @@ public class Puzzle {
     public int getActualNumOfElementsReadFromInputFile(){
         return puzzleElementList.size();
     }
+
+
+//    public static void main(String[] args) {
+//        String filePath = "C:\\Users\\yk4184\\Course\\jigsaw1\\16p.txt";
+//        //String filePath = "C:\\t1\\t1.txt";
+//        Puzzle puzzle = new Puzzle();
+//        ArrayList<Integer> rowOptions = new ArrayList<>();
+////        rowOptions.add(1);
+//        rowOptions.add(4);
+//        try {
+//            puzzle.readInputFile(filePath);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        PuzzleSolver puzzleSolver = new PuzzleSolver(puzzle.puzzleElementList,rowOptions,puzzle.availableOptionsForSolution);
+//        PuzzleElement[][] board = puzzleSolver.start();
+//        for (int ii = 0; ii <= board.length - 1; ii++) {
+//            for (int jj = 0; jj <= board[0].length - 1; jj++) {
+//                System.out.print("[" + board[ii][jj] + "],");
+//            }
+//            System.out.println();
+//        }
+////        puzzle.printErrorsFromReadingInputFile();
+//
+//    }
 
 }

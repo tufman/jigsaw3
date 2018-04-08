@@ -23,7 +23,7 @@ public class PuzzleMain {
 //            for (int jj = 0; jj <= board[0].length - 1; jj++) {
 //                System.out.print("[" + board[ii][jj] + "],");
 //            }
-//            System.out.println();
+////            System.out.println();
 //        }
 
 
