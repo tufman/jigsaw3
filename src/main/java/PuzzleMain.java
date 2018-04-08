@@ -5,11 +5,20 @@ public class PuzzleMain {
     public static void main(String[] args) throws IOException {
 
         //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\main\\resources\\Good4Pieces";
-        //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\main\\resources\\BadInputFile20Pieces";
-        String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\main\\resources\\Good16Pieces";
+        //String filePath = "C:\\GitRepository\\jigsaw1\\src\\\\main\\resources\\BadInputFile20Pieces";
+        String filePath = "C:\\GitRepository\\jigsaw1\\src\\\\main\\resources\\oded.in";
+       // String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\main\\resources\\Good16Pieces";
+       // WritePuzzleStatus  writePuzzleStatus = new WritePuzzleStatus("C:\\GitRepository\\jigsaw1\\src\\main\\resources\\Results");
+       // writePuzzleStatus.WriteErrorsToFile();
+        //String filePath = "C:\\GitRepository\\jigsaw1\\src\\main\\resources\\Good16Pieces";
 
         Puzzle puzzle = new Puzzle();
         puzzle.readInputFile(filePath);
+
+        //if errors of solver - discuss with Yelena ==> print to file
+
+        //Print solve matrix to  file
+
         puzzle.printErrorsFromReadingInputFile();
 //        System.out.println("Get board frompuzzle solution");
 //        PuzzleElement[][] board = PuzzleSolver.start();

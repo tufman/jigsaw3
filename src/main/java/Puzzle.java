@@ -1,13 +1,10 @@
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 public class Puzzle {
 
     private String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\main\\resources\\Good4Pieces";
-    private int expectedNumOfElementsFromFirstLine;
+    private int  expectedNumOfElementsFromFirstLine;
     private List<PuzzleElement> puzzleElementList = new ArrayList<>();
     private List<String> errorsReadingInputFile = new ArrayList<>();
     private Map<PuzzleDirections, List<Integer>> availableOptionsForSolution = new HashMap<>();
@@ -148,14 +145,18 @@ public class Puzzle {
         verifyAllCornersExist();
 
         ArrayList<Integer> numOfAvailableRowsForSolution = Utils.getNumOfRowsForSolution();
-
+        WritePuzzleStatus  writePuzzleStatus = new WritePuzzleStatus("C:\\GitRepository\\jigsaw1\\src\\main\\resources\\Results");
         if (errorsReadingInputFile.size() ==0 && numOfAvailableRowsForSolution != null &&
                 puzzleElementList != null && availableOptionsForSolution.get(PuzzleDirections.TOP_LEFT_CORNER).size() > 0){
             ArrayList<Integer> numOfRowsForSolution = Utils.getNumOfRowsForSolution();
             PuzzleSolver puzzleSolver = new PuzzleSolver(puzzleElementList, numOfRowsForSolution, availableOptionsForSolution);
             board = puzzleSolver.start();
+            writePuzzleStatus.WriteResultToFile(board);
+        }else if (errorsReadingInputFile.size()>0 ) {
 
+            writePuzzleStatus.WriteErrorsToFile(errorsReadingInputFile);
         }
+
 
         //printErrorsFromReadingInputFile();
 
@@ -291,4 +292,18 @@ public class Puzzle {
         return puzzleElementList.size();
     }
 
+
+    private void WriteErrorsToFile (List<String> errorsReadingInputFile, String filePathToSave )throws IOException {
+        //String propFileName ="Result";
+        //URL resource = this.getClass().getClassLoader().getResource(propFileName);
+        File file = new File("results");
+
+        try(FileOutputStream fos = new FileOutputStream(filePathToSave);
+            OutputStreamWriter osr = new OutputStreamWriter(fos)){
+            for (String err :errorsReadingInputFile ) {
+                osr.write(err + '\n');
+            }
+
+        }
+    }
 }
