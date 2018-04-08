@@ -95,7 +95,7 @@ public class ReadFileContentTest {
 
         readFileContent.printListOfElements();
 
-        //readFileContent.printErrorsFromReadingInputFile();
+        readFileContent.printErrorsFromReadingInputFile();
     }
 
     @ParameterizedTest
@@ -216,11 +216,11 @@ public class ReadFileContentTest {
         Map<PuzzleDirections, List<Integer>> solutionMap = Utils.getSolutionMap();
 
         assertTrue(solutionMap.get(PuzzleDirections.TOP_LEFT_CORNER).size() == 1);
-        assertTrue(solutionMap.get(PuzzleDirections.TOP_LEFT_CORNER).get(0) == 0);
+        assertTrue(solutionMap.get(PuzzleDirections.TOP_LEFT_CORNER).get(0) == 1);
 
         assertTrue(solutionMap.get(PuzzleDirections.LEFT_PLUS).size() == 2, String.format("LEFT_PLUS size -> Expected %d, actuall %d",2,solutionMap.get(PuzzleDirections.LEFT_PLUS).size()));
-        assertTrue(solutionMap.get(PuzzleDirections.LEFT_PLUS).get(0) == 2, String.format("LEFT_PLUS(0) -> Expected %d, actuall %d",2,solutionMap.get(PuzzleDirections.LEFT_PLUS).get(0)));
-        assertTrue(solutionMap.get(PuzzleDirections.LEFT_PLUS).get(1) == 4, String.format("LEFT_PLUS(1) -> Expected %d, actuall %d",4,solutionMap.get(PuzzleDirections.LEFT_PLUS).get(1)));
+        assertTrue(solutionMap.get(PuzzleDirections.LEFT_PLUS).get(0) == 3, String.format("LEFT_PLUS(0) -> Expected %d, actuall %d",2,solutionMap.get(PuzzleDirections.LEFT_PLUS).get(0)));
+        assertTrue(solutionMap.get(PuzzleDirections.LEFT_PLUS).get(1) == 5, String.format("LEFT_PLUS(1) -> Expected %d, actuall %d",4,solutionMap.get(PuzzleDirections.LEFT_PLUS).get(1)));
 
 
         System.out.println("My Break");
