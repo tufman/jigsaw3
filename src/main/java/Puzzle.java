@@ -6,7 +6,7 @@ import java.util.*;
 
 public class Puzzle {
 
-    private String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\main\\resources\\inputFile";
+    private String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\main\\resources\\Good4Pieces";
     private int expectedNumOfElementsFromFirstLine;
     private List<PuzzleElement> puzzleElementList = new ArrayList<>();
     private List<String> errorsReadingInputFile = new ArrayList<>();
@@ -96,7 +96,7 @@ public class Puzzle {
                         puzzleElementList.add(element);
                         //TODO calculate the edges and add it to optionsOfSolution
                         //utils.mapElementToSolutionList(element, puzzleElementList.size()-1);
-                        Utils.mapElementToSolutionList(element, puzzleElementList.size() - 1);
+                        Utils.mapElementToSolutionList(element, puzzleElementList.size());
                         markExistElement(id);
                         continue;
                     }

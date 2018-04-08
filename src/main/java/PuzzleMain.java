@@ -4,8 +4,10 @@ public class PuzzleMain {
 
     public static void main(String[] args) throws IOException {
 
-        String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\main\\resources\\inputFile";
-        //String filePath = "C:\\t1\\t1.txt";
+        //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\main\\resources\\Good4Pieces";
+        //String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\main\\resources\\BadInputFile20Pieces";
+        String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\main\\resources\\Good16Pieces";
+
         Puzzle puzzle = new Puzzle();
         puzzle.readInputFile(filePath);
         puzzle.printErrorsFromReadingInputFile();
