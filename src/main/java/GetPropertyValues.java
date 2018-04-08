@@ -16,7 +16,10 @@ public class GetPropertyValues {
             prop = new Properties();
             String propFileName = "config.properties";
 
-            URL resource = getClass().getClassLoader().getResource(propFileName);
+//            File file = new File("..//resources/config.properties");
+
+            //URL resource = this.getClass().getClassLoader().get
+            URL resource = this.getClass().getClassLoader().getResource(propFileName);
             System.out.println(resource.getPath());
             inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
             if (inputStream != null) {

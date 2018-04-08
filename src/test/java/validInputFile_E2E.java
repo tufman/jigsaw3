@@ -17,8 +17,8 @@
 //    @ParameterizedTest
 //    @CsvSource({"validFourPuzzleElementsForSolver"})
 //    @DisplayName("Validate Utils Solution Map - all options")
-//    public void validTestForUtilsGetSolutionMap (String inputFile) throws IOException {
-//        String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
+//    public void validTestForUtilsGetSolutionMap (String Good4Pieces) throws IOException {
+//        String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + Good4Pieces;
 //
 //        Utils.claenSolutionMap();
 //
