@@ -14,8 +14,8 @@ public class PuzzleMain {
         //String filePath = System.getProperty("user.dir")+"\\src\\\\main\\resources\\simple\\test1.in";    // -- works as expected
         //String filePath = System.getProperty("user.dir")+"\\src\\\\main\\resources\\simple\\test2.in";   // -- works fine ???
         //String filePath = System.getProperty("user.dir")+"\\src\\\\main\\resources\\simple\\test3.in";   // -- works as expected
-        //String filePath = System.getProperty("user.dir")+"\\src\\\\main\\resources\\simple\\test4.in";   // should work return error
-        String filePath = System.getProperty("user.dir")+"\\src\\\\main\\resources\\simple\\test5.in";
+        String filePath = System.getProperty("user.dir")+"\\src\\\\main\\resources\\simple\\test4.in";   // should work return error
+        //String filePath = System.getProperty("user.dir")+"\\src\\\\main\\resources\\simple\\test5.in";
 
 
         Puzzle puzzle = new Puzzle();
