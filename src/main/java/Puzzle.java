@@ -4,19 +4,20 @@ import java.util.*;
 public class Puzzle {
 
     private String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\main\\resources\\Good4Pieces";
-    private int  expectedNumOfElementsFromFirstLine;
+    private String filePathToSave = System.getProperty("user.dir") + "\\src\\main\\resources\\result.txt";
+    private int expectedNumOfElementsFromFirstLine;
     private List<PuzzleElement> puzzleElementList = new ArrayList<>();
     private List<String> errorsReadingInputFile = new ArrayList<>();
     private Map<PuzzleDirections, List<Integer>> availableOptionsForSolution = new HashMap<>();
     private List<Integer> idsForErrorsNotInRange = new ArrayList<>();
     private ArrayList<Integer> splittedLineToInt = new ArrayList<>();
-    private boolean [] puzzleElementIDs;
+    private boolean[] puzzleElementIDs;
     PuzzleElement[][] board = null;
 
 
     Properties prop = null;
 
-    public Puzzle(){
+    public Puzzle() {
     }
 
 
@@ -39,44 +40,42 @@ public class Puzzle {
     }
 
 
-
-
     private void readDataFromFile(BufferedReader br) throws IOException {
         System.out.println("--------------------------------------------");
-        System.out.println("---         Data fro  input file        ---");
+        System.out.println("---         Data from  input file        ---");
         System.out.println("--------------------------------------------");
         String line;
-        while ((line = br.readLine()) != null){
+        while ((line = br.readLine()) != null) {
             System.out.println("line: " + line);
-            if (line.trim().length() == 0){
+            if (line.trim().length() == 0) {
                 continue;
             }
 
-            if (line.charAt(0) == '#'){
+            if (line.charAt(0) == '#') {
                 continue;
             }
 
-            if(line.contains("NumElements")){
-                String [] numElementArr = line.split("=");
-                try{
+            if (line.contains("NumElements")) {
+                String[] numElementArr = line.split("=");
+                try {
                     expectedNumOfElementsFromFirstLine = Integer.parseInt(numElementArr[1].trim());
-                    puzzleElementIDs = new boolean [expectedNumOfElementsFromFirstLine];
-                }catch (NumberFormatException e ){
+                    puzzleElementIDs = new boolean[expectedNumOfElementsFromFirstLine];
+                } catch (NumberFormatException e) {
                     addErrorWrongFirstLine(line);
                 }
 
                 continue;
             }
             line = line.trim();
-            String [] lineToArray = line.split(" ");
+            String[] lineToArray = line.split(" ");
             splittedLineToInt.clear();
-            for (String str : lineToArray){
-                if (str.length() == 0){
+            for (String str : lineToArray) {
+                if (str.length() == 0) {
                     continue;
                 }
                 try {
-                    splittedLineToInt.add( Integer.parseInt(str));
-                }catch (NumberFormatException e ) {
+                    splittedLineToInt.add(Integer.parseInt(str));
+                } catch (NumberFormatException e) {
                     //TODO - make it more elegant ...
                     addErrorWrongElementFormat(-9999, line);
                 }
@@ -85,7 +84,7 @@ public class Puzzle {
 
             int id = splittedLineToInt.get(0);
 
-            if(splittedLineToInt.size()==5) {
+            if (splittedLineToInt.size() == 5) {
 //                int id = numFromLine.get(0);
                 if (verifyIdInRange(id)) {
                     if (verifyAllEdgesInRange(splittedLineToInt)) {
@@ -103,32 +102,32 @@ public class Puzzle {
                     }
                 }
                 //ID is not in range
-                else{
+                else {
                     addIDToNotInRangeList(id);
                 }
 
             }
             //Num of edges is not 4 (id + 4 edges)
-            else{
+            else {
                 addErrorWrongElementFormat(id, line);
             }
         }
 
 
-        if (idsForErrorsNotInRange.size() > 0){
+        if (idsForErrorsNotInRange.size() > 0) {
             String wrongElementID = prop.getProperty("wrongElementIDs");
             wrongElementID = wrongElementID.replace("SIZE", String.valueOf(expectedNumOfElementsFromFirstLine));
-            for (int i = 0; i < idsForErrorsNotInRange.size(); i++){
+            for (int i = 0; i < idsForErrorsNotInRange.size(); i++) {
                 wrongElementID += idsForErrorsNotInRange.get(i) + ",";
             }
             errorsReadingInputFile.add(wrongElementID);
         }
 
-        if (expectedNumOfElementsFromFirstLine != puzzleElementList.size()){
+        if (expectedNumOfElementsFromFirstLine != puzzleElementList.size()) {
             String allIDs = "";
-            for (int i = 0; i < puzzleElementIDs.length; i++){
-                if (!(puzzleElementIDs[i])){
-                    allIDs += (i+1) + ",";
+            for (int i = 0; i < puzzleElementIDs.length; i++) {
+                if (!(puzzleElementIDs[i])) {
+                    allIDs += (i + 1) + ",";
                 }
             }
             String errorToAdd = (prop.getProperty("missingPuzzleElements"));
@@ -137,65 +136,62 @@ public class Puzzle {
         }
 
 
-
-
         this.availableOptionsForSolution = Utils.getSolutionMap();
 
         verifyAtLeastOneLineAvailable();
         verifyAllCornersExist();
 
         ArrayList<Integer> numOfAvailableRowsForSolution = Utils.getNumOfRowsForSolution();
-        WritePuzzleStatus  writePuzzleStatus = new WritePuzzleStatus("C:\\GitRepository\\jigsaw1\\src\\main\\resources\\Results");
-        if (errorsReadingInputFile.size() ==0 && numOfAvailableRowsForSolution != null &&
-                puzzleElementList != null && availableOptionsForSolution.get(PuzzleDirections.TOP_LEFT_CORNER).size() > 0){
+        WritePuzzleStatus writePuzzleStatus = new WritePuzzleStatus(filePathToSave);
+        if (errorsReadingInputFile.size() == 0 && numOfAvailableRowsForSolution != null &&
+                puzzleElementList != null && availableOptionsForSolution.get(PuzzleDirections.TOP_LEFT_CORNER).size() > 0) {
             ArrayList<Integer> numOfRowsForSolution = Utils.getNumOfRowsForSolution();
             PuzzleSolver puzzleSolver = new PuzzleSolver(puzzleElementList, numOfRowsForSolution, availableOptionsForSolution);
             board = puzzleSolver.start();
             writePuzzleStatus.WriteResultToFile(board);
-        }else if (errorsReadingInputFile.size()>0 ) {
+        } else if (errorsReadingInputFile.size() > 0) {
 
             writePuzzleStatus.WriteErrorsToFile(errorsReadingInputFile);
         }
 
-
-        //printErrorsFromReadingInputFile();
-
     }
 
 
-    public void printSolution(){
-        for (int ii = 0; ii <= board.length - 1; ii++) {
-            for (int jj = 0; jj <= board[0].length - 1; jj++) {
-                //System.out.print("[" + board[ii][jj].id + "],");
-                System.out.print(board[ii][jj].id + " ");
+    public void printSolution() {
+        if (board != null) {
+
+            for (int ii = 0; ii <= board.length - 1; ii++) {
+                for (int jj = 0; jj <= board[0].length - 1; jj++) {
+                    System.out.print(board[ii][jj].id + " ");
+                }
+                System.out.println();
             }
-            System.out.println();
         }
     }
 
     private void verifyAtLeastOneLineAvailable() {
         String error = prop.getProperty("wrongNumberOfStraighEdges");
         if ((this.availableOptionsForSolution.get(PuzzleDirections.LEFT_ZERO).size() == 0) ||
-                (this.availableOptionsForSolution.get(PuzzleDirections.RIGHT_ZERO).size() == 0)){
+                (this.availableOptionsForSolution.get(PuzzleDirections.RIGHT_ZERO).size() == 0)) {
             errorsReadingInputFile.add(error);
         }
     }
 
     private void verifyAllCornersExist() {
         String error = prop.getProperty("missingCorner");
-        if (this.availableOptionsForSolution.get(PuzzleDirections.TOP_LEFT_CORNER).size() == 0){
+        if (this.availableOptionsForSolution.get(PuzzleDirections.TOP_LEFT_CORNER).size() == 0) {
             String errorTopLeftCorner = error.replace("<>", "TL");
             errorsReadingInputFile.add(errorTopLeftCorner);
         }
-        if (this.availableOptionsForSolution.get(PuzzleDirections.TOP_RIGHT_CORNER).size() == 0){
+        if (this.availableOptionsForSolution.get(PuzzleDirections.TOP_RIGHT_CORNER).size() == 0) {
             String errorTopRightCorner = error.replace("<>", "TR");
             errorsReadingInputFile.add(errorTopRightCorner);
         }
-        if (this.availableOptionsForSolution.get(PuzzleDirections.BOTTOM_LEFT_CORNER).size() == 0){
+        if (this.availableOptionsForSolution.get(PuzzleDirections.BOTTOM_LEFT_CORNER).size() == 0) {
             String errorBottomLeftCorner = error.replace("<>", "BL");
             errorsReadingInputFile.add(errorBottomLeftCorner);
         }
-        if (this.availableOptionsForSolution.get(PuzzleDirections.BOTTOM_RIGHT_CORNER).size() == 0){
+        if (this.availableOptionsForSolution.get(PuzzleDirections.BOTTOM_RIGHT_CORNER).size() == 0) {
             String errorBottomRight = error.replace("<>", "BR");
             errorsReadingInputFile.add(errorBottomRight);
         }
@@ -213,10 +209,10 @@ public class Puzzle {
 
     private void addErrorWrongElementFormat(int id, String line) {
         String errorToAdd = (prop.getProperty("wrongElementsFormat"));
-        if (!(id == -9999)){
+        if (!(id == -9999)) {
             String errorToAdd1 = errorToAdd.replace("<id>", String.valueOf(id));
             errorsReadingInputFile.add(errorToAdd1 + line);
-        }else{
+        } else {
             errorsReadingInputFile.add(errorToAdd + line);
         }
 
@@ -224,7 +220,7 @@ public class Puzzle {
     }
 
     private void markExistElement(int id) {
-        puzzleElementIDs[id-1] = true;
+        puzzleElementIDs[id - 1] = true;
     }
 
     private boolean verifyIdInRange(Integer idToCheck) {
@@ -235,20 +231,19 @@ public class Puzzle {
         System.out.println("----------------------------------");
         System.out.println("--- All Errors from Input File ---");
         System.out.println("----------------------------------");
-        if (errorsReadingInputFile.size() > 0){
-            for (String error : errorsReadingInputFile){
+        if (errorsReadingInputFile.size() > 0) {
+            for (String error : errorsReadingInputFile) {
                 System.out.println(error);
             }
-        }
-        else{
+        } else {
             System.out.println("NO ERRORS");
         }
     }
 
 
     private boolean verifyAllEdgesInRange(ArrayList<Integer> numFromLine) {
-        for (int i =1; i < numFromLine.size(); i++){
-            if (!(numFromLine.get(i)>=-1 && numFromLine.get(i) <= 1)){
+        for (int i = 1; i < numFromLine.size(); i++) {
+            if (!(numFromLine.get(i) >= -1 && numFromLine.get(i) <= 1)) {
                 return false;
             }
         }
@@ -256,11 +251,11 @@ public class Puzzle {
     }
 
 
-    public void printListOfElements(){
+    public void printListOfElements() {
         System.out.println("----------------------------------");
         System.out.println("----   printListOfElements   ----");
         System.out.println("----------------------------------");
-        for (PuzzleElement element: puzzleElementList){
+        for (PuzzleElement element : puzzleElementList) {
             System.out.println(element);
         }
     }
@@ -275,12 +270,12 @@ public class Puzzle {
         prop.forEach((key, value) -> System.out.println(key + " : " + value));
     }
 
-    public int getNumOfElementsFromFirstLine(){
+    public int getNumOfElementsFromFirstLine() {
         return expectedNumOfElementsFromFirstLine;
     }
 
 
-    public boolean verifyErrorExistInList(String error){
+    public boolean verifyErrorExistInList(String error) {
         return errorsReadingInputFile.contains(error);
     }
 
@@ -288,7 +283,7 @@ public class Puzzle {
         return puzzleElementList.get(index);
     }
 
-    public int getActualNumOfElementsReadFromInputFile(){
+    public int getActualNumOfElementsReadFromInputFile() {
         return puzzleElementList.size();
     }
 
@@ -318,14 +313,13 @@ public class Puzzle {
 //    }
 
 
-    private void WriteErrorsToFile (List<String> errorsReadingInputFile, String filePathToSave )throws IOException {
-        //String propFileName ="Result";
-        //URL resource = this.getClass().getClassLoader().getResource(propFileName);
-        File file = new File("results");
+    private void WriteErrorsToFile(List<String> errorsReadingInputFile, String filePathToSave) throws IOException {
 
-        try(FileOutputStream fos = new FileOutputStream(filePathToSave);
-            OutputStreamWriter osr = new OutputStreamWriter(fos)){
-            for (String err :errorsReadingInputFile ) {
+        File file = new File(filePathToSave + "//results");
+
+        try (FileOutputStream fos = new FileOutputStream(filePathToSave);
+             OutputStreamWriter osr = new OutputStreamWriter(fos)) {
+            for (String err : errorsReadingInputFile) {
                 osr.write(err + '\n');
             }
 
