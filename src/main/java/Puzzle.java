@@ -3,8 +3,8 @@ import java.util.*;
 
 public class Puzzle {
 
-    private String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\main\\resources\\Good4Pieces";
-    private String filePathToSave = System.getProperty("user.dir") + "\\src\\main\\resources\\result.txt";
+//    private String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\main\\resources\\Good4Pieces";
+//    private String filePathToSave = System.getProperty("user.dir") + "\\src\\main\\resources\\result.txt";
     private int expectedNumOfElementsFromFirstLine;
     private List<PuzzleElement> puzzleElementList = new ArrayList<>();
     private List<String> errorsReadingInputFile = new ArrayList<>();
@@ -12,10 +12,12 @@ public class Puzzle {
     private List<Integer> idsForErrorsNotInRange = new ArrayList<>();
     private ArrayList<Integer> splittedLineToInt = new ArrayList<>();
     private boolean[] puzzleElementIDs;
-    PuzzleElement[][] board = null;
+    private PuzzleElement[][] board = null;
+    private ArrayList<Integer> numOfRowsForSolution;
 
 
-    Properties prop = null;
+            Properties prop = null;
+    private List<Integer> idsList;
 
     public Puzzle() {
     }
@@ -142,20 +144,32 @@ public class Puzzle {
         verifyAllCornersExist();
 
         ArrayList<Integer> numOfAvailableRowsForSolution = Utils.getNumOfRowsForSolution();
-        WritePuzzleStatus writePuzzleStatus = new WritePuzzleStatus(filePathToSave);
-        if (errorsReadingInputFile.size() == 0 && numOfAvailableRowsForSolution != null &&
-                puzzleElementList != null && availableOptionsForSolution.get(PuzzleDirections.TOP_LEFT_CORNER).size() > 0) {
-            ArrayList<Integer> numOfRowsForSolution = Utils.getNumOfRowsForSolution();
-            PuzzleSolver puzzleSolver = new PuzzleSolver(puzzleElementList, numOfRowsForSolution, availableOptionsForSolution);
-            board = puzzleSolver.start();
-            writePuzzleStatus.WriteResultToFile(board);
+//        WritePuzzleStatus writePuzzleStatus = new WritePuzzleStatus(filePathToSave);
+        if (errorsReadingInputFile.size() == 0 && numOfAvailableRowsForSolution != null && puzzleElementList != null && availableOptionsForSolution.get(PuzzleDirections.TOP_LEFT_CORNER).size() > 0) {
+//            numOfRowsForSolution = Utils.getNumOfRowsForSolution();
+
+//            PuzzleSolver puzzleSolver = new PuzzleSolver(puzzleElementList, numOfRowsForSolution, availableOptionsForSolution);
+//            board = puzzleSolver.start();
+//            writePuzzleStatus.WriteResultToFile(board);
         } else if (errorsReadingInputFile.size() > 0) {
 
-            writePuzzleStatus.WriteErrorsToFile(errorsReadingInputFile);
+//            writePuzzleStatus.WriteErrorsToFile(errorsReadingInputFile);
         }
 
     }
 
+    public ArrayList<Integer> getNumOfRowsForSolution() {
+        numOfRowsForSolution = Utils.getNumOfRowsForSolution();
+        return numOfRowsForSolution;
+    }
+
+    public List<PuzzleElement> getPuzzleElementList() {
+        return puzzleElementList;
+    }
+
+    public Map<PuzzleDirections, List<Integer>> getAvailableOptionsForSolution() {
+        return availableOptionsForSolution;
+    }
 
     public void printSolution() {
         if (board != null) {
@@ -287,32 +301,6 @@ public class Puzzle {
         return puzzleElementList.size();
     }
 
-
-//    public static void main(String[] args) {
-//        String filePath = "C:\\Users\\yk4184\\Course\\jigsaw1\\16p.txt";
-//        //String filePath = "C:\\t1\\t1.txt";
-//        Puzzle puzzle = new Puzzle();
-//        ArrayList<Integer> rowOptions = new ArrayList<>();
-////        rowOptions.add(1);
-//        rowOptions.add(4);
-//        try {
-//            puzzle.readInputFile(filePath);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        PuzzleSolver puzzleSolver = new PuzzleSolver(puzzle.puzzleElementList,rowOptions,puzzle.availableOptionsForSolution);
-//        PuzzleElement[][] board = puzzleSolver.start();
-//        for (int ii = 0; ii <= board.length - 1; ii++) {
-//            for (int jj = 0; jj <= board[0].length - 1; jj++) {
-//                System.out.print("[" + board[ii][jj] + "],");
-//            }
-//            System.out.println();
-//        }
-////        puzzle.printErrorsFromReadingInputFile();
-//
-//    }
-
-
     private void WriteErrorsToFile(List<String> errorsReadingInputFile, String filePathToSave) throws IOException {
 
         File file = new File(filePathToSave + "//results");
@@ -324,5 +312,27 @@ public class Puzzle {
             }
 
         }
+    }
+
+    public boolean isSolution(List<PuzzleElement> in, List<Integer> out) {
+        boolean isSolution = false;
+        List<Integer> entry;
+        //TODO: solution using two list
+
+//        for (Map.Entry<PuzzleDirections, List<Integer>> ids: in.entrySet()){
+//            for(Integer id :ids.getValue()) {
+//                entry = out.get(ids.getKey());
+//                if (!entry.contains(id)){
+//                    isSolution=false;
+//                    break;
+//                }
+//            }
+//        }
+
+        return isSolution;
+    }
+//return list of ids from output file
+    public List<Integer> getIdsList() {
+        return idsList;
     }
 }
