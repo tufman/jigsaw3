@@ -104,7 +104,7 @@ public class ReadFileContentTest {
     public void missingCorners (String inputFile) throws IOException {
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
 
-        Utils.claenSolutionMap();
+        PuzzleMapper.claenSolutionMap();
 
         Puzzle readFileContent = new Puzzle();
         readFileContent.readInputFile(filePath);
@@ -125,7 +125,7 @@ public class ReadFileContentTest {
     public void missingStraightEdges (String inputFile) throws IOException {
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
 
-        Utils.claenSolutionMap();
+        PuzzleMapper.claenSolutionMap();
 
         Puzzle readFileContent = new Puzzle();
         readFileContent.readInputFile(filePath);
@@ -206,17 +206,17 @@ public class ReadFileContentTest {
 
     @ParameterizedTest
     @CsvSource({"6"})
-    @DisplayName("Validate Utils Solution Map")
+    @DisplayName("Validate PuzzleMapper Solution Map")
     public void validTestForUtilsGetSolutionMap (String inputFile) throws IOException {
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
 
-        Utils.claenSolutionMap();
+        PuzzleMapper.claenSolutionMap();
 
         Puzzle readFileContent = new Puzzle();
         readFileContent.readInputFile(filePath);
         readFileContent.printListOfElements();
 
-        Map<PuzzleDirections, List<Integer>> solutionMap = Utils.getSolutionMap();
+        Map<PuzzleDirections, List<Integer>> solutionMap = PuzzleMapper.getSolutionMap();
 
         assertTrue(solutionMap.get(PuzzleDirections.TOP_LEFT_CORNER).size() == 1);
         assertTrue(solutionMap.get(PuzzleDirections.TOP_LEFT_CORNER).get(0) == 1);

@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Utils {
+public class PuzzleMapper {
 
     //I think it will be easier to fill the list as part of the file reading,
     // and in the end before we will send it to Solver, to put it in the relevant Map
