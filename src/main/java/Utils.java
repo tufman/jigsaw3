@@ -162,12 +162,13 @@ public class Utils {
         int numOfLeft = leftZero.size();
         int numOfRight = rightZero.size();
         int commonLeftZeroAndRightZero = Math.min(numOfLeft, numOfRight);
+        boolean isPrime = true;
 
         ArrayList<Integer> retVal = new ArrayList<>();
-        retVal.add(1);
+        if(topZero.size() ==  bottomZero.size()){
+            retVal.add(1);
+        }
 
-
-        boolean isPrime = true;
         for(int divisor = 2; divisor <= counterOfPuzzleElements / 2; divisor++) {
             if (counterOfPuzzleElements % divisor == 0) {
                 isPrime = false;
@@ -175,21 +176,19 @@ public class Utils {
             }
         }
 
-
-
-        if (isPrime){
+        if (isPrime && topZero.size()/counterOfPuzzleElements == bottomZero.size()/counterOfPuzzleElements){
             retVal.add(counterOfPuzzleElements);
             return retVal;
         }
 
-
-
         for (int i = 2; i < commonLeftZeroAndRightZero; i++){
             if ((counterOfPuzzleElements % i) == 0){
-                retVal.add(i);
+                if (topZero.size()>=counterOfPuzzleElements/i && bottomZero.size()>=counterOfPuzzleElements/i){
+                    retVal.add(i);
+                }
+
             }
         }
-
         return retVal;
     }
 }
