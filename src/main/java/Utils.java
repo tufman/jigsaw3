@@ -165,30 +165,35 @@ public class Utils {
         boolean isPrime = true;
 
         ArrayList<Integer> retVal = new ArrayList<>();
-        if(topZero.size() ==  bottomZero.size()){
-            retVal.add(1);
-        }
 
-        for(int divisor = 2; divisor <= counterOfPuzzleElements / 2; divisor++) {
-            if (counterOfPuzzleElements % divisor == 0) {
-                isPrime = false;
-                break; // num is not a prime, no reason to continue checking
+        if (counterOfPuzzleElements >0){
+            if(topZero.size() ==  bottomZero.size()){
+                retVal.add(1);
             }
-        }
 
-        if (isPrime && topZero.size()/counterOfPuzzleElements == bottomZero.size()/counterOfPuzzleElements){
-            retVal.add(counterOfPuzzleElements);
-            return retVal;
-        }
-
-        for (int i = 2; i < commonLeftZeroAndRightZero; i++){
-            if ((counterOfPuzzleElements % i) == 0){
-                if (topZero.size()>=counterOfPuzzleElements/i && bottomZero.size()>=counterOfPuzzleElements/i){
-                    retVal.add(i);
+            for(int divisor = 2; divisor <= counterOfPuzzleElements / 2; divisor++) {
+                if (counterOfPuzzleElements % divisor == 0) {
+                    isPrime = false;
+                    break; // num is not a prime, no reason to continue checking
                 }
+            }
 
+            if (isPrime && topZero.size()/counterOfPuzzleElements == bottomZero.size()/counterOfPuzzleElements){
+                retVal.add(counterOfPuzzleElements);
+                return retVal;
+            }
+
+            for (int i = 2; i < commonLeftZeroAndRightZero; i++){
+                if ((counterOfPuzzleElements % i) == 0){
+                    if (topZero.size()>=counterOfPuzzleElements/i && bottomZero.size()>=counterOfPuzzleElements/i){
+                        retVal.add(i);
+                    }
+
+                }
             }
         }
+
+
         return retVal;
     }
 }

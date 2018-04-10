@@ -150,6 +150,7 @@ public class ReadFileContentTest {
         assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle ID 2 has wrong data: 2 0 -2 0 0"));
         assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle ID 3 has wrong data: 3 -1 1 2 1"));
         assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle ID 4 has wrong data: 4 1 0 1 -2"));
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle ID -1 has wrong data: -1 0 0 0 0"));
 
     }
 
@@ -198,6 +199,8 @@ public class ReadFileContentTest {
 
 
     }
+
+
 
 
 

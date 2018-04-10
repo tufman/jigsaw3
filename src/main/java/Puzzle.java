@@ -85,6 +85,12 @@ public class Puzzle {
 
 
             int id = splittedLineToInt.get(0);
+            if(id <1) {
+                addErrorWrongElementFormat(id,line);
+                continue;
+            }
+
+
 
             if (splittedLineToInt.size() == 5) {
 //                int id = numFromLine.get(0);

@@ -1,5 +1,1 @@
-ERROR: Cannot solve puzzle: wrong number of straight edges
-ERROR: Cannot solve puzzle: missing corner element: TL
-ERROR: Cannot solve puzzle: missing corner element: TR
-ERROR: Cannot solve puzzle: missing corner element: BL
-ERROR: Cannot solve puzzle: missing corner element: BR
+1 2 3
