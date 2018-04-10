@@ -29,7 +29,7 @@ public class WritePuzzleStatus {
         try (FileOutputStream fos = new FileOutputStream(filePathToSave);
              OutputStreamWriter osr = new OutputStreamWriter(fos)) {
             if (board == null) {
-                osr.write("No Result Was Found ");
+                osr.write("Cannot solve puzzle: it seems that there is no proper solution");
             } else {
                 for (int ii = 0; ii <= board.length - 1; ii++) {
                     String line = "";

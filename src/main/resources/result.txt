@@ -1,2 +1,5 @@
-ERROR: Puzzle of size <4> cannot have the following IDs: 5,
-ERROR: Missing puzzle element(s) with the following IDs: 4,
+ERROR: Cannot solve puzzle: wrong number of straight edges
+ERROR: Cannot solve puzzle: missing corner element: TL
+ERROR: Cannot solve puzzle: missing corner element: TR
+ERROR: Cannot solve puzzle: missing corner element: BL
+ERROR: Cannot solve puzzle: missing corner element: BR
