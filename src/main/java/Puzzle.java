@@ -341,4 +341,8 @@ public class Puzzle {
     public List<Integer> getIdsList() {
         return idsList;
     }
+
+    public Map<PuzzleDirections,List<Integer>> getSolutionMap() {
+        return puzzleMapper.getSolutionMap();
+    }
 }
