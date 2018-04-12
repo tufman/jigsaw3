@@ -22,6 +22,12 @@ public class PuzzleSolver {
 
     }
 
+    public PuzzleSolver(Puzzle puzzle1) {
+        this.elements = puzzle1.getPuzzleElementList();
+        this.rowOptions = puzzle1.getNumOfRowsForSolution();
+        this.positionToElements = puzzle1.getAvailableOptionsForSolution();
+    }
+
     public PuzzleElement[][] start() {
 
         for (int i = 0; i< rowOptions.size(); i++) {
