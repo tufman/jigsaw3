@@ -8,7 +8,7 @@ public class PuzzleMain {
     public static void main(String[] args) throws IOException {
 
         // Our Test files
-       String filePath = System.getProperty("user.dir")+"\\src\\main\\resources\\IDASCHAR.in";     //  --- works expected
+//       String filePath = System.getProperty("user.dir")+"\\src\\main\\resources\\IDASCHAR.in";     //  --- works expected
 //        String filePath = "..\\jigsaw1\\src\\main\\resources\\Good16Pieces";//System.getProperty("user.dir")+"\\src\\\\main\\resources\\Good16Pieces";    //  --- works expected
         //String filePath = System.getProperty("user.dir")+"\\src\\\\main\\resources\\BadInputFile20Pieces";
         //String filePath = System.getProperty("user.dir")+"\\src\\\\main\\resources\\SolverReturnNULL.in";  // -- works expected
@@ -26,7 +26,7 @@ public class PuzzleMain {
         //String filePath = System.getProperty("user.dir")+"\\src\\\\main\\resources\\simple\\test3.in";   // -- works as expected
 //        String filePath = System.getProperty("user.dir")+"\\src\\\\main\\resources\\simple\\test4.in";   // should work return error
         //String filePath = System.getProperty("user.dir")+"\\src\\\\main\\resources\\simple\\test8.in";
-       // String fileIn = System.getProperty("user.dir")+"\\src\\main\\resources\\Good4Pieces";
+        String filePath = System.getProperty("user.dir")+"\\src\\main\\resources\\Good4Pieces";
        // String fileOut = System.getProperty("user.dir")+"\\src\\main\\resources\\add\\test1.out";
 
         String filePathToSave = System.getProperty("user.dir") + "\\src\\main\\resources\\result.txt";

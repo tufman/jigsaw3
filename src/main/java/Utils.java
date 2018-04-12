@@ -167,7 +167,7 @@ public class Utils {
         ArrayList<Integer> retVal = new ArrayList<>();
 
         if (counterOfPuzzleElements >0){
-            if(topZero.size() ==  bottomZero.size()){
+            if(topZero.size() == counterOfPuzzleElements && bottomZero.size() == counterOfPuzzleElements){
                 retVal.add(1);
             }
 
