@@ -16,7 +16,7 @@ public class Puzzle {
     private ArrayList<Integer> numOfRowsForSolution;
     private PuzzleMapper puzzleMapper = new PuzzleMapper();
 
-            Properties prop = null;
+    private Properties prop = null;
     private List<Integer> idsList;
 
     public Puzzle() {
@@ -100,7 +100,7 @@ public class Puzzle {
                         puzzleElementList.add(element);
                         //TODO calculate the edges and add it to optionsOfSolution
                         //puzzleMapper.mapElementToSolutionList(element, puzzleElementList.size()-1);
-                        puzzleMapper.mapElementToSolutionList(element, element.id);//puzzleElementList.size());
+                        puzzleMapper.mapElementToSolutionList(element, element.getId());//puzzleElementList.size());
                         markExistElement(id);
                         continue;
                     }
@@ -182,7 +182,7 @@ public class Puzzle {
 
             for (int ii = 0; ii <= board.length - 1; ii++) {
                 for (int jj = 0; jj <= board[0].length - 1; jj++) {
-                    System.out.print(board[ii][jj].id + " ");
+                    System.out.print(board[ii][jj].getId() + " ");
                 }
                 System.out.println();
             }
@@ -281,7 +281,7 @@ public class Puzzle {
     }
 
     private void initConfiguration() throws IOException {
-        GetPropertyValues properties = new GetPropertyValues();
+        GetPuzzleErrors properties = new GetPuzzleErrors();
         prop = properties.getPropValues();
 
         System.out.println("--------------------------------------------");

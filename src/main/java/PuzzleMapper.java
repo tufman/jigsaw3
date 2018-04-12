@@ -61,7 +61,7 @@ public class PuzzleMapper {
 
     public  void mapElementToSolutionList(PuzzleElement element, int indexInPuzzleElementList) {
         //Map<String, List<Integer>> availableOptionsForSolution
-        switch(element.left){
+        switch(element.getLeft()){
             case -1:  {
                 leftMinus.add(indexInPuzzleElementList);
                 break;
@@ -76,7 +76,7 @@ public class PuzzleMapper {
             }
             default: //Currently do nothing
         }
-        switch(element.top){
+        switch(element.getTop()){
             case -1:  {
                 topMinus.add(indexInPuzzleElementList);
                 break;
@@ -91,7 +91,7 @@ public class PuzzleMapper {
             }
             default: //Currently do nothing
         }
-        switch(element.right){
+        switch(element.getRight()){
             case -1:  {
                 rightMinus.add(indexInPuzzleElementList);
                 break;
@@ -106,7 +106,7 @@ public class PuzzleMapper {
             }
             default: //Currently do nothing
         }
-        switch(element.bottom){
+        switch(element.getBottom()){
             case -1:  {
                 bottomMinus.add(indexInPuzzleElementList);
                 break;
@@ -121,16 +121,16 @@ public class PuzzleMapper {
             }
             default: //Currently do nothing
         }
-        if (element.left == 0 && element.top == 0){
+        if (element.getLeft() == 0 && element.getTop() == 0){
             topLeftCorner.add(indexInPuzzleElementList);
         }
-        if (element.left == 0 && element.bottom == 0){
+        if (element.getLeft() == 0 && element.getBottom() == 0){
             bottomLeftCorner.add(indexInPuzzleElementList);
         }
-        if (element.right == 0 && element.top == 0){
+        if (element.getRight() == 0 && element.getTop() == 0){
             topRightCorner.add(indexInPuzzleElementList);
         }
-        if (element.right == 0 && element.bottom == 0){
+        if (element.getRight() == 0 && element.getBottom() == 0){
             bottomRightCorner.add(indexInPuzzleElementList);
         }
 

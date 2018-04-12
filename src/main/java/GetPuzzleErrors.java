@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Properties;
 
 
-public class GetPropertyValues {
+public class GetPuzzleErrors {
 
 
-    InputStream inputStream;
+    private InputStream inputStream;
 
     public Properties getPropValues() throws IOException {
         HashMap <String, String> retValConfiguration = new HashMap<>();
