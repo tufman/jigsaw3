@@ -1,3 +1,5 @@
+package puzzle;
+
 import java.util.ArrayList;
 
 public class PuzzleElement {

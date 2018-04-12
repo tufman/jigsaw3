@@ -1,6 +1,9 @@
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import puzzle.Puzzle;
+import puzzle.PuzzleDirections;
+import puzzle.PuzzleMapper;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

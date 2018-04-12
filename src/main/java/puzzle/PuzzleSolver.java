@@ -1,4 +1,4 @@
-
+package puzzle;
 
 import java.util.*;
 
