@@ -1,4 +1,4 @@
-
+package puzzle;
 
 import java.util.*;
 
@@ -20,6 +20,12 @@ public class PuzzleSolver {
         this.rowOptions = rowOptions;
         this.positionToElements = positionToElements;
 
+    }
+
+    public PuzzleSolver(Puzzle puzzle1) {
+        this.elements = puzzle1.getPuzzleElementList();
+        this.rowOptions = puzzle1.getNumOfRowsForSolution();
+        this.positionToElements = puzzle1.getAvailableOptionsForSolution();
     }
 
     public PuzzleElement[][] start() {
@@ -78,32 +84,32 @@ public class PuzzleSolver {
     private boolean tryInsert(PuzzleElement e, int r, int c) {
         //check if corner
         if (r == 0 && c == 0) { // first TOP_LEFT_CORNER
-            if (!fit(e.id, PuzzleDirections.TOP_LEFT_CORNER)) return false;
+            if (!fit(e.getId(), PuzzleDirections.TOP_LEFT_CORNER)) return false;
         }
         else if (r == rows-1 && c == 0) { // first BOTTOM_LEFT_CORNER
-            if (!fit(e.id, PuzzleDirections.BOTTOM_LEFT_CORNER)) return false;
+            if (!fit(e.getId(), PuzzleDirections.BOTTOM_LEFT_CORNER)) return false;
         }
         else if (r == rows -1 && c==columns-1) { // last BOTTOM_RIGHT_CORNER
-            if (!fit(e.id, PuzzleDirections.BOTTOM_RIGHT_CORNER)) return false;
+            if (!fit(e.getId(), PuzzleDirections.BOTTOM_RIGHT_CORNER)) return false;
         }
         else if (r == 0 && c==columns-1) { // last TOP_RIGHT_CORNER
-            if (!fit(e.id, PuzzleDirections.TOP_RIGHT_CORNER)) return false;
+            if (!fit(e.getId(), PuzzleDirections.TOP_RIGHT_CORNER)) return false;
         }
         //check if edge
         else if (r == 0) { // first row
-            if (!(fit(e.id, PuzzleDirections.TOP_ZERO) && (board[r][c-1].right+e.left == 0))) return false;
+            if (!(fit(e.getId(), PuzzleDirections.TOP_ZERO) && (board[r][c-1].getRight()+e.getLeft() == 0))) return false;
         }
         else if (c == 0) { // first column
-            if (!(fit(e.id, PuzzleDirections.LEFT_ZERO) && (board[r-1][c].bottom+e.top == 0))) return false;
+            if (!(fit(e.getId(), PuzzleDirections.LEFT_ZERO) && (board[r-1][c].getBottom()+e.getTop() == 0))) return false;
         }
         else if (r == rows -1) { // last row
-            if (!(fit(e.id, PuzzleDirections.BOTTOM_ZERO) && (board[r-1][c].bottom+e.top == 0)&& (board[r][c-1].right+e.left == 0))) return false;
+            if (!(fit(e.getId(), PuzzleDirections.BOTTOM_ZERO) && (board[r-1][c].getBottom()+e.getTop() == 0)&& (board[r][c-1].getRight()+e.getLeft() == 0))) return false;
         }
         else if (c==columns-1) { // last column
-            if (!(fit(e.id, PuzzleDirections.RIGHT_ZERO) && (board[r-1][c].bottom+e.top == 0)&& (board[r][c-1].right+e.left == 0))) return false;
+            if (!(fit(e.getId(), PuzzleDirections.RIGHT_ZERO) && (board[r-1][c].getBottom()+e.getTop() == 0)&& (board[r][c-1].getRight()+e.getLeft() == 0))) return false;
         }
         else { // middle element
-            if (!((board[r-1][c].bottom+e.top == 0)&& (board[r][c-1].right+e.left == 0))) return false;
+            if (!((board[r-1][c].getBottom()+e.getTop() == 0)&& (board[r][c-1].getRight()+e.getLeft() == 0))) return false;
         }
 
         board[r][c]=e;

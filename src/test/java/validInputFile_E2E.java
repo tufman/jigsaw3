@@ -16,17 +16,17 @@
 //
 //    @ParameterizedTest
 //    @CsvSource({"validFourPuzzleElementsForSolver"})
-//    @DisplayName("Validate Utils Solution Map - all options")
+//    @DisplayName("Validate PuzzleMapper Solution Map - all options")
 //    public void validTestForUtilsGetSolutionMap (String Good4Pieces) throws IOException {
 //        String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + Good4Pieces;
 //
-//        Utils.claenSolutionMap();
+//        PuzzleMapper.claenSolutionMap();
 //
 //        Puzzle readFileContent = new Puzzle();
 //        readFileContent.readInputFile(filePath);
 //        readFileContent.printListOfElements();
 //
-//        Map<Enum, List<Integer>> solutionMap = Utils.getSolutionMap();
+//        Map<Enum, List<Integer>> solutionMap = PuzzleMapper.getSolutionMap();
 //
 //        assertTrue(solutionMap.get(PUZZLEDIRECTIONS.TOP_LEFT_CORNER).size() == 1);
 //        assertTrue(solutionMap.get(PUZZLEDIRECTIONS.TOP_LEFT_CORNER).get(0) == 0);

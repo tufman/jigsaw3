@@ -1,3 +1,5 @@
+package puzzle;
+
 import java.io.*;
 import java.util.*;
 
@@ -14,9 +16,9 @@ public class Puzzle {
     private boolean[] puzzleElementIDs;
     private PuzzleElement[][] board = null;
     private ArrayList<Integer> numOfRowsForSolution;
+    private PuzzleMapper puzzleMapper = new PuzzleMapper();
 
-
-            Properties prop = null;
+    private Properties prop = null;
     private List<Integer> idsList;
 
     public Puzzle() {
@@ -99,8 +101,8 @@ public class Puzzle {
                         PuzzleElement element = new PuzzleElement(splittedLineToInt);
                         puzzleElementList.add(element);
                         //TODO calculate the edges and add it to optionsOfSolution
-                        //utils.mapElementToSolutionList(element, puzzleElementList.size()-1);
-                        Utils.mapElementToSolutionList(element, element.id);//puzzleElementList.size());
+                        //puzzleMapper.mapElementToSolutionList(element, puzzleElementList.size()-1);
+                        puzzleMapper.mapElementToSolutionList(element, element.getId());//puzzleElementList.size());
                         markExistElement(id);
                         continue;
                     }
@@ -144,15 +146,15 @@ public class Puzzle {
         }
 
 
-        this.availableOptionsForSolution = Utils.getSolutionMap();
+        this.availableOptionsForSolution = puzzleMapper.getSolutionMap();
 
         verifyAtLeastOneLineAvailable();
         verifyAllCornersExist();
 
-        ArrayList<Integer> numOfAvailableRowsForSolution = Utils.getNumOfRowsForSolution();
+        ArrayList<Integer> numOfAvailableRowsForSolution = puzzleMapper.getNumOfRowsForSolution();
 //        WritePuzzleStatus writePuzzleStatus = new WritePuzzleStatus(filePathToSave);
         if (errorsReadingInputFile.size() == 0 && numOfAvailableRowsForSolution != null && puzzleElementList != null && availableOptionsForSolution.get(PuzzleDirections.TOP_LEFT_CORNER).size() > 0) {
-//            numOfRowsForSolution = Utils.getNumOfRowsForSolution();
+//            numOfRowsForSolution = PuzzleMapper.getNumOfRowsForSolution();
 
 //            PuzzleSolver puzzleSolver = new PuzzleSolver(puzzleElementList, numOfRowsForSolution, availableOptionsForSolution);
 //            board = puzzleSolver.start();
@@ -165,7 +167,7 @@ public class Puzzle {
     }
 
     public ArrayList<Integer> getNumOfRowsForSolution() {
-        numOfRowsForSolution = Utils.getNumOfRowsForSolution();
+        numOfRowsForSolution = puzzleMapper.getNumOfRowsForSolution();
         return numOfRowsForSolution;
     }
 
@@ -182,7 +184,7 @@ public class Puzzle {
 
             for (int ii = 0; ii <= board.length - 1; ii++) {
                 for (int jj = 0; jj <= board[0].length - 1; jj++) {
-                    System.out.print(board[ii][jj].id + " ");
+                    System.out.print(board[ii][jj].getId() + " ");
                 }
                 System.out.println();
             }
@@ -281,7 +283,7 @@ public class Puzzle {
     }
 
     private void initConfiguration() throws IOException {
-        GetPropertyValues properties = new GetPropertyValues();
+        GetPuzzleErrors properties = new GetPuzzleErrors();
         prop = properties.getPropValues();
 
         System.out.println("--------------------------------------------");
@@ -340,5 +342,9 @@ public class Puzzle {
 //return list of ids from output file
     public List<Integer> getIdsList() {
         return idsList;
+    }
+
+    public Map<PuzzleDirections,List<Integer>> getSolutionMap() {
+        return puzzleMapper.getSolutionMap();
     }
 }

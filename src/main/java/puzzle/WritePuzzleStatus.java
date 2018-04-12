@@ -1,3 +1,5 @@
+package puzzle;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -6,9 +8,6 @@ import java.util.List;
 public class WritePuzzleStatus {
 
     private String filePathToSave;
-
-    FileOutputStream fos;
-    OutputStreamWriter osr;
 
     public WritePuzzleStatus(String filePathToSave) throws IOException {
         this.filePathToSave = filePathToSave;
@@ -35,9 +34,9 @@ public class WritePuzzleStatus {
                     String line = "";
                     for (int jj = 0; jj <= board[0].length - 1; jj++) {
                         if (jj == board[0].length - 1) {
-                            line += board[ii][jj].id;
+                            line += board[ii][jj].getId();
                         } else {
-                            line += board[ii][jj].id + " ";
+                            line += board[ii][jj].getId() + " ";
                         }
 
                     }

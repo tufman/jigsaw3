@@ -1,12 +1,14 @@
+package puzzle;
+
 import java.util.ArrayList;
 
 public class PuzzleElement {
 
-    int id;
-    int left;
-    int top;
-    int right;
-    int bottom;
+    private int id;
+    private int left;
+    private int top;
+    private int right;
+    private int bottom;
 
     //public PuzzleElement(int id, int left, int top, int right, int bottom){
     public PuzzleElement(ArrayList<Integer> numFromLine){
@@ -28,6 +30,26 @@ public class PuzzleElement {
                 ((PuzzleElement) obj).top == this.top &&
                 ((PuzzleElement) obj).right == this.right &&
                 ((PuzzleElement) obj).bottom == this.bottom);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getLeft() {
+        return left;
+    }
+
+    public int getTop() {
+        return top;
+    }
+
+    public int getRight() {
+        return right;
+    }
+
+    public int getBottom() {
+        return bottom;
     }
 
     @Override

@@ -1,9 +1,11 @@
+package puzzle;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PuzzleMain {
+public class PuzzleMainOrig4Yelena {
 
     public static void main(String[] args) throws IOException {
 
