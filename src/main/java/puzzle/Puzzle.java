@@ -9,10 +9,17 @@ public class Puzzle {
 //    private String filePathToSave = System.getProperty("user.dir") + "\\src\\main\\resources\\result.txt";
     private int expectedNumOfElementsFromFirstLine;
     private List<PuzzleElement> puzzleElementList = new ArrayList<>();
+
+    public List<String> getErrorsReadingInputFile() {
+        return errorsReadingInputFile;
+    }
+
     private List<String> errorsReadingInputFile = new ArrayList<>();
     private Map<PuzzleDirections, List<Integer>> availableOptionsForSolution = new HashMap<>();
     private List<Integer> idsForErrorsNotInRange = new ArrayList<>();
     private ArrayList<Integer> splittedLineToInt = new ArrayList<>();
+    private Map<Integer,List<Integer>> puzzleOutput = new HashMap<>();
+
     private boolean[] puzzleElementIDs;
     private PuzzleElement[][] board = null;
     private ArrayList<Integer> numOfRowsForSolution;
@@ -25,7 +32,7 @@ public class Puzzle {
     }
 
 
-    public void readInputFile(String filePath) throws IOException {
+    public boolean readInputFile(String filePath) throws IOException {
         FileInputStream fis = null;
         try {
             fis = new FileInputStream(filePath);
@@ -34,13 +41,17 @@ public class Puzzle {
             System.out.println("Puzzle Fail to Init");
         }
         if (fis == null) {
-            return;
+            return false;
         }
         try (InputStreamReader isr = new InputStreamReader(fis);
              BufferedReader br = new BufferedReader(isr)) {
             initConfiguration();
             readDataFromFile(br);
         }
+        if (errorsReadingInputFile.size() > 0){
+            return false;
+        }
+        return true;
     }
 
 
@@ -322,20 +333,74 @@ public class Puzzle {
         }
     }
 
-    public boolean isSolution(List<PuzzleElement> in, List<Integer> out) {
-        boolean isSolution = false;
-        List<Integer> entry;
-        //TODO: solution using two list
 
-//        for (Map.Entry<PuzzleDirections, List<Integer>> ids: in.entrySet()){
-//            for(Integer id :ids.getValue()) {
-//                entry = out.get(ids.getKey());
-//                if (!entry.contains(id)){
-//                    isSolution=false;
-//                    break;
-//                }
-//            }
-//        }
+    public void readOutputFile(String filePath) throws IOException {
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(filePath);
+        } catch (IOException e) {
+            e.getMessage();
+            System.out.println("Puzzle Fail to Init");
+        }
+        if (fis == null) {
+            return;
+        }
+        try (InputStreamReader isr = new InputStreamReader(fis);
+             BufferedReader br = new BufferedReader(isr)) {
+//            initConfiguration();
+            readDataFromOutputFile(br);
+        }
+    }
+
+
+    private void readDataFromOutputFile(BufferedReader br) throws IOException {
+
+        String line;
+        Integer lineIndex = 0;
+
+        while ((line = br.readLine()) != null) {
+            System.out.println("line: " + line);
+            if (line.trim().length() == 0) {
+                continue;
+            }
+            line = line.trim();
+            String[] lineToArray = line.split(" ");
+            splittedLineToInt = new ArrayList<>();
+            for (String str : lineToArray) {
+                if (str.length() == 0) {
+                    continue;
+                }
+                try {
+                    splittedLineToInt.add(Integer.parseInt(str));
+                    puzzleOutput.put(lineIndex,splittedLineToInt);
+                } catch (NumberFormatException e) {
+                    //TODO - make it more elegant ...
+                    addErrorWrongElementFormat(-9999, line);
+                }
+            }
+            puzzleOutput.put(lineIndex,splittedLineToInt);
+            lineIndex++;
+        }
+    }
+
+
+
+    public boolean isIOSolvable() {
+        boolean isSolution = false;
+        PuzzleElement[][] board = null;
+        int row = puzzleOutput.size();
+        if(row != 0) {
+            int col = expectedNumOfElementsFromFirstLine / row;
+            board = new PuzzleElement[row][col];
+        }
+
+        //TODO: solution using list and map of list
+
+        for (Map.Entry<Integer, List<Integer>> ids: puzzleOutput.entrySet()){
+            for(Integer id :ids.getValue()) {
+                System.out.print(id);
+            }
+        }
 
         return isSolution;
     }
