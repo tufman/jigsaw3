@@ -161,6 +161,7 @@ public class Puzzle {
 
         verifyAtLeastOneLineAvailable();
         verifyAllCornersExist();
+        verifySumZero();
 
         ArrayList<Integer> numOfAvailableRowsForSolution = puzzleMapper.getNumOfRowsForSolution();
 //        WritePuzzleStatus writePuzzleStatus = new WritePuzzleStatus(filePathToSave);
@@ -175,6 +176,21 @@ public class Puzzle {
 //            writePuzzleStatus.WriteErrorsToFile(errorsReadingInputFile);
         }
 
+    }
+
+    private void verifySumZero() {
+        int leftPlus = availableOptionsForSolution.get(PuzzleDirections.LEFT_PLUS).size() * 1;
+        int leftMinus = availableOptionsForSolution.get(PuzzleDirections.LEFT_MINUS).size() * (-1);
+        int rightPlus = availableOptionsForSolution.get(PuzzleDirections.RIGHT_PLUS).size() * 1;
+        int rightMinus = availableOptionsForSolution.get(PuzzleDirections.RIGHT_MINUS).size() * (-1);
+        int topPlus = availableOptionsForSolution.get(PuzzleDirections.TOP_PLUS).size() * 1;
+        int topMinus = availableOptionsForSolution.get(PuzzleDirections.TOP_MINUS).size() * (-1);
+        int bottomPlus = availableOptionsForSolution.get(PuzzleDirections.BOTTOM_PLUS).size() * 1;
+        int bottomMinus = availableOptionsForSolution.get(PuzzleDirections.BOTTOM_MINUS).size() * (-1);
+
+        if (!((leftPlus + leftMinus + rightPlus + rightMinus + topPlus +topMinus + bottomPlus + bottomMinus) == 0)){
+            errorsReadingInputFile.add(prop.getProperty("sumOfAllEdgesIsNotZero"));
+        }
     }
 
     public ArrayList<Integer> getNumOfRowsForSolution() {

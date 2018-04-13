@@ -186,6 +186,18 @@ public class ReadFileContentTest {
         //assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
     }
 
+    @ParameterizedTest
+    @CsvSource({"9"})
+    @DisplayName("Sum of all edegs is not Zero")
+    public void sumOfEdgesIsNotZero (String inputFile) throws IOException {
+        String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
+
+        Puzzle readFileContent = new Puzzle();
+        readFileContent.readInputFile(filePath);
+        //readFileContent.printListOfElements();
+
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Sum of all edges is not zero."));
+    }
 
     @ParameterizedTest
     @CsvSource({"8"})
