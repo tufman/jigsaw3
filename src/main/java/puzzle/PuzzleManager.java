@@ -7,20 +7,19 @@ import java.util.Map;
 
 public class PuzzleManager {
 
-//    public static void main(String[] args) throws IOException {
 private PuzzleElement[][] board = null;
 
 
 public void manage(String filePath, String filePathToOutput) throws IOException {
 
-        Puzzle puzzle1 = new Puzzle();
+    Puzzle puzzle1 = new Puzzle();
     String fileInputPath = System.getProperty("user.dir") + "\\src\\main\\resources\\add\\test2.in";
     String fileOutputPath = System.getProperty("user.dir") + "\\src\\main\\resources\\add\\test2.out";
-        //puzzle1.readOutputFile(filePath);
-        //puzzle1.isIOSolvable();
+    puzzle1.readOutputFile(fileOutputPath);
+//    puzzle1.isIOSolvable();
 
     WritePuzzleStatus writePuzzleStatus = new WritePuzzleStatus(filePathToOutput);
-       if(puzzle1.readInputFile(filePath)) {
+       if(puzzle1.readInputFile(fileInputPath)) {
            PuzzleSolver puzzleSolver = new PuzzleSolver(puzzle1);
            board = puzzleSolver.start();
 
@@ -30,5 +29,7 @@ public void manage(String filePath, String filePathToOutput) throws IOException 
        }else {
            writePuzzleStatus.WriteErrorsToFile(puzzle1.getErrorsReadingInputFile());
        }
+    System.out.println("the output puzzle is correct: "+ puzzle1.isIOSolvable());
     }
+
 }

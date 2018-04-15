@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import puzzle.Puzzle;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ReadFileContentTest {
@@ -246,6 +248,31 @@ public class ReadFileContentTest {
 
 
         System.out.println("My Break");
+
+    }
+    @Test
+    @DisplayName("I/O is solution")
+
+    public void verifyOutputFileIsSolutionForInput () throws IOException {
+        String fileInputPath = System.getProperty("user.dir") + "\\src\\main\\resources\\add\\test2.in";
+        String fileOutputPath = System.getProperty("user.dir") + "\\src\\main\\resources\\add\\test2.out";
+        Puzzle puzzle = new Puzzle();
+        puzzle.readOutputFile(fileOutputPath);
+        puzzle.readInputFile(fileInputPath);
+        assertTrue(puzzle.isIOSolvable(), "output file is not solution for input");
+
+    }
+
+    @Test
+    @DisplayName("I/O is not solution")
+
+    public void verifyOutputFileIsNotSolutionForInput () throws IOException {
+        String fileInputPath = System.getProperty("user.dir") + "\\src\\main\\resources\\add\\test9.in";
+        String fileOutputPath = System.getProperty("user.dir") + "\\src\\main\\resources\\add\\test9.out";
+        Puzzle puzzle = new Puzzle();
+        puzzle.readOutputFile(fileOutputPath);
+        puzzle.readInputFile(fileInputPath);
+        assertFalse(puzzle.isIOSolvable(), "output file is solution for input");
 
     }
 

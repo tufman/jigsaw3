@@ -48,10 +48,7 @@ public class Puzzle {
             initConfiguration();
             readDataFromFile(br);
         }
-        if (errorsReadingInputFile.size() > 0){
-            return false;
-        }
-        return true;
+        return errorsReadingInputFile.isEmpty();
     }
 
 
@@ -349,7 +346,7 @@ public class Puzzle {
         }
     }
 
-
+//reade output file with ids only
     public void readOutputFile(String filePath) throws IOException {
         FileInputStream fis = null;
         try {
@@ -373,7 +370,7 @@ public class Puzzle {
 
         String line;
         Integer lineIndex = 0;
-
+        List<Integer>list = new ArrayList<>();
         while ((line = br.readLine()) != null) {
             System.out.println("line: " + line);
             if (line.trim().length() == 0) {
@@ -381,44 +378,122 @@ public class Puzzle {
             }
             line = line.trim();
             String[] lineToArray = line.split(" ");
-            splittedLineToInt = new ArrayList<>();
+            list = new ArrayList<>();
             for (String str : lineToArray) {
                 if (str.length() == 0) {
                     continue;
                 }
                 try {
-                    splittedLineToInt.add(Integer.parseInt(str));
-                    puzzleOutput.put(lineIndex,splittedLineToInt);
+                    list.add(Integer.parseInt(str));
+                    puzzleOutput.put(lineIndex,list);
                 } catch (NumberFormatException e) {
                     //TODO - make it more elegant ...
                     addErrorWrongElementFormat(-9999, line);
                 }
             }
-            puzzleOutput.put(lineIndex,splittedLineToInt);
+            puzzleOutput.put(lineIndex,list);
             lineIndex++;
         }
     }
 
 
-
+//check if output file is solution for input
     public boolean isIOSolvable() {
+        PuzzleElement elm;
+        int index=0;
         boolean isSolution = false;
         PuzzleElement[][] board = null;
         int row = puzzleOutput.size();
+        int col = 0;
+        int i = 0, j=0;
         if(row != 0) {
-            int col = expectedNumOfElementsFromFirstLine / row;
+            col = expectedNumOfElementsFromFirstLine / row;
             board = new PuzzleElement[row][col];
         }
 
-        //TODO: solution using list and map of list
-
         for (Map.Entry<Integer, List<Integer>> ids: puzzleOutput.entrySet()){
             for(Integer id :ids.getValue()) {
-                System.out.print(id);
-            }
+                elm = getById(id);
+//                if(i>=0 && i<=row && j>=0 && j<=col && (board[i][j-1].getRight()+elm.getLeft()==0)&&(board[i-1][j].getBottom()+elm.getTop()==0)){
+                    if (i == 0 && j == 0) { // first TOP_LEFT_CORNER
+                        board[i][j++] = elm;
+                    }
+                    else if (i == row-1 && j == 0) { // first BOTTOM_LEFT_CORNER
+                        board[i][j++] = elm;
+                    }
+                    else if (i == row -1 && j==col-1) { // last BOTTOM_RIGHT_CORNER
+                        board[i][j++] = elm;
+                    }
+                    else if (i == 0 && j==col-1) { // last TOP_RIGHT_CORNER
+                        board[i][j++] = elm;
+                    }
+                    //check if edge
+                    else if (i == 0) { // first row
+                        if ((board[i][j-1].getRight()+elm.getLeft() == 0))board[i][j++] = elm;
+                    }
+                    else if (j == 0) { // first column
+                        if ((board[i-1][j].getBottom()+elm.getTop() == 0))board[i][j++] = elm;
+                    }
+                    else if (i == row -1) { // last row
+                        if ((board[i-1][j].getBottom()+elm.getTop() == 0)&& (board[i][j-1].getRight()+elm.getLeft() == 0)) board[i][j++] = elm;
+                    }
+                    else if (j==col-1) { // last column
+                        if ((board[i-1][j].getBottom()+elm.getTop() == 0)&& (board[i][j-1].getRight()+elm.getLeft() == 0)) board[i][j++] = elm;
+                    }
+                    else { // middle element
+                        if ((board[i-1][j].getBottom()+elm.getTop() == 0)&& (board[i][j-1].getRight()+elm.getLeft() == 0)) board[i][j++] = elm;
+                    }
+//                    board[i][j++] = elm;
+                    System.out.print(id);
+                }
+//            }
+            i++;
+            j=0;
         }
 
-        return isSolution;
+        return isProperPuzzle(board);
+    }
+
+    //get puzzle element by id from output file
+    public PuzzleElement getById(int id){
+        PuzzleElement puzzleElement = null;
+        int count = puzzleElementList.size()-1;
+        while (count>=0) {
+            puzzleElement = puzzleElementList.get(count);
+            if(puzzleElement.getId() == id)
+                return puzzleElement;
+            count--;
+        }
+        return puzzleElement;
+    }
+
+    //check if puzzle have straight edges
+    private boolean isProperPuzzle(PuzzleElement[][] board){
+        for (int i=0;i<board[0].length; i++){
+            for(int j=0;j<board.length; j++) {
+                if (i == 0) {
+                    if (!(board[i][j].getTop() == 0)) {
+                        return false;
+                    }
+                }
+                if (i == board[0].length-1) {
+                    if (!(board[i][j].getBottom() == 0)) {
+                        return false;
+                    }
+                }
+                if (j == 0) {
+                    if (!(board[i][j].getLeft() == 0)) {
+                        return false;
+                    }
+                }
+                if (j == board[0].length-1) {
+                    if (!(board[i][j].getRight() == 0)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 //return list of ids from output file
     public List<Integer> getIdsList() {
