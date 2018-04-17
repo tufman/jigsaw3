@@ -50,7 +50,7 @@ public class ReadFileContentTest {
 
         assertTrue(puzzle.verifyErrorExistInList("ERROR: Num Of Elements is not valid NumElements=AAA,22"));
         assertTrue(puzzle.verifyErrorExistInList("ERROR: Num Of Elements is not valid NumElements=AAA"));
-        assertTrue(puzzle.verifyErrorExistInList("ERROR: Missing puzzle element(s) with the following IDs: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,"));
+        assertTrue(puzzle.verifyErrorExistInList("ERROR: Missing puzzle element(s) with the following IDs: 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22"));
     }
 
 
@@ -67,9 +67,9 @@ public class ReadFileContentTest {
         readFileContent.readInputFile(filePath);
 
 
-        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle of size <5> cannot have the following IDs: 6,8,9,"));
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle of size <5> cannot have the following IDs: 6,8,9"));
         assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle ID <id> has wrong data: 9 1 0 1 -   1"));
-        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Missing puzzle element(s) with the following IDs: 1,3,5,"));
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Missing puzzle element(s) with the following IDs: 1,3,5"));
     }
 
 
@@ -96,7 +96,7 @@ public class ReadFileContentTest {
 
 
 
-        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Missing puzzle element(s) with the following IDs: 1,2,3,4,5,6,9,"));
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Missing puzzle element(s) with the following IDs: 1,2,3,4,5,6,9"));
 
         readFileContent.printListOfElements();
 
@@ -171,8 +171,8 @@ public class ReadFileContentTest {
         readFileContent.printListOfElements();
 
         assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == 2);
-        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle of size <4> cannot have the following IDs: 8,6,"));
-        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Missing puzzle element(s) with the following IDs: 1,3,"));
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle of size <4> cannot have the following IDs: 8,6"));
+        assertTrue(readFileContent.verifyErrorExistInList("ERROR: Missing puzzle element(s) with the following IDs: 1,3"));
     }
 
     @ParameterizedTest

@@ -136,6 +136,10 @@ public class Puzzle {
             String wrongElementID = prop.getProperty("wrongElementIDs");
             wrongElementID = wrongElementID.replace("SIZE", String.valueOf(expectedNumOfElementsFromFirstLine));
             for (int i = 0; i < idsForErrorsNotInRange.size(); i++) {
+                if (i == (idsForErrorsNotInRange.size() -1)){
+                    wrongElementID += idsForErrorsNotInRange.get(i);
+                    continue;
+                }
                 wrongElementID += idsForErrorsNotInRange.get(i) + ",";
             }
             errorsReadingInputFile.add(wrongElementID);
@@ -149,7 +153,8 @@ public class Puzzle {
                 }
             }
             String errorToAdd = (prop.getProperty("missingPuzzleElements"));
-            errorToAdd += allIDs;
+            allIDs = allIDs.substring(0, allIDs.length() - 1);
+            errorToAdd += allIDs ;
             errorsReadingInputFile.add(errorToAdd);
         }
 
