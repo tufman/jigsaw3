@@ -10,7 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TestForSolverLogic {
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+public class PuzzleSolverTest {
     //@ParameterizedTest //@CsvSource({"SolvePuzzleWith2Pieces_All_Zero"})
     @DisplayName("Find Solution for 2 Puzzle Elements - All Zero")
     @Test
@@ -148,6 +150,10 @@ public class TestForSolverLogic {
 
         PuzzleSolver puzzleSolver = new PuzzleSolver(puzzleElementList, numOfAvailableLineForSolution, availableOptionsForSolution);
         PuzzleElement[][] board = puzzleSolver.start();
+        assertTrue(board[0][0].getId() == 1);
+        assertTrue(board[0][1].getId() == 2);
+        assertTrue(board[1][0].getId() == 3);
+        assertTrue(board[1][1].getId() == 4);
         for (int ii = 0; ii <= board.length - 1; ii++) {
             for (int jj = 0; jj <= board[0].length - 1; jj++) {
                 System.out.print("[" + board[ii][jj] + "],");

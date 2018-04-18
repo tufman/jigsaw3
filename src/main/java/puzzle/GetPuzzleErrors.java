@@ -9,18 +9,17 @@ import java.util.Properties;
 public class GetPuzzleErrors {
 
 
-    private InputStream inputStream;
+
 
     public Properties getPropValues() throws IOException {
-        HashMap <String, String> retValConfiguration = new HashMap<>();
+
+        InputStream inputStream = null;
+
         Properties prop = null;
         try {
             prop = new Properties();
             String propFileName = "config.properties";
 
-//            File file = new File("..//resources/config.properties");
-
-            //URL resource = this.getClass().getClassLoader().get
             URL resource = this.getClass().getClassLoader().getResource(propFileName);
             System.out.println(resource.getPath());
             inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);

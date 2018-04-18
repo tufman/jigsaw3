@@ -247,8 +247,6 @@ public class ReadFileContentTest {
         assertTrue(solutionMap.get(PuzzleDirections.LEFT_PLUS).get(1) == 5, String.format("LEFT_PLUS(1) -> Expected %d, actuall %d",4,solutionMap.get(PuzzleDirections.LEFT_PLUS).get(1)));
 
 
-        System.out.println("My Break");
-
     }
     @Test
     @DisplayName("I/O is solution")
