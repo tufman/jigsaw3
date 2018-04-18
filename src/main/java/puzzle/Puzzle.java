@@ -68,14 +68,7 @@ public class Puzzle {
             }
 
             if (line.contains("NumElements")) {
-                String[] numElementArr = line.split("=");
-                try {
-                    expectedNumOfElementsFromFirstLine = Integer.parseInt(numElementArr[1].trim());
-                    puzzleElementIDs = new boolean[expectedNumOfElementsFromFirstLine];
-                } catch (NumberFormatException e) {
-                    addErrorWrongFirstLine(line);
-                }
-
+                extractNumOfElements(line);
                 continue;
             }
             line = line.trim();
@@ -178,6 +171,16 @@ public class Puzzle {
 //            writePuzzleStatus.WriteErrorsToFile(errorsReadingInputFile);
         }
 
+    }
+
+    private void extractNumOfElements(String line) {
+        String[] numElementArr = line.split("=");
+        try {
+            expectedNumOfElementsFromFirstLine = Integer.parseInt(numElementArr[1].trim());
+            puzzleElementIDs = new boolean[expectedNumOfElementsFromFirstLine];
+        } catch (NumberFormatException e) {
+            addErrorWrongFirstLine(line);
+        }
     }
 
     private void verifySumZero() {
