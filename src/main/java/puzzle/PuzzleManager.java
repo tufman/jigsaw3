@@ -12,7 +12,7 @@ public void manage(String filePath, String filePathToOutput) throws IOException 
     Puzzle puzzle1 = new Puzzle();
     String fileInputPath = System.getProperty("user.dir") + "\\src\\main\\resources\\add\\test2.in";
     String fileOutputPath = System.getProperty("user.dir") + "\\src\\main\\resources\\add\\test2.out";
-    puzzle1.readOutputFile(fileOutputPath);
+//    puzzle1.readOutputFile(fileOutputPath);
 //    puzzle1.isIOSolvable();
 
     WritePuzzleStatus writePuzzleStatus = new WritePuzzleStatus(filePathToOutput);

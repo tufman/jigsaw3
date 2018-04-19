@@ -1,15 +1,17 @@
 package puzzle;
 
 public enum Rotation {
-    _90(90),
-    _180(180),
-    _270(270);
+    _0(""),
+    _1("[90]"),
+    _2("[180]"),
+    _3("[270]");
 
-    private int monetaryValue;
-    Rotation(int monetaryValue) {
+    private String monetaryValue;
+    Rotation(String monetaryValue) {
         this.monetaryValue = monetaryValue;
     }
-    public int getMonetaryValue() {
+    public String getMonetaryValue() {
         return this.monetaryValue;
     }
+
 }

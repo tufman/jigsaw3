@@ -77,21 +77,23 @@ public class Puzzle {
 
 
             int id = splittedLineToInt.get(0);
-            if(id <1) {
-                addErrorWrongElementFormat(id,line);
+            if (id < 1) {
+                addErrorWrongElementFormat(id, line);
                 continue;
             }
 
-
+//TODO: add element with rotation
 
             if (splittedLineToInt.size() == 5) {
                 if (verifyIdInRange(id)) {
                     if (verifyAllEdgesInRange(splittedLineToInt)) {
-                        PuzzleElement element = new PuzzleElement(splittedLineToInt);
-                        puzzleElementList.add(element);
-                        puzzleMapper.mapElementToSolutionList(element, element.getId());//puzzleElementList.size());
-                        markExistElement(id);
-                        continue;
+                        for (int rotate = 0; rotate < 4; rotate++) {
+                            PuzzleElement element = new PuzzleElement(splittedLineToInt, rotate);
+                            puzzleElementList.add(element);
+                            puzzleMapper.mapElementToSolutionList(element, element.getId());
+                            markExistElement(id);
+                            continue;
+                        }
                     }
                     // left, top, right and bottom between -1 to 1
                     else {
@@ -110,12 +112,11 @@ public class Puzzle {
             }
         }
 
-
         if (idsForErrorsNotInRange.size() > 0) {
             addErrorForIDsNotInRange();
         }
-
-        if (expectedNumOfElementsFromFirstLine != puzzleElementList.size()) {
+//expectedNumOfElementsFromFirstLine*4 whit rotation
+        if ((expectedNumOfElementsFromFirstLine*4) != puzzleElementList.size()) {
             addErrorMissingPuzzleElements();
         }
 

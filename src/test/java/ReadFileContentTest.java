@@ -1,3 +1,4 @@
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -248,25 +249,29 @@ public class ReadFileContentTest {
 
 
     }
-    @Test
+
+    @Ignore
+    @ParameterizedTest
+    @CsvSource({"test2.in, test2.out"})
     @DisplayName("I/O is solution")
 
-    public void verifyOutputFileIsSolutionForInput () throws IOException {
-        String fileInputPath = System.getProperty("user.dir") + "\\src\\main\\resources\\add\\test2.in";
-        String fileOutputPath = System.getProperty("user.dir") + "\\src\\main\\resources\\add\\test2.out";
+    public void verifyOutputFileIsSolutionForInput (String in, String out) throws IOException {
+        String fileInputPath = System.getProperty("user.dir") + "\\src\\main\\resources\\add\\" +in;//System.getProperty("user.dir") + "\\src\\main\\resources\\add\\test2.in";
+        String fileOutputPath = System.getProperty("user.dir") + "\\src\\main\\resources\\add\\" +out;//System.getProperty("user.dir") + "\\src\\main\\resources\\add\\test2.out";
         Puzzle puzzle = new Puzzle();
         puzzle.readOutputFile(fileOutputPath);
         puzzle.readInputFile(fileInputPath);
         assertTrue(puzzle.isIOSolvable(), "output file is not solution for input");
 
     }
-
-    @Test
+    @Ignore
+    @ParameterizedTest
+    @CsvSource({"test9.in, test9.out"})
     @DisplayName("I/O is not solution")
 
-    public void verifyOutputFileIsNotSolutionForInput () throws IOException {
-        String fileInputPath = System.getProperty("user.dir") + "\\src\\main\\resources\\add\\test9.in";
-        String fileOutputPath = System.getProperty("user.dir") + "\\src\\main\\resources\\add\\test9.out";
+    public void verifyOutputFileIsNotSolutionForInput (String in, String out) throws IOException {
+        String fileInputPath = System.getProperty("user.dir") + "\\src\\main\\resources\\add\\" +in;//System.getProperty("user.dir") + "\\src\\main\\resources\\add\\test2.in";
+        String fileOutputPath = System.getProperty("user.dir") + "\\src\\main\\resources\\add\\" +out;//System.getProperty("user.dir") + "\\src\\main\\resources\\add\\test2.out";
         Puzzle puzzle = new Puzzle();
         puzzle.readOutputFile(fileOutputPath);
         puzzle.readInputFile(fileInputPath);
