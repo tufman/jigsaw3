@@ -1,9 +1,6 @@
 package puzzle;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class PuzzleManager {
 
@@ -19,11 +16,12 @@ public void manage(String filePath, String filePathToOutput) throws IOException 
 //    puzzle1.isIOSolvable();
 
     WritePuzzleStatus writePuzzleStatus = new WritePuzzleStatus(filePathToOutput);
-       if(puzzle1.readInputFile(fileInputPath)) {
+       if(puzzle1.readInputFile(filePath)) {
            PuzzleSolver puzzleSolver = new PuzzleSolver(puzzle1);
-           board = puzzleSolver.start();
-
+           board = puzzleSolver.solve();
+           //write puzzle solution to output file
            writePuzzleStatus.WriteResultToFile(board);
+           //sout
            puzzle1.printSolution();
 
        }else {

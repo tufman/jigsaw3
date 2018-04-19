@@ -149,7 +149,7 @@ public class PuzzleSolverTest {
         listOfInteger.add(1);
 
         PuzzleSolver puzzleSolver = new PuzzleSolver(puzzleElementList, numOfAvailableLineForSolution, availableOptionsForSolution);
-        PuzzleElement[][] board = puzzleSolver.start();
+        PuzzleElement[][] board = puzzleSolver.solve();
         assertTrue(board[0][0].getId() == 1);
         assertTrue(board[0][1].getId() == 2);
         assertTrue(board[1][0].getId() == 3);

@@ -190,7 +190,7 @@ public class ReadFileContentTest {
 
     @ParameterizedTest
     @CsvSource({"9"})
-    @DisplayName("Sum of all edegs is not Zero")
+    @DisplayName("Sum of all edges is not Zero")
     public void sumOfEdgesIsNotZero (String inputFile) throws IOException {
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
 

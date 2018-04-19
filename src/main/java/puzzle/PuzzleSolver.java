@@ -6,11 +6,8 @@ public class PuzzleSolver {
 
     private List<PuzzleElement> elements = new ArrayList<>();
     private ArrayList<Integer> rowOptions;
-    private Map<PuzzleDirections, List<Integer>> positionToElements; // a map between a location within the board to a list of available elements which fits this position
-    private List<Integer> indexesOfTopLowerLetfCorners = new ArrayList<>();
-    private int totalPuzzleElements;
-    private int numOfRowsForSolution;
-    private int numOfColumnsForSolution;
+    // a map between a location within the board to a list of available elements which fits this position
+    private Map<PuzzleDirections, List<Integer>> positionToElements;
     private PuzzleElement[][] board;
     private int rows;
     private int columns;
@@ -28,12 +25,12 @@ public class PuzzleSolver {
         this.positionToElements = puzzle1.getAvailableOptionsForSolution();
     }
 
-    public PuzzleElement[][] start() {
+    public PuzzleElement[][] solve() {
 
         for (int i = 0; i< rowOptions.size(); i++) {
             int r = rowOptions.get(i);
             int c = elements.size() / r;
-            // try to buid a puzzle
+            // try to build a puzzle
 
             initPuzzle(c,r);
 
@@ -45,13 +42,13 @@ public class PuzzleSolver {
         return null;
     }
 
-    public void initPuzzle(int columns, int rows) {
+    private void initPuzzle(int columns, int rows) {
         this.columns = columns;
         this.rows = rows;
         board = new PuzzleElement[rows][columns];
     }
 
-    public PuzzleElement[][] solve(int r, int c, List<PuzzleElement> piecesLeft) {
+    private PuzzleElement[][] solve(int r, int c, List<PuzzleElement> piecesLeft) {
 
         if (isSolved(r,c))
             return board;
@@ -128,7 +125,7 @@ public class PuzzleSolver {
         return false;
     }
 
-    public boolean fit(int puzzleElement, PuzzleDirections direction){
+    private boolean fit(int puzzleElement, PuzzleDirections direction){
         return positionToElements.get(direction).contains(puzzleElement);
 
     }
