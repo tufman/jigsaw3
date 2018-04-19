@@ -27,7 +27,7 @@ public void manage(String filePath, String filePathToOutput) throws IOException 
        }else {
            writePuzzleStatus.WriteErrorsToFile(puzzle1.getErrorsReadingInputFile());
        }
-    System.out.println("the output puzzle is correct: "+ puzzle1.isIOSolvable());
+//    System.out.println("the output puzzle is correct: "+ puzzle1.isIOSolvable());
     }
 
 }
