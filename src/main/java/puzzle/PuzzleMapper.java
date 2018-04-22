@@ -32,31 +32,40 @@ public class PuzzleMapper {
     private  Map<PuzzleDirections, List<Integer>> availableOptionsForSolution = new HashMap<>();
 
     public void addElementToStructure(PuzzleElement e){
-        int kye = 0;
+        int key = 0;
         List<PuzzleElement>list;
-
-
+    //TODO: add joker on right
         //create real element without joker
-        kye = e.getLeft()*1000 + e.getTop()*100 + e.getRight()*10 + e.getBottom();
-        if(puzzleStructure.get(kye)==null) {
+        key = e.getLeft()*1000 + e.getTop()*100 + e.getRight()*10 + e.getBottom();
+        if(puzzleStructure.get(key)==null) {
             list = new ArrayList<>();
-        }else list = new ArrayList<>(puzzleStructure.get(kye));
+        }else list = new ArrayList<>(puzzleStructure.get(key));
         list.add(e);
-        puzzleStructure.put(kye,list);
+        puzzleStructure.put(key,list);
+
         //create element with joker on bottom
-        kye = e.getLeft()*1000 + e.getTop()*100 + e.getRight()*10 + 5;
-        if(puzzleStructure.get(kye)==null) {
+        key = e.getLeft()*1000 + e.getTop()*100 + e.getRight()*10 + 5;
+        if(puzzleStructure.get(key)==null) {
             list = new ArrayList<>();
-        }else list = new ArrayList<>(puzzleStructure.get(kye));
+        }else list = new ArrayList<>(puzzleStructure.get(key));
         list.add(e);
-        puzzleStructure.put(kye,list);
+        puzzleStructure.put(key,list);
+
+        //create element with joker on right
+        key = e.getLeft()*1000 + e.getTop()*100 + 5*10 + e.getBottom();
+        if(puzzleStructure.get(key)==null) {
+            list = new ArrayList<>();
+        }else list = new ArrayList<>(puzzleStructure.get(key));
+        list.add(e);
+        puzzleStructure.put(key,list);
+
         //create element with joker on right&bottom
-        kye = e.getLeft()*1000 + e.getTop()*100 + 5*10 + 5;
-        if(puzzleStructure.get(kye)==null) {
+        key = e.getLeft()*1000 + e.getTop()*100 + 5*10 + 5;
+        if(puzzleStructure.get(key)==null) {
             list = new ArrayList<>();
-        }else list = new ArrayList<>(puzzleStructure.get(kye));
+        }else list = new ArrayList<>(puzzleStructure.get(key));
         list.add(e);
-        puzzleStructure.put(kye,list);
+        puzzleStructure.put(key,list);
     }
 
 

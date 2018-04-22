@@ -134,7 +134,7 @@ public class Puzzle {
         if (errorsReadingInputFile.size() == 0 && numOfAvailableRowsForSolution != null && puzzleElementList != null && availableOptionsForSolution.get(PuzzleDirections.TOP_LEFT_CORNER).size() > 0) {
 
         } else if (errorsReadingInputFile.size() > 0) {
-
+//TODO: check if in use
         }
 
     }
