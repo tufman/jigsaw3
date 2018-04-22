@@ -171,7 +171,7 @@ public class ReadFileContentTest {
         readFileContent.readInputFile(filePath);
         readFileContent.printListOfElements();
 
-        assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == 2);
+        assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == 8);
         assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle of size <4> cannot have the following IDs: 8,6"));
         assertTrue(readFileContent.verifyErrorExistInList("ERROR: Missing puzzle element(s) with the following IDs: 1,3"));
     }
