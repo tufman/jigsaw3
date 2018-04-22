@@ -12,6 +12,7 @@ public class PuzzleSolver {
     private int rows;
     private int columns;
 
+    //TODO: remove - this is for test the logic of the solver by Unit test....
     public PuzzleSolver(List<PuzzleElement> elements, ArrayList<Integer> rowOptions, Map<PuzzleDirections, List<Integer>> positionToElements) {
         this.elements = elements;
         this.rowOptions = rowOptions;
@@ -63,7 +64,7 @@ public class PuzzleSolver {
                 piecesLeft2.remove(p);
 
                 // (can stop here and return success if piecesLeft2 is empty)
-                // Find the next poisition
+                // Find the next position
                 Position next = nextPos(r, c);
 
                 // Recurse to try next square
