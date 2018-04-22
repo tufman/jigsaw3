@@ -17,7 +17,6 @@ public void manage(String filePath, String filePathToOutput) throws IOException 
            board = puzzleSolver.solve();
            //write puzzle solution to output file
            writePuzzleStatus.WriteResultToFile(board);
-           //sout
            puzzle1.printSolution();
 
        }else {

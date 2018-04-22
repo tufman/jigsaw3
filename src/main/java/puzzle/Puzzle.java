@@ -5,8 +5,6 @@ import java.util.*;
 
 public class Puzzle {
 
-//    private String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\main\\resources\\Good4Pieces";
-//    private String filePathToSave = System.getProperty("user.dir") + "\\src\\main\\resources\\result.txt";
     private int expectedNumOfElementsFromFirstLine;
     private List<PuzzleElement> puzzleElementList = new ArrayList<>();
 
@@ -26,7 +24,6 @@ public class Puzzle {
     private PuzzleMapper puzzleMapper = new PuzzleMapper();
 
     private Properties prop = null;
-    private List<Integer> idsList;
 
     public Puzzle() {
     }
@@ -339,26 +336,11 @@ public class Puzzle {
         return errorsReadingInputFile.contains(error);
     }
 
-    public PuzzleElement getElementByIndex(int index) {
-        return puzzleElementList.get(index);
-    }
 
     public int getActualNumOfElementsReadFromInputFile() {
         return puzzleElementList.size();
     }
 
-    private void WriteErrorsToFile(List<String> errorsReadingInputFile, String filePathToSave) throws IOException {
-
-        File file = new File(filePathToSave + "//results");
-
-        try (FileOutputStream fos = new FileOutputStream(filePathToSave);
-             OutputStreamWriter osr = new OutputStreamWriter(fos)) {
-            for (String err : errorsReadingInputFile) {
-                osr.write(err + '\n');
-            }
-
-        }
-    }
 
 //reade output file with ids only
     public void readOutputFile(String filePath) throws IOException {
@@ -510,9 +492,7 @@ public class Puzzle {
         return true;
     }
 //return list of ids from output file
-    public List<Integer> getIdsList() {
-        return idsList;
-    }
+
 
     public Map<PuzzleDirections,List<Integer>> getSolutionMap() {
         return puzzleMapper.getSolutionMap();
