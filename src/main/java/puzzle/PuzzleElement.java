@@ -1,5 +1,9 @@
 package puzzle;
 
+/*
+@Author Shay Tufman
+ */
+
 import java.util.ArrayList;
 
 public class PuzzleElement {

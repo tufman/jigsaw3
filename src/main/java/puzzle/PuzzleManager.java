@@ -1,5 +1,9 @@
 package puzzle;
 
+/*
+@Author Yelena Koviar
+ */
+
 import java.io.IOException;
 
 public class PuzzleManager {

@@ -1,5 +1,9 @@
 package puzzle;
 
+/*
+@Author Oded Kessler
+ */
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;

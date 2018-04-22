@@ -1,5 +1,9 @@
 package puzzle;
 
+/*
+@Author Yelena Koviar
+ */
+
 import java.util.*;
 
 public class PuzzleSolver {

@@ -1,5 +1,9 @@
 package puzzle;
 
+/*
+@Author Shay Tufman
+ */
+
 public enum PuzzleDirections {
     LEFT_PLUS("LEFT_PLUS"),
     LEFT_ZERO("LEFT_ZERO"),

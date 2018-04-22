@@ -1,5 +1,10 @@
 package puzzle;
 
+
+/*
+@Author Shay Tufman
+ */
+
 import java.io.*;
 import java.net.URL;
 import java.util.Properties;
