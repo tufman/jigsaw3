@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PuzzleMapper {
-
+    Map<Integer, List<PuzzleElement>> puzzleStructure = new HashMap<>();
     //I think it will be easier to fill the list as part of the file reading,
     // and in the end before we will send it to Solver, to put it in the relevant Map
     private  List<Integer> leftPlus = new ArrayList<>();
@@ -31,7 +31,33 @@ public class PuzzleMapper {
     //Map that will hold all the Keys "TopLeft", "BottomPlus" and the relevant List of integers that will point to their reference in the Puzzle List<PuzzleElement> puzzleElementList
     private  Map<PuzzleDirections, List<Integer>> availableOptionsForSolution = new HashMap<>();
 
+    public void addElementToStructure(PuzzleElement e){
+        int kye = 0;
+        List<PuzzleElement>list;
 
+
+        //create real element without joker
+        kye = e.getLeft()*1000 + e.getTop()*100 + e.getRight()*10 + e.getBottom();
+        if(puzzleStructure.get(kye)==null) {
+            list = new ArrayList<>();
+        }else list = new ArrayList<>(puzzleStructure.get(kye));
+        list.add(e);
+        puzzleStructure.put(kye,list);
+        //create element with joker on bottom
+        kye = e.getLeft()*1000 + e.getTop()*100 + e.getRight()*10 + 5;
+        if(puzzleStructure.get(kye)==null) {
+            list = new ArrayList<>();
+        }else list = new ArrayList<>(puzzleStructure.get(kye));
+        list.add(e);
+        puzzleStructure.put(kye,list);
+        //create element with joker on right&bottom
+        kye = e.getLeft()*1000 + e.getTop()*100 + 5*10 + 5;
+        if(puzzleStructure.get(kye)==null) {
+            list = new ArrayList<>();
+        }else list = new ArrayList<>(puzzleStructure.get(kye));
+        list.add(e);
+        puzzleStructure.put(kye,list);
+    }
 
 
 

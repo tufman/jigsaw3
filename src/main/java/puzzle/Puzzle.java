@@ -90,7 +90,9 @@ public class Puzzle {
                         for (int rotate = 0; rotate < 4; rotate++) {
                             PuzzleElement element = new PuzzleElement(splittedLineToInt, rotate);
                             puzzleElementList.add(element);
-                            puzzleMapper.mapElementToSolutionList(element, element.getId());
+                            //TODO:
+                            puzzleMapper.addElementToStructure(element);
+//                            puzzleMapper.mapElementToSolutionList(element, element.getId());
                             markExistElement(id);
                             continue;
                         }
