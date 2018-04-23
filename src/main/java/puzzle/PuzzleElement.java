@@ -19,6 +19,8 @@ public class PuzzleElement {
         this.bottom = numFromLine.get(4);
     }
     public PuzzleElement(ArrayList<Integer> numFromLine, int rotation){
+        //TODO Change the switch to something with %4
+
         switch(rotation){
             case 0:  {
                 this.rotation = Rotation._0;

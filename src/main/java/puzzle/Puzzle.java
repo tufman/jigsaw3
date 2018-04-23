@@ -5,8 +5,6 @@ import java.util.*;
 
 public class Puzzle {
 
-//    private String filePath = "C:\\Users\\st198j\\Desktop\\JavaStuff\\jigsaw\\src\\main\\resources\\Good4Pieces";
-//    private String filePathToSave = System.getProperty("user.dir") + "\\src\\main\\resources\\result.txt";
     private int expectedNumOfElementsFromFirstLine;
     private List<PuzzleElement> puzzleElementList = new ArrayList<>();
 
@@ -15,7 +13,7 @@ public class Puzzle {
     }
 
     private List<String> errorsReadingInputFile = new ArrayList<>();
-    private Map<PuzzleDirections, List<Integer>> availableOptionsForSolution = new HashMap<>();
+    private Map<Integer, List<PuzzleElement>> availableOptionsForSolution = new HashMap<>();
     private List<Integer> idsForErrorsNotInRange = new ArrayList<>();
     private ArrayList<Integer> splittedLineToInt = new ArrayList<>();
     private Map<Integer,List<Integer>> puzzleOutput = new HashMap<>();
@@ -123,19 +121,19 @@ public class Puzzle {
         }
 
 
-        this.availableOptionsForSolution = puzzleMapper.getSolutionMap();
+        this.availableOptionsForSolution = puzzleMapper.getPuzzleStructure();
+        System.out.println("size: "+availableOptionsForSolution.size()+"  "+availableOptionsForSolution);
+//        verifyAtLeastOneLineAvailable();
+//        verifyAllCornersExist();
+//        verifySumZero();
 
-        verifyAtLeastOneLineAvailable();
-        verifyAllCornersExist();
-        verifySumZero();
+//        ArrayList<Integer> numOfAvailableRowsForSolution = puzzleMapper.getNumOfRowsForSolution();
 
-        ArrayList<Integer> numOfAvailableRowsForSolution = puzzleMapper.getNumOfRowsForSolution();
-
-        if (errorsReadingInputFile.size() == 0 && numOfAvailableRowsForSolution != null && puzzleElementList != null && availableOptionsForSolution.get(PuzzleDirections.TOP_LEFT_CORNER).size() > 0) {
-
-        } else if (errorsReadingInputFile.size() > 0) {
+//        if (errorsReadingInputFile.size() == 0 && numOfAvailableRowsForSolution != null && puzzleElementList != null && availableOptionsForSolution.get(PuzzleDirections.TOP_LEFT_CORNER).size() > 0) {
+//
+//        } else if (errorsReadingInputFile.size() > 0) {
 //TODO: check if in use
-        }
+//        }
 
     }
 
@@ -192,31 +190,31 @@ public class Puzzle {
         }
     }
 
-    private void verifySumZero() {
-        int leftPlus = availableOptionsForSolution.get(PuzzleDirections.LEFT_PLUS).size() * 1;
-        int leftMinus = availableOptionsForSolution.get(PuzzleDirections.LEFT_MINUS).size() * (-1);
-        int rightPlus = availableOptionsForSolution.get(PuzzleDirections.RIGHT_PLUS).size() * 1;
-        int rightMinus = availableOptionsForSolution.get(PuzzleDirections.RIGHT_MINUS).size() * (-1);
-        int topPlus = availableOptionsForSolution.get(PuzzleDirections.TOP_PLUS).size() * 1;
-        int topMinus = availableOptionsForSolution.get(PuzzleDirections.TOP_MINUS).size() * (-1);
-        int bottomPlus = availableOptionsForSolution.get(PuzzleDirections.BOTTOM_PLUS).size() * 1;
-        int bottomMinus = availableOptionsForSolution.get(PuzzleDirections.BOTTOM_MINUS).size() * (-1);
+//    private void verifySumZero() {
+//        int leftPlus = availableOptionsForSolution.get(PuzzleDirections.LEFT_PLUS).size() * 1;
+//        int leftMinus = availableOptionsForSolution.get(PuzzleDirections.LEFT_MINUS).size() * (-1);
+//        int rightPlus = availableOptionsForSolution.get(PuzzleDirections.RIGHT_PLUS).size() * 1;
+//        int rightMinus = availableOptionsForSolution.get(PuzzleDirections.RIGHT_MINUS).size() * (-1);
+//        int topPlus = availableOptionsForSolution.get(PuzzleDirections.TOP_PLUS).size() * 1;
+//        int topMinus = availableOptionsForSolution.get(PuzzleDirections.TOP_MINUS).size() * (-1);
+//        int bottomPlus = availableOptionsForSolution.get(PuzzleDirections.BOTTOM_PLUS).size() * 1;
+//        int bottomMinus = availableOptionsForSolution.get(PuzzleDirections.BOTTOM_MINUS).size() * (-1);
+//
+//        if (!((leftPlus + leftMinus + rightPlus + rightMinus + topPlus +topMinus + bottomPlus + bottomMinus) == 0)){
+//            errorsReadingInputFile.add(prop.getProperty("sumOfAllEdgesIsNotZero"));
+//        }
+//    }
 
-        if (!((leftPlus + leftMinus + rightPlus + rightMinus + topPlus +topMinus + bottomPlus + bottomMinus) == 0)){
-            errorsReadingInputFile.add(prop.getProperty("sumOfAllEdgesIsNotZero"));
-        }
-    }
-
-    public ArrayList<Integer> getNumOfRowsForSolution() {
-        numOfRowsForSolution = puzzleMapper.getNumOfRowsForSolution();
-        return numOfRowsForSolution;
-    }
+//    public ArrayList<Integer> getNumOfRowsForSolution() {
+//        numOfRowsForSolution = puzzleMapper.getNumOfRowsForSolution();
+//        return numOfRowsForSolution;
+//    }
 
     public List<PuzzleElement> getPuzzleElementList() {
         return puzzleElementList;
     }
 
-    public Map<PuzzleDirections, List<Integer>> getAvailableOptionsForSolution() {
+    public Map<Integer, List<PuzzleElement>> getAvailableOptionsForSolution() {
         return availableOptionsForSolution;
     }
 
@@ -232,34 +230,34 @@ public class Puzzle {
         }
     }
 
-    private void verifyAtLeastOneLineAvailable() {
-        String error = prop.getProperty("wrongNumberOfStraighEdges");
-        if ((this.availableOptionsForSolution.get(PuzzleDirections.LEFT_ZERO).size() == 0) ||
-                (this.availableOptionsForSolution.get(PuzzleDirections.RIGHT_ZERO).size() == 0)) {
-            errorsReadingInputFile.add(error);
-        }
-    }
+//    private void verifyAtLeastOneLineAvailable() {
+//        String error = prop.getProperty("wrongNumberOfStraighEdges");
+//        if ((this.availableOptionsForSolution.get(PuzzleDirections.LEFT_ZERO).size() == 0) ||
+//                (this.availableOptionsForSolution.get(PuzzleDirections.RIGHT_ZERO).size() == 0)) {
+//            errorsReadingInputFile.add(error);
+//        }
+//    }
 
-    private void verifyAllCornersExist() {
-        String error = prop.getProperty("missingCorner");
-        if (this.availableOptionsForSolution.get(PuzzleDirections.TOP_LEFT_CORNER).size() == 0) {
-            String errorTopLeftCorner = error.replace("<>", "TL");
-            errorsReadingInputFile.add(errorTopLeftCorner);
-        }
-        if (this.availableOptionsForSolution.get(PuzzleDirections.TOP_RIGHT_CORNER).size() == 0) {
-            String errorTopRightCorner = error.replace("<>", "TR");
-            errorsReadingInputFile.add(errorTopRightCorner);
-        }
-        if (this.availableOptionsForSolution.get(PuzzleDirections.BOTTOM_LEFT_CORNER).size() == 0) {
-            String errorBottomLeftCorner = error.replace("<>", "BL");
-            errorsReadingInputFile.add(errorBottomLeftCorner);
-        }
-        if (this.availableOptionsForSolution.get(PuzzleDirections.BOTTOM_RIGHT_CORNER).size() == 0) {
-            String errorBottomRight = error.replace("<>", "BR");
-            errorsReadingInputFile.add(errorBottomRight);
-        }
-
-    }
+//    private void verifyAllCornersExist() {
+//        String error = prop.getProperty("missingCorner");
+//        if (this.availableOptionsForSolution.get(PuzzleDirections.TOP_LEFT_CORNER).size() == 0) {
+//            String errorTopLeftCorner = error.replace("<>", "TL");
+//            errorsReadingInputFile.add(errorTopLeftCorner);
+//        }
+//        if (this.availableOptionsForSolution.get(PuzzleDirections.TOP_RIGHT_CORNER).size() == 0) {
+//            String errorTopRightCorner = error.replace("<>", "TR");
+//            errorsReadingInputFile.add(errorTopRightCorner);
+//        }
+//        if (this.availableOptionsForSolution.get(PuzzleDirections.BOTTOM_LEFT_CORNER).size() == 0) {
+//            String errorBottomLeftCorner = error.replace("<>", "BL");
+//            errorsReadingInputFile.add(errorBottomLeftCorner);
+//        }
+//        if (this.availableOptionsForSolution.get(PuzzleDirections.BOTTOM_RIGHT_CORNER).size() == 0) {
+//            String errorBottomRight = error.replace("<>", "BR");
+//            errorsReadingInputFile.add(errorBottomRight);
+//        }
+//
+//    }
 
     private void addErrorWrongFirstLine(String line) {
         String errMsg = prop.getProperty("wrongFirstLineFormat");
@@ -517,7 +515,7 @@ public class Puzzle {
         return idsList;
     }
 
-    public Map<PuzzleDirections,List<Integer>> getSolutionMap() {
-        return puzzleMapper.getSolutionMap();
-    }
+//    public Map<PuzzleDirections,List<Integer>> getSolutionMap() {
+//        return puzzleMapper.getSolutionMap();
+//    }
 }

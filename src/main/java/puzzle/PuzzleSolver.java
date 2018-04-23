@@ -8,8 +8,10 @@ public class PuzzleSolver {
     private ArrayList<Integer> rowOptions;
     // a map between a location within the board to a list of available elements which fits this position
     private Map<PuzzleDirections, List<Integer>> positionToElements;
+    private Map<Integer, List<PuzzleElement>> puzzleStructure;
     private Map<Rotation, List<Integer>> usedElementIdByRotation;
     private PuzzleElement[][] board;
+    PuzzleMapper puzzleMapper = new PuzzleMapper();
     private int rows;
     private int columns;
 
@@ -22,16 +24,15 @@ public class PuzzleSolver {
 
     public PuzzleSolver(Puzzle puzzle1) {
         this.elements = puzzle1.getPuzzleElementList();
-        this.rowOptions = puzzle1.getNumOfRowsForSolution();
-        this.positionToElements = puzzle1.getAvailableOptionsForSolution();
+        this.puzzleStructure = puzzle1.getAvailableOptionsForSolution();
         usedElementIdByRotation = new HashMap<>();
     }
 
     public PuzzleElement[][] solve() {
 
-        for (int i = 0; i< rowOptions.size(); i++) {
-            int r = rowOptions.get(i);
-            int c = elements.size() / r;
+        for (int i = 0; i< 2; i++) {
+            int r = 2;//rowOptions.get(i);
+            int c = 2;//elements.size() / r;
             // try to build a puzzle
 
             initPuzzle(c,r);
@@ -81,31 +82,32 @@ public class PuzzleSolver {
     }
 
     private boolean tryInsert(PuzzleElement e, int r, int c) {
+        PuzzleMapper puzzleMapper = new PuzzleMapper();
         //check if corner
         if (r == 0 && c == 0) { // first TOP_LEFT_CORNER
-            if (isUsed(e) && !fit(e.getId(), PuzzleDirections.TOP_LEFT_CORNER)) return false;
+            if (isUsed(e) && !fit(e.getId(), getPuzzleList(getKey(0,0,5,5)))) return false;
         }
         else if (r == rows-1 && c == 0) { // first BOTTOM_LEFT_CORNER
-            if (isUsed(e) && !fit(e.getId(), PuzzleDirections.BOTTOM_LEFT_CORNER)) return false;
+            if (isUsed(e) && !fit(e.getId(), getPuzzleList(getKey(0,e.getTop(),5,0)))) return false;
         }
         else if (r == rows -1 && c==columns-1) { // last BOTTOM_RIGHT_CORNER
-            if (isUsed(e) && !fit(e.getId(), PuzzleDirections.BOTTOM_RIGHT_CORNER)) return false;
+            if (isUsed(e) && !fit(e.getId(), getPuzzleList(getKey(e.getLeft(),e.getTop(),0,0)))) return false;
         }
         else if (r == 0 && c==columns-1) { // last TOP_RIGHT_CORNER
-            if (isUsed(e) && !fit(e.getId(), PuzzleDirections.TOP_RIGHT_CORNER)) return false;
+            if (isUsed(e) && !fit(e.getId(), getPuzzleList(getKey(e.getLeft(),0,0,5)))) return false;
         }
         //check if edge
         else if (r == 0) { // first row
-            if (isUsed(e) && !(fit(e.getId(), PuzzleDirections.TOP_ZERO) && (board[r][c-1].getRight()+e.getLeft() == 0))) return false;
+            if (isUsed(e) && !(fit(e.getId(), getPuzzleList(getKey(e.getLeft(),0,5,5)))) && (board[r][c-1].getRight()+e.getLeft() == 0)) return false;
         }
         else if (c == 0) { // first column
-            if (isUsed(e) && !(fit(e.getId(), PuzzleDirections.LEFT_ZERO) && (board[r-1][c].getBottom()+e.getTop() == 0))) return false;
+            if (isUsed(e) && !(fit(e.getId(), getPuzzleList(getKey(0,e.getTop(),5,5)))) && (board[r-1][c].getBottom()+e.getTop() == 0)) return false;
         }
         else if (r == rows -1) { // last row
-            if (isUsed(e) && !(fit(e.getId(), PuzzleDirections.BOTTOM_ZERO) && (board[r-1][c].getBottom()+e.getTop() == 0)&& (board[r][c-1].getRight()+e.getLeft() == 0))) return false;
+            if (isUsed(e) && !(fit(e.getId(), getPuzzleList(getKey(e.getLeft(),e.getTop(),5,0)))) && (board[r-1][c].getBottom()+e.getTop() == 0)&& (board[r][c-1].getRight()+e.getLeft() == 0)) return false;
         }
         else if (c==columns-1) { // last column
-            if (isUsed(e) && !(fit(e.getId(), PuzzleDirections.RIGHT_ZERO) && (board[r-1][c].getBottom()+e.getTop() == 0)&& (board[r][c-1].getRight()+e.getLeft() == 0))) return false;
+            if (isUsed(e) && !(fit(e.getId(), getPuzzleList(getKey(e.getLeft(),e.getTop(),0,5)))) && (board[r-1][c].getBottom()+e.getTop() == 0)&& (board[r][c-1].getRight()+e.getLeft() == 0)) return false;
         }
         else { // middle element
             if (isUsed(e) && !((board[r-1][c].getBottom()+e.getTop() == 0)&& (board[r][c-1].getRight()+e.getLeft() == 0))) return false;
@@ -113,6 +115,18 @@ public class PuzzleSolver {
 
         board[r][c]=e;
         return true;
+    }
+
+    private Integer getKey(int l, int t, int r, int b) {
+        return l*1000 + t*100 + r*10 + b;
+    }
+
+    private boolean fit(int id, List<PuzzleElement> puzzleList) {
+        return puzzleList.contains(id);
+    }
+
+    public List<PuzzleElement> getPuzzleList(Integer key) {
+        return puzzleStructure.get(key);
     }
 
     private void setAsUsed(PuzzleElement p) {
@@ -147,7 +161,7 @@ public class PuzzleSolver {
         return false;
     }
 
-    private boolean fit(int puzzleElement, PuzzleDirections direction){
+    private boolean fit1(int puzzleElement, PuzzleDirections direction){
         return positionToElements.get(direction).contains(puzzleElement);
 
     }
