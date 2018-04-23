@@ -7,6 +7,8 @@ public class Puzzle {
 
     private int expectedNumOfElementsFromFirstLine;
     private List<PuzzleElement> puzzleElementList = new ArrayList<>();
+    private Stack<PuzzleElement> puzzleElementListFromInputFile = new Stack<>();
+    private Stack<ArrayList<Integer>> stackOfGoodLines = new Stack<>();
 
     public List<String> getErrorsReadingInputFile() {
         return errorsReadingInputFile;
@@ -56,6 +58,7 @@ public class Puzzle {
         System.out.println("--------------------------------------------");
         String line;
         while ((line = br.readLine()) != null) {
+            splittedLineToInt = new ArrayList<>();
             System.out.println("line: " + line);
             if (line.trim().length() == 0) {
                 continue;
@@ -85,15 +88,16 @@ public class Puzzle {
             if (splittedLineToInt.size() == 5) {
                 if (verifyIdInRange(id)) {
                     if (verifyAllEdgesInRange(splittedLineToInt)) {
-                        for (int rotate = 0; rotate < 4; rotate++) {
-                            PuzzleElement element = new PuzzleElement(splittedLineToInt, rotate);
-                            puzzleElementList.add(element);
-                            //TODO:
-                            puzzleMapper.addElementToStructure(element);
-//                            puzzleMapper.mapElementToSolutionList(element, element.getId());
-                            markExistElement(id);
-                            continue;
-                        }
+
+                        //PuzzleElement element = new PuzzleElement(splittedLineToInt,0);
+                        //puzzleElementListFromInputFile.push(element);
+
+
+                        stackOfGoodLines.push(splittedLineToInt);
+                        markExistElement(splittedLineToInt.get(0));
+                        System.out.println("Check");
+
+
                     }
                     // left, top, right and bottom between -1 to 1
                     else {
@@ -116,16 +120,24 @@ public class Puzzle {
             addErrorForIDsNotInRange();
         }
 //expectedNumOfElementsFromFirstLine*4 whit rotation
-        if ((expectedNumOfElementsFromFirstLine*4) != puzzleElementList.size()) {
+        //if ((expectedNumOfElementsFromFirstLine) != puzzleElementList.size()) {
+        if ((expectedNumOfElementsFromFirstLine) != stackOfGoodLines.size()) {
             addErrorMissingPuzzleElements();
         }
 
 
+        if (stackOfGoodLines.size() >0){
+            createAndMapPuzzleElements();
+        }
+
         this.availableOptionsForSolution = puzzleMapper.getPuzzleStructure();
-        System.out.println("size: "+availableOptionsForSolution.size()+"  "+availableOptionsForSolution);
-//        verifyAtLeastOneLineAvailable();
-//        verifyAllCornersExist();
-//        verifySumZero();
+        System.out.println("availableOptionsForSolution size: "+availableOptionsForSolution.size()+ "  " +availableOptionsForSolution);
+        verifyAtLeastOneLineAvailable();
+        verifyAllCornersExist();
+        verifySumZero();
+
+
+
 
 //        ArrayList<Integer> numOfAvailableRowsForSolution = puzzleMapper.getNumOfRowsForSolution();
 
@@ -134,6 +146,28 @@ public class Puzzle {
 //        } else if (errorsReadingInputFile.size() > 0) {
 //TODO: check if in use
 //        }
+
+    }
+
+    private void createAndMapPuzzleElements() {
+        while (stackOfGoodLines.size() != 0){
+            ArrayList<Integer> popedLineFromStack = stackOfGoodLines.pop();
+
+            //ToDo - take the element from the Stack and send it to multi threads....
+            for (int rotate = 0; rotate < 4; rotate++) {
+                //PuzzleElement element2 = new PuzzleElement(splittedLineToInt, rotate);
+                PuzzleElement element = new PuzzleElement(popedLineFromStack, rotate);
+                puzzleElementList.add(element);
+                //TODO:
+                puzzleMapper.addElementToStructure(element);
+//            markExistElement(element.getId());
+                //TODO - make it a function and add also cases where left = right && top = bottom (only 2 cases)....
+                if (element.getKey() == 1111 || element.getKey() == -1111 || element.getKey() == 0){
+                    break;
+                }
+                continue;
+            }
+        }
 
     }
 
@@ -190,7 +224,7 @@ public class Puzzle {
         }
     }
 
-//    private void verifySumZero() {
+    private void verifySumZero() {
 //        int leftPlus = availableOptionsForSolution.get(PuzzleDirections.LEFT_PLUS).size() * 1;
 //        int leftMinus = availableOptionsForSolution.get(PuzzleDirections.LEFT_MINUS).size() * (-1);
 //        int rightPlus = availableOptionsForSolution.get(PuzzleDirections.RIGHT_PLUS).size() * 1;
@@ -203,7 +237,10 @@ public class Puzzle {
 //        if (!((leftPlus + leftMinus + rightPlus + rightMinus + topPlus +topMinus + bottomPlus + bottomMinus) == 0)){
 //            errorsReadingInputFile.add(prop.getProperty("sumOfAllEdgesIsNotZero"));
 //        }
-//    }
+        if (!(puzzleMapper.getTotalSumOfAllEdges() == 0)){
+            errorsReadingInputFile.add(prop.getProperty("sumOfAllEdgesIsNotZero"));
+        }
+    }
 
 //    public ArrayList<Integer> getNumOfRowsForSolution() {
 //        numOfRowsForSolution = puzzleMapper.getNumOfRowsForSolution();
@@ -230,34 +267,56 @@ public class Puzzle {
         }
     }
 
-//    private void verifyAtLeastOneLineAvailable() {
-//        String error = prop.getProperty("wrongNumberOfStraighEdges");
-//        if ((this.availableOptionsForSolution.get(PuzzleDirections.LEFT_ZERO).size() == 0) ||
-//                (this.availableOptionsForSolution.get(PuzzleDirections.RIGHT_ZERO).size() == 0)) {
-//            errorsReadingInputFile.add(error);
-//        }
-//    }
+    private void verifyAtLeastOneLineAvailable() {
+        boolean hasLeftZero = false;
+        boolean hasRightZero = false;
+        for (int keyInMap : this.availableOptionsForSolution.keySet()){
+            //Left is 0
+            if ((keyInMap / 1000) < 0){
+                hasLeftZero = true;
+            }
+            //Right is 0
+            if (((keyInMap / 10)%10) == 0){
+                hasRightZero = true;
+            }
+            if (hasLeftZero && hasRightZero){
+                break;
+            }
+        }
+        String error = prop.getProperty("wrongNumberOfStraighEdges");
+        errorsReadingInputFile.add(error);
+    }
 
-//    private void verifyAllCornersExist() {
-//        String error = prop.getProperty("missingCorner");
-//        if (this.availableOptionsForSolution.get(PuzzleDirections.TOP_LEFT_CORNER).size() == 0) {
-//            String errorTopLeftCorner = error.replace("<>", "TL");
-//            errorsReadingInputFile.add(errorTopLeftCorner);
-//        }
-//        if (this.availableOptionsForSolution.get(PuzzleDirections.TOP_RIGHT_CORNER).size() == 0) {
-//            String errorTopRightCorner = error.replace("<>", "TR");
-//            errorsReadingInputFile.add(errorTopRightCorner);
-//        }
-//        if (this.availableOptionsForSolution.get(PuzzleDirections.BOTTOM_LEFT_CORNER).size() == 0) {
-//            String errorBottomLeftCorner = error.replace("<>", "BL");
-//            errorsReadingInputFile.add(errorBottomLeftCorner);
-//        }
-//        if (this.availableOptionsForSolution.get(PuzzleDirections.BOTTOM_RIGHT_CORNER).size() == 0) {
-//            String errorBottomRight = error.replace("<>", "BR");
-//            errorsReadingInputFile.add(errorBottomRight);
-//        }
-//
-//    }
+    private void verifyAllCornersExist() {
+
+        /*
+        7 - Top Left Corner
+        77 - Top Right Corner
+        777 - Bottom Left Corner
+        7777 - Bottom Right Corner
+         */
+
+        //TODO add the logic of 7 , 77, 777, 7777 to  puzzleMapper.addElementToStructure(element);
+
+        String error = prop.getProperty("missingCorner");
+        if (this.availableOptionsForSolution.get(7) == null) {
+            String errorTopLeftCorner = error.replace("<>", "TL");
+            errorsReadingInputFile.add(errorTopLeftCorner);
+        }
+        if (this.availableOptionsForSolution.get(77) == null) {
+            String errorTopRightCorner = error.replace("<>", "TR");
+            errorsReadingInputFile.add(errorTopRightCorner);
+        }
+        if (this.availableOptionsForSolution.get(777) == null) {
+            String errorBottomLeftCorner = error.replace("<>", "BL");
+            errorsReadingInputFile.add(errorBottomLeftCorner);
+        }
+        if (this.availableOptionsForSolution.get(7777) == null) {
+            String errorBottomRight = error.replace("<>", "BR");
+            errorsReadingInputFile.add(errorBottomRight);
+        }
+
+    }
 
     private void addErrorWrongFirstLine(String line) {
         String errMsg = prop.getProperty("wrongFirstLineFormat");

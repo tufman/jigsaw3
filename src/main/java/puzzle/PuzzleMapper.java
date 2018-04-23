@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 public class PuzzleMapper {
-    Map<Integer, List<PuzzleElement>> puzzleStructure = new HashMap<>();
+    private Map<Integer, List<PuzzleElement>> puzzleStructure = new HashMap<>();
+    private int totalSumOfAllEdges;
     //I think it will be easier to fill the list as part of the file reading,
     // and in the end before we will send it to Solver, to put it in the relevant Map
 //    private  List<Integer> leftPlus = new ArrayList<>();
@@ -32,6 +33,9 @@ public class PuzzleMapper {
     private  Map<PuzzleDirections, List<Integer>> availableOptionsForSolution = new HashMap<>();
 
     public void addElementToStructure(PuzzleElement e){
+
+        totalSumOfAllEdges += e.getKey();
+
         int key = 0;
         List<PuzzleElement>list;
         //create real element without joker
@@ -67,7 +71,12 @@ public class PuzzleMapper {
         puzzleStructure.put(key,list);
     }
 
-//    public List<PuzzleElement> getPuzzleList(Integer key) {
+    public int getTotalSumOfAllEdges() {
+        return totalSumOfAllEdges;
+    }
+
+
+    //    public List<PuzzleElement> getPuzzleList(Integer key) {
 //        return puzzleStructure.get(key);
 //    }
 

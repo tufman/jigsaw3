@@ -10,6 +10,7 @@ public class PuzzleElement {
     private int right;
     private int bottom;
     private Rotation rotation;
+    private int key;
     //public PuzzleElement(int id, int left, int top, int right, int bottom){
     public PuzzleElement(ArrayList<Integer> numFromLine){
         this.id = numFromLine.get(0);
@@ -58,6 +59,10 @@ public class PuzzleElement {
                 this.bottom = numFromLine.get(1);
             }
         }
+    }
+
+    public int getKey() {
+        return left*1000 + top*100 + right*10 + bottom;
     }
 
     @Override
