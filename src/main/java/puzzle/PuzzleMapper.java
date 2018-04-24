@@ -17,14 +17,30 @@ public class PuzzleMapper {
     public void addElementToStructure(PuzzleElement e){
 
         totalSumOfAllEdges += e.getSumOfEdges();
-        int key = 0;
-        List<PuzzleElement>list;
 
+        mapZeroEdges(e);
+
+        mapCorners(e);
+
+
+        //create real element without joker
+        addElementToMapByKey(e, e.getSumOfEdges());
+
+        //create element with joker on bottom
+        addElementToMapByKey(e, e.getSumOfEdgesJokerBottom());
+
+        //create element with joker on right
+        addElementToMapByKey(e, e.getSumOfEdgesJokerRight());
+
+        //create element with joker on right&bottom
+        addElementToMapByKey(e, e.getSumOfEdgesJokerRightAndBottom());
+    }
+
+    private void mapCorners(PuzzleElement e) {
         int keyForTopLeftCorner = 7;
         int keyForTopRightCorner = 77;
         int keyForBottomLeftCorner = 777;
         int keyForBottomRightCorner = 7777;
-
 
         //TopLeftCorner
         if(e.getTopLeftCorner()){
@@ -45,24 +61,33 @@ public class PuzzleMapper {
         if(e.getBottomRightCorner()){
             addElementToMapByKey(e, keyForBottomRightCorner);
         }
+    }
 
+    private void mapZeroEdges(PuzzleElement e) {
+        int keyForLeftZero = 4;
+        int keyForTopZero = 44;
+        int keyForRightZero = 444;
+        int keyBottomZero = 4444;
 
+        //LeftZero
+        if (e.getLeft() == 0){
+            addElementToMapByKey(e, keyForLeftZero);
+        }
 
-        //create real element without joker
-        key = e.getSumOfEdges();
-        addElementToMapByKey(e, key);
+        //TopZero
+        if (e.getTop() == 0){
+            addElementToMapByKey(e, keyForTopZero);
+        }
 
-        //create element with joker on bottom
-        key = e.getSumOfEdgesJokerBottom();
-        addElementToMapByKey(e, key);
+        //RightZero
+        if (e.getRight() == 0){
+            addElementToMapByKey(e, keyForRightZero);
+        }
 
-        //create element with joker on right
-        key = e.getSumOfEdgesJokerRight();
-        addElementToMapByKey(e, key);
-
-        //create element with joker on right&bottom
-        key = e.getSumOfEdgesJokerRightAndBottom();
-        addElementToMapByKey(e, key);
+        //BottomZero
+        if (e.getBottom() == 0){
+            addElementToMapByKey(e, keyBottomZero);
+        }
     }
 
     private void addElementToMapByKey(PuzzleElement e, int key) {
