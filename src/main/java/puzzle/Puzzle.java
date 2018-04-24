@@ -162,7 +162,7 @@ public class Puzzle {
                 puzzleMapper.addElementToStructure(element);
 //            markExistElement(element.getId());
                 //TODO - make it a function and add also cases where left = right && top = bottom (only 2 cases)....
-                if (element.getKey() == 1111 || element.getKey() == -1111 || element.getKey() == 0){
+                if (element.getSumOfEdges() == 1111 || element.getSumOfEdges() == -1111 || element.getSumOfEdges() == 0){
                     break;
                 }
                 continue;

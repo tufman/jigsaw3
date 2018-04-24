@@ -61,7 +61,7 @@ public class PuzzleElement {
         }
     }
 
-    public int getKey() {
+    public int getSumOfEdges() {
         return left*1000 + top*100 + right*10 + bottom;
     }
 
