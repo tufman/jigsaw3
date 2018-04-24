@@ -28,75 +28,51 @@ public class PuzzleMapper {
 
         //TopLeftCorner
         if(e.getTopLeftCorner()){
-            if(puzzleStructure.get(keyForTopLeftCorner)==null) {
-                list = new ArrayList<>();
-            }else list = new ArrayList<>(puzzleStructure.get(keyForTopLeftCorner));
-            list.add(e);
-            puzzleStructure.put(keyForTopLeftCorner,list);
+            addElementToMapByKey(e, keyForTopLeftCorner);
         }
 
         //TopRightCorner
         if(e.getTopRightCorner()){
-            if(puzzleStructure.get(keyForTopRightCorner)==null) {
-                list = new ArrayList<>();
-            }else list = new ArrayList<>(puzzleStructure.get(keyForTopRightCorner));
-            list.add(e);
-            puzzleStructure.put(keyForTopRightCorner,list);
+            addElementToMapByKey(e, keyForTopRightCorner);
         }
 
         //BottomLeftCorner
         if(e.getBottomLeftCorner()){
-            if(puzzleStructure.get(keyForBottomLeftCorner)==null) {
-                list = new ArrayList<>();
-            }else list = new ArrayList<>(puzzleStructure.get(keyForBottomLeftCorner));
-            list.add(e);
-            puzzleStructure.put(keyForBottomLeftCorner,list);
+            addElementToMapByKey(e, keyForBottomLeftCorner);
         }
 
         //BottomLeftCorner
         if(e.getBottomRightCorner()){
-            if(puzzleStructure.get(keyForBottomRightCorner)==null) {
-                list = new ArrayList<>();
-            }else list = new ArrayList<>(puzzleStructure.get(keyForBottomRightCorner));
-            list.add(e);
-            puzzleStructure.put(keyForBottomRightCorner,list);
+            addElementToMapByKey(e, keyForBottomRightCorner);
         }
 
 
 
         //create real element without joker
         key = e.getSumOfEdges();
-        if(puzzleStructure.get(key)==null) {
-            list = new ArrayList<>();
-        }else list = new ArrayList<>(puzzleStructure.get(key));
-        list.add(e);
-        puzzleStructure.put(key,list);
+        addElementToMapByKey(e, key);
 
         //create element with joker on bottom
         key = e.getSumOfEdgesJokerBottom();
-        if(puzzleStructure.get(key)==null) {
-            list = new ArrayList<>();
-        }else list = new ArrayList<>(puzzleStructure.get(key));
-        list.add(e);
-        puzzleStructure.put(key,list);
+        addElementToMapByKey(e, key);
 
         //create element with joker on right
         key = e.getSumOfEdgesJokerRight();
-        if(puzzleStructure.get(key)==null) {
-            list = new ArrayList<>();
-        }else list = new ArrayList<>(puzzleStructure.get(key));
-        list.add(e);
-        puzzleStructure.put(key,list);
+        addElementToMapByKey(e, key);
 
         //create element with joker on right&bottom
         key = e.getSumOfEdgesJokerRightAndBottom();
+        addElementToMapByKey(e, key);
+    }
+
+    private void addElementToMapByKey(PuzzleElement e, int key) {
+        List<PuzzleElement> list;
         if(puzzleStructure.get(key)==null) {
             list = new ArrayList<>();
         }else list = new ArrayList<>(puzzleStructure.get(key));
         list.add(e);
         puzzleStructure.put(key,list);
     }
-
 
 
     public int getTotalSumOfAllEdges() {
