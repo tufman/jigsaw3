@@ -64,6 +64,16 @@ public class PuzzleElement {
     public int getSumOfEdges() {
         return left*1000 + top*100 + right*10 + bottom;
     }
+    public int getSumOfEdgesJokerBottom() {
+        return left*1000 + top*100 + right*10 + 5;
+    }
+    public int getSumOfEdgesJokerRight() {
+        return left*1000 + top*100 + 50 + bottom;
+    }
+    public int getSumOfEdgesJokerRightAndBottom() {
+        return left*1000 + top*100 + 55;
+    }
+
 
     @Override
     public boolean equals (Object obj){
@@ -106,5 +116,22 @@ public class PuzzleElement {
     @Override
     public String toString() {
         return String.format("[ID %d] [ %d] [ %d] [ %d] [ %d] [%s]", id, left, top, right, bottom, rotation);
+    }
+
+
+    public boolean getTopLeftCorner() {
+        return ((left == 0) && (top == 0));
+    }
+
+    public boolean getTopRightCorner() {
+        return ((top == 0) && (right == 0));
+    }
+
+    public boolean getBottomLeftCorner() {
+        return ((bottom == 0) && (left == 0));
+    }
+
+    public boolean getBottomRightCorner() {
+        return ((bottom == 0) && (right == 0));
     }
 }
