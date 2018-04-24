@@ -1,17 +1,13 @@
 import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import puzzle.Puzzle;
-import puzzle.PuzzleDirections;
 import puzzle.PuzzleMapper;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -32,7 +28,7 @@ public class ReadFileContentTest {
 
 
         Puzzle readFileContent = new Puzzle();
-        readFileContent.readInputFile(filePath);
+        readFileContent.readInputFile(filePath, isRotation, isMultiThread);
         assertEquals(expectedVal,readFileContent.getNumOfElementsFromFirstLine());
 
 
@@ -47,7 +43,7 @@ public class ReadFileContentTest {
 
         Puzzle puzzle = new Puzzle();
 
-        puzzle.readInputFile(filePath);
+        puzzle.readInputFile(filePath, isRotation, isMultiThread);
 
         assertTrue(puzzle.verifyErrorExistInList("ERROR: Num Of Elements is not valid NumElements=AAA,22"));
         assertTrue(puzzle.verifyErrorExistInList("ERROR: Num Of Elements is not valid NumElements=AAA"));
@@ -65,7 +61,7 @@ public class ReadFileContentTest {
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
 
         Puzzle readFileContent = new Puzzle();
-        readFileContent.readInputFile(filePath);
+        readFileContent.readInputFile(filePath, isRotation, isMultiThread);
 
 
         assertTrue(readFileContent.verifyErrorExistInList("ERROR: Puzzle of size <5> cannot have the following IDs: 6,8,9"));
@@ -83,7 +79,7 @@ public class ReadFileContentTest {
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
 
         Puzzle readFileContent = new Puzzle();
-        readFileContent.readInputFile(filePath);
+        readFileContent.readInputFile(filePath, isRotation, isMultiThread);
         //readFileContent.printListOfElements();
         //assertTrue(readFileContent.verifyErrorExistInList("Please correct this line (should contain int ) D 1 1 1 1"));
         //Range 1 to -1
@@ -113,7 +109,7 @@ public class ReadFileContentTest {
 //        puzzleMapper.claenSolutionMap();
 
         Puzzle readFileContent = new Puzzle();
-        readFileContent.readInputFile(filePath);
+        readFileContent.readInputFile(filePath, isRotation, isMultiThread);
         //readFileContent.printListOfElements();
 
 
@@ -135,7 +131,7 @@ public class ReadFileContentTest {
 //        puzzleMapper.claenSolutionMap();
 
         Puzzle readFileContent = new Puzzle();
-        readFileContent.readInputFile(filePath);
+        readFileContent.readInputFile(filePath, isRotation, isMultiThread);
 
         assertTrue(readFileContent.verifyErrorExistInList("ERROR: Cannot solve puzzle: wrong number of straight edges"));
 
@@ -149,7 +145,7 @@ public class ReadFileContentTest {
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
 
         Puzzle readFileContent = new Puzzle();
-        readFileContent.readInputFile(filePath);
+        readFileContent.readInputFile(filePath, isRotation, isMultiThread);
         readFileContent.printListOfElements();
 
 
@@ -168,7 +164,7 @@ public class ReadFileContentTest {
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
 
         Puzzle readFileContent = new Puzzle();
-        readFileContent.readInputFile(filePath);
+        readFileContent.readInputFile(filePath, isRotation, isMultiThread);
         readFileContent.printListOfElements();
 
         assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == 8);
@@ -183,7 +179,7 @@ public class ReadFileContentTest {
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
 
         Puzzle readFileContent = new Puzzle();
-        readFileContent.readInputFile(filePath);
+        readFileContent.readInputFile(filePath, isRotation, isMultiThread);
         //readFileContent.printListOfElements();
 
         //assertTrue(readFileContent.getActualNumOfElementsReadFromInputFile() == readFileContent.getNumOfElementsFromFirstLine());
@@ -196,7 +192,7 @@ public class ReadFileContentTest {
         String filePath = System.getProperty("user.dir") + "\\src\\test\\java\\" + inputFile;
 
         Puzzle readFileContent = new Puzzle();
-        readFileContent.readInputFile(filePath);
+        readFileContent.readInputFile(filePath, isRotation, isMultiThread);
         //readFileContent.printListOfElements();
 
         assertTrue(readFileContent.verifyErrorExistInList("ERROR: Sum of all edges is not zero."));
@@ -211,7 +207,7 @@ public class ReadFileContentTest {
 
         Puzzle readFileContent = new Puzzle();
         try {
-            readFileContent.readInputFile(filePath);
+            readFileContent.readInputFile(filePath, isRotation, isMultiThread);
         }catch (IOException e ) {
 
         }
@@ -233,7 +229,7 @@ public class ReadFileContentTest {
         //puzzleMapper.claenSolutionMap();
 
         Puzzle readFileContent = new Puzzle();
-        readFileContent.readInputFile(filePath);
+        readFileContent.readInputFile(filePath, isRotation, isMultiThread);
         readFileContent.printListOfElements();
 
 
@@ -260,7 +256,7 @@ public class ReadFileContentTest {
         String fileOutputPath = System.getProperty("user.dir") + "\\src\\main\\resources\\add\\" +out;//System.getProperty("user.dir") + "\\src\\main\\resources\\add\\test2.out";
         Puzzle puzzle = new Puzzle();
         puzzle.readOutputFile(fileOutputPath);
-        puzzle.readInputFile(fileInputPath);
+        puzzle.readInputFile(fileInputPath, isRotation, isMultiThread);
         assertTrue(puzzle.isIOSolvable(), "output file is not solution for input");
 
     }
@@ -274,7 +270,7 @@ public class ReadFileContentTest {
         String fileOutputPath = System.getProperty("user.dir") + "\\src\\main\\resources\\add\\" +out;//System.getProperty("user.dir") + "\\src\\main\\resources\\add\\test2.out";
         Puzzle puzzle = new Puzzle();
         puzzle.readOutputFile(fileOutputPath);
-        puzzle.readInputFile(fileInputPath);
+        puzzle.readInputFile(fileInputPath, isRotation, isMultiThread);
         assertFalse(puzzle.isIOSolvable(), "output file is solution for input");
 
     }

@@ -28,11 +28,17 @@ public class Puzzle {
     private Properties prop = null;
     private List<Integer> idsList;
 
+    private boolean isRotation;
+    private boolean isMultiThread;
+
     public Puzzle() {
     }
 
 
-    public boolean readInputFile(String filePath) throws IOException {
+    public boolean readInputFile(String filePath, boolean isRotation, boolean isMultiThread) throws IOException {
+        this.isRotation = isRotation;
+        this.isMultiThread = isMultiThread;
+
         FileInputStream fis = null;
         try {
             fis = new FileInputStream(filePath);
@@ -225,18 +231,6 @@ public class Puzzle {
     }
 
     private void verifySumZero() {
-//        int leftPlus = availableOptionsForSolution.get(PuzzleDirections.LEFT_PLUS).size() * 1;
-//        int leftMinus = availableOptionsForSolution.get(PuzzleDirections.LEFT_MINUS).size() * (-1);
-//        int rightPlus = availableOptionsForSolution.get(PuzzleDirections.RIGHT_PLUS).size() * 1;
-//        int rightMinus = availableOptionsForSolution.get(PuzzleDirections.RIGHT_MINUS).size() * (-1);
-//        int topPlus = availableOptionsForSolution.get(PuzzleDirections.TOP_PLUS).size() * 1;
-//        int topMinus = availableOptionsForSolution.get(PuzzleDirections.TOP_MINUS).size() * (-1);
-//        int bottomPlus = availableOptionsForSolution.get(PuzzleDirections.BOTTOM_PLUS).size() * 1;
-//        int bottomMinus = availableOptionsForSolution.get(PuzzleDirections.BOTTOM_MINUS).size() * (-1);
-//
-//        if (!((leftPlus + leftMinus + rightPlus + rightMinus + topPlus +topMinus + bottomPlus + bottomMinus) == 0)){
-//            errorsReadingInputFile.add(prop.getProperty("sumOfAllEdgesIsNotZero"));
-//        }
         if (!(puzzleMapper.getTotalSumOfAllEdges() == 0)){
             errorsReadingInputFile.add(prop.getProperty("sumOfAllEdgesIsNotZero"));
         }
