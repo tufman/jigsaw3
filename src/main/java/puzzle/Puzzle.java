@@ -296,7 +296,6 @@ public class Puzzle {
         7777 - Bottom Right Corner
          */
 
-        //TODO add the logic of 7 , 77, 777, 7777 to  puzzleMapper.addElementToStructure(element);
 
         String error = prop.getProperty("missingCorner");
         if (this.availableOptionsForSolution.get(7) == null) {
@@ -315,7 +314,6 @@ public class Puzzle {
             String errorBottomRight = error.replace("<>", "BR");
             errorsReadingInputFile.add(errorBottomRight);
         }
-
     }
 
     private void addErrorWrongFirstLine(String line) {
