@@ -116,11 +116,11 @@ public class Puzzle {
         if (stackOfGoodLines.size() > 0) {
             createAndMapPuzzleElements();
             this.availableOptionsForSolution = puzzleMapper.getPuzzleStructure();
-            System.out.println("availableOptionsForSolution size: " + availableOptionsForSolution.size() + "  " + availableOptionsForSolution);
+//            System.out.println("availableOptionsForSolution size: " + availableOptionsForSolution.size() + "  " + availableOptionsForSolution);
             verifyAtLeastOneLineAvailable();
             verifyAllCornersExist();
             verifySumZero();
-            System.out.println("puzzle: " + puzzleMapper.getPuzzleStructure());
+//            System.out.println("puzzle: " + puzzleMapper.getPuzzleStructure());
         }
     }
 
@@ -140,11 +140,11 @@ public class Puzzle {
 
             for (int rotate = 1; rotate < x; rotate++) {
                 element = new PuzzleElement(popedLineFromStack, rotate);
-                puzzleElementList.add(element);
+//                puzzleElementList.add(element);
                 puzzleMapper.addElementToStructure(element);
             }
         }
-        System.out.println("puz   " + puzzleMapper.getPuzzleStructure().size());
+//        System.out.println("puz   " + "\u001B[32m"+ puzzleMapper.getPuzzleStructure().size()+" puzzle element "+ puzzleElementList );
     }
 
     private void addErrorMissingPuzzleElements() {
@@ -207,8 +207,8 @@ public class Puzzle {
     }
 
     //TODO:new logic for available solution
-    public ArrayList<Integer> getNumOfRowsForSolution() {
-        numOfRowsForSolution = puzzleMapper.getNumOfRowsForSolution();
+    public ArrayList<Integer> getNumOfRowsForSolution(int numOfElm) {
+        numOfRowsForSolution = puzzleMapper.getNumOfRowsForSolution(numOfElm);
         return numOfRowsForSolution;
     }
 

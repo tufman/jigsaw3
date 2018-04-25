@@ -9,7 +9,7 @@ public class PuzzleSolver {
     // a map between a location within the board to a list of available elements which fits this position
     private Map<PuzzleDirections, List<Integer>> positionToElements;
     private Map<Integer, List<PuzzleElement>> puzzleStructure;
-    private Map<Rotation, List<Integer>> usedElementIdByRotation;
+    private Map<Rotation, List<PuzzleElement>> usedElementIdByRotation;
     private PuzzleElement[][] board;
     private List<Integer> availableRowsForSolution;
     PuzzleMapper puzzleMapper = new PuzzleMapper();
@@ -20,20 +20,19 @@ public class PuzzleSolver {
         this.elements = elements;
         this.rowOptions = rowOptions;
         this.positionToElements = positionToElements;
-        usedElementIdByRotation = new HashMap<>();
     }
 
     public PuzzleSolver(Puzzle puzzle1) {
         this.elements = puzzle1.getPuzzleElementList();
         this.puzzleStructure = puzzle1.getAvailableOptionsForSolution();
         usedElementIdByRotation = new HashMap<>();
-        availableRowsForSolution = puzzle1.getNumOfRowsForSolution();
+        availableRowsForSolution = puzzle1.getNumOfRowsForSolution(puzzle1.getPuzzleElementList().size());
     }
 
     public PuzzleElement[][] solve() {
 //TODO: create threadePool for available row for solution
         for (int i = 0; i< availableRowsForSolution.size(); i++) {
-            int r = rowOptions.get(i);
+            int r = availableRowsForSolution.get(i);
             int c = elements.size() / r;
             // try to build a puzzle
 
@@ -62,6 +61,7 @@ public class PuzzleSolver {
         for (PuzzleElement p : elements) {
             setAsUsed(p);
             if (tryInsert(p, r, c)) {
+
                 // It fits: recurse to try the next square
                 // Create the new list of pieces left
 //                List<PuzzleElement> piecesLeft2 = new ArrayList<PuzzleElement>(piecesLeft);
@@ -78,38 +78,38 @@ public class PuzzleSolver {
                     return solution;
                 }
             }
+            else setAsNotUsed(p);
         }
         // no solution with this piece
         return null;
     }
 
     private boolean tryInsert(PuzzleElement e, int r, int c) {
-        PuzzleMapper puzzleMapper = new PuzzleMapper();
         //check if corner
         if (r == 0 && c == 0) { // first TOP_LEFT_CORNER
-            if (isUsed(e) && !fit(e.getId(), getPuzzleList(getKey(0,0,5,5)))) return false;
+            if (isUsed(e) && !fit(e, getPuzzleList(getKey(0,0,5,5)))) return false;
         }
         else if (r == rows-1 && c == 0) { // first BOTTOM_LEFT_CORNER
-            if (isUsed(e) && !fit(e.getId(), getPuzzleList(getKey(0,e.getTop(),5,0)))) return false;
+            if (isUsed(e) && !fit(e, getPuzzleList(getKey(0,e.getTop(),5,0)))) return false;
         }
         else if (r == rows -1 && c==columns-1) { // last BOTTOM_RIGHT_CORNER
-            if (isUsed(e) && !fit(e.getId(), getPuzzleList(getKey(e.getLeft(),e.getTop(),0,0)))) return false;
+            if (isUsed(e) && !fit(e, getPuzzleList(getKey(e.getLeft(),e.getTop(),0,0)))) return false;
         }
         else if (r == 0 && c==columns-1) { // last TOP_RIGHT_CORNER
-            if (isUsed(e) && !fit(e.getId(), getPuzzleList(getKey(e.getLeft(),0,0,5)))) return false;
+            if (isUsed(e) && !fit(e, getPuzzleList(getKey(e.getLeft(),0,0,5)))) return false;
         }
         //check if edge
         else if (r == 0) { // first row
-            if (isUsed(e) && !(fit(e.getId(), getPuzzleList(getKey(e.getLeft(),0,5,5)))) && (board[r][c-1].getRight()+e.getLeft() == 0)) return false;
+            if (isUsed(e) && !(fit(e, getPuzzleList(getKey(e.getLeft(),0,5,5)))) && (board[r][c-1].getRight()+e.getLeft() == 0)) return false;
         }
         else if (c == 0) { // first column
-            if (isUsed(e) && !(fit(e.getId(), getPuzzleList(getKey(0,e.getTop(),5,5)))) && (board[r-1][c].getBottom()+e.getTop() == 0)) return false;
+            if (isUsed(e) && !(fit(e, getPuzzleList(getKey(0,e.getTop(),5,5)))) && (board[r-1][c].getBottom()+e.getTop() == 0)) return false;
         }
         else if (r == rows -1) { // last row
-            if (isUsed(e) && !(fit(e.getId(), getPuzzleList(getKey(e.getLeft(),e.getTop(),5,0)))) && (board[r-1][c].getBottom()+e.getTop() == 0)&& (board[r][c-1].getRight()+e.getLeft() == 0)) return false;
+            if (isUsed(e) && !(fit(e, getPuzzleList(getKey(e.getLeft(),e.getTop(),5,0)))) && (board[r-1][c].getBottom()+e.getTop() == 0)&& (board[r][c-1].getRight()+e.getLeft() == 0)) return false;
         }
         else if (c==columns-1) { // last column
-            if (isUsed(e) && !(fit(e.getId(), getPuzzleList(getKey(e.getLeft(),e.getTop(),0,5)))) && (board[r-1][c].getBottom()+e.getTop() == 0)&& (board[r][c-1].getRight()+e.getLeft() == 0)) return false;
+            if (isUsed(e) && !(fit(e, getPuzzleList(getKey(e.getLeft(),e.getTop(),0,5)))) && (board[r-1][c].getBottom()+e.getTop() == 0)&& (board[r][c-1].getRight()+e.getLeft() == 0)) return false;
         }
         else { // middle element
             if (isUsed(e) && !((board[r-1][c].getBottom()+e.getTop() == 0)&& (board[r][c-1].getRight()+e.getLeft() == 0))) return false;
@@ -123,8 +123,8 @@ public class PuzzleSolver {
         return l*1000 + t*100 + r*10 + b;
     }
 
-    private boolean fit(int id, List<PuzzleElement> puzzleList) {
-        return puzzleList.contains(id);
+    private boolean fit(PuzzleElement pe, List<PuzzleElement> puzzleList) {
+        return puzzleList.contains(pe);
     }
 
     public List<PuzzleElement> getPuzzleList(Integer key) {
@@ -132,20 +132,27 @@ public class PuzzleSolver {
     }
 
     private void setAsUsed(PuzzleElement p) {
-        List<Integer>list;
+        List<PuzzleElement>list;
         if(usedElementIdByRotation.get(p.getRotation())==null) {
             list = new ArrayList<>();
         }else list = new ArrayList<>(usedElementIdByRotation.get(p.getRotation()));
-        list.add(p.getId());
+        list.add(p);
+        usedElementIdByRotation.put(p.getRotation(),list);
+    }
+
+    private void setAsNotUsed(PuzzleElement p) {
+        List<PuzzleElement>list;
+        list = new ArrayList<>(usedElementIdByRotation.get(p.getRotation()));
+        list.remove(p);
         usedElementIdByRotation.put(p.getRotation(),list);
     }
 
     private boolean isUsed(PuzzleElement p) {
-        List<Integer> list = new ArrayList<>();
+        List<PuzzleElement> list = new ArrayList<>();
         if(usedElementIdByRotation.get(p.getRotation())==null) {
             return false;
         }
-        else if(usedElementIdByRotation.get(p.getRotation()).contains(p.getId())){
+        else if(usedElementIdByRotation.get(p.getRotation()).contains(p)){
             return true;
         }
         return false;
@@ -171,4 +178,5 @@ public class PuzzleSolver {
             this.row = row;
         }
     }
+
 }
