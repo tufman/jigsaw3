@@ -115,13 +115,19 @@ public class Puzzle {
         }
         if (stackOfGoodLines.size() >0){
             createAndMapPuzzleElements();
+            this.availableOptionsForSolution = puzzleMapper.getPuzzleStructure();
+            System.out.println("availableOptionsForSolution size: "+availableOptionsForSolution.size()+ "  " +availableOptionsForSolution);
+            verifyAtLeastOneLineAvailable();
+            verifyAllCornersExist();
+            verifySumZero();
+            System.out.println("puzzle: "+puzzleMapper.getPuzzleStructure());
         }
-        this.availableOptionsForSolution = puzzleMapper.getPuzzleStructure();
-        System.out.println("availableOptionsForSolution size: "+availableOptionsForSolution.size()+ "  " +availableOptionsForSolution);
-        verifyAtLeastOneLineAvailable();
-        verifyAllCornersExist();
-        verifySumZero();
-        System.out.println("puzzle: "+puzzleMapper.getPuzzleStructure());
+//        this.availableOptionsForSolution = puzzleMapper.getPuzzleStructure();
+//        System.out.println("availableOptionsForSolution size: "+availableOptionsForSolution.size()+ "  " +availableOptionsForSolution);
+//        verifyAtLeastOneLineAvailable();
+//        verifyAllCornersExist();
+//        verifySumZero();
+//        System.out.println("puzzle: "+puzzleMapper.getPuzzleStructure());
     }
 
     private void createAndMapPuzzleElements() {
@@ -229,23 +235,28 @@ public class Puzzle {
     }
 
     private void verifyAtLeastOneLineAvailable() {
-        boolean hasLeftZero = false;
-        boolean hasRightZero = false;
-        for (int keyInMap : this.availableOptionsForSolution.keySet()){
-            //Left is 0
-            if ((keyInMap / 1000) < 0){
-                hasLeftZero = true;
-            }
-            //Right is 0
-            if (((keyInMap / 10)%10) == 0){
-                hasRightZero = true;
-            }
-            if (hasLeftZero && hasRightZero){
-                break;
-            }
+//        boolean hasLeftZero = false;
+//        boolean hasRightZero = false;
+//        for (int keyInMap : this.availableOptionsForSolution.keySet()){
+//            //Left is 0
+//            if ((keyInMap / 1000) < 0){
+//                hasLeftZero = true;
+//            }
+//            //Right is 0
+//            if (((keyInMap / 10)%10) == 0){
+//                hasRightZero = true;
+//            }
+//            if (hasLeftZero && hasRightZero){
+//                break;
+//            }
+//        }
+
+        if (!(this.availableOptionsForSolution.get(4).size() >0) || !(this.availableOptionsForSolution.get(444).size() >0)){
+            String error = prop.getProperty("wrongNumberOfStraighEdges");
+            errorsReadingInputFile.add(error);
         }
-        String error = prop.getProperty("wrongNumberOfStraighEdges");
-        errorsReadingInputFile.add(error);
+
+
     }
     /**
       7 - Top Left Corner
