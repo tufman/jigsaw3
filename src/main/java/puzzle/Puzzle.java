@@ -18,7 +18,7 @@ public class Puzzle {
     private Map<Integer, List<PuzzleElement>> availableOptionsForSolution = new HashMap<>();
     private List<Integer> idsForErrorsNotInRange = new ArrayList<>();
     private ArrayList<Integer> splittedLineToInt = new ArrayList<>();
-    private Map<Integer,List<Integer>> puzzleOutput = new HashMap<>();
+    private Map<Integer, List<Integer>> puzzleOutput = new HashMap<>();
 
     private boolean[] puzzleElementIDs;
     private PuzzleElement[][] board = null;
@@ -113,42 +113,36 @@ public class Puzzle {
         if ((expectedNumOfElementsFromFirstLine) != stackOfGoodLines.size()) {
             addErrorMissingPuzzleElements();
         }
-        if (stackOfGoodLines.size() >0){
+        if (stackOfGoodLines.size() > 0) {
             createAndMapPuzzleElements();
             this.availableOptionsForSolution = puzzleMapper.getPuzzleStructure();
-            System.out.println("availableOptionsForSolution size: "+availableOptionsForSolution.size()+ "  " +availableOptionsForSolution);
+            System.out.println("availableOptionsForSolution size: " + availableOptionsForSolution.size() + "  " + availableOptionsForSolution);
             verifyAtLeastOneLineAvailable();
             verifyAllCornersExist();
             verifySumZero();
-            System.out.println("puzzle: "+puzzleMapper.getPuzzleStructure());
+            System.out.println("puzzle: " + puzzleMapper.getPuzzleStructure());
         }
-//        this.availableOptionsForSolution = puzzleMapper.getPuzzleStructure();
-//        System.out.println("availableOptionsForSolution size: "+availableOptionsForSolution.size()+ "  " +availableOptionsForSolution);
-//        verifyAtLeastOneLineAvailable();
-//        verifyAllCornersExist();
-//        verifySumZero();
-//        System.out.println("puzzle: "+puzzleMapper.getPuzzleStructure());
     }
 
     private void createAndMapPuzzleElements() {
-        while (stackOfGoodLines.size() != 0){
+        while (stackOfGoodLines.size() != 0) {
             ArrayList<Integer> popedLineFromStack = stackOfGoodLines.pop();
             int x = 0;
             //insert element with 0 rotation
             PuzzleElement element = new PuzzleElement(popedLineFromStack, x);
             puzzleMapper.addElementToStructure(element);
-            if (element.getSumOfEdges() == 1111 || element.getSumOfEdges() == -1111 || element.getSumOfEdges() == 0){
-                x=0;
-            }else if(element.getTop()==element.getBottom()&&element.getLeft()==element.getRight()){
-                x=2;
-            }else x=4;
+            if (element.getSumOfEdges() == 1111 || element.getSumOfEdges() == -1111 || element.getSumOfEdges() == 0) {
+                x = 0;
+            } else if (element.getTop() == element.getBottom() && element.getLeft() == element.getRight()) {
+                x = 2;
+            } else x = 4;
 
             for (int rotate = 1; rotate < x; rotate++) {
                 puzzleElementList.add(element);
                 puzzleMapper.addElementToStructure(element);
             }
         }
-        System.out.println("puz   "+puzzleMapper.getPuzzleStructure().size());
+        System.out.println("puz   " + puzzleMapper.getPuzzleStructure().size());
     }
 
     private void addErrorMissingPuzzleElements() {
@@ -160,7 +154,7 @@ public class Puzzle {
         }
         String errorToAdd = (prop.getProperty("missingPuzzleElements"));
         allIDs = allIDs.substring(0, allIDs.length() - 1);
-        errorToAdd += allIDs ;
+        errorToAdd += allIDs;
         errorsReadingInputFile.add(errorToAdd);
     }
 
@@ -168,7 +162,7 @@ public class Puzzle {
         String wrongElementID = prop.getProperty("wrongElementIDs");
         wrongElementID = wrongElementID.replace("SIZE", String.valueOf(expectedNumOfElementsFromFirstLine));
         for (int i = 0; i < idsForErrorsNotInRange.size(); i++) {
-            if (i == (idsForErrorsNotInRange.size() -1)){
+            if (i == (idsForErrorsNotInRange.size() - 1)) {
                 wrongElementID += idsForErrorsNotInRange.get(i);
                 continue;
             }
@@ -205,11 +199,12 @@ public class Puzzle {
     }
 
     private void verifySumZero() {
-        if (!(puzzleMapper.getTotalSumOfAllEdges() == 0)){
+        if (!(puzzleMapper.getTotalSumOfAllEdges() == 0)) {
             errorsReadingInputFile.add(prop.getProperty("sumOfAllEdgesIsNotZero"));
         }
     }
-//TODO:new logic for available solution
+
+    //TODO:new logic for available solution
     public ArrayList<Integer> getNumOfRowsForSolution() {
         numOfRowsForSolution = puzzleMapper.getNumOfRowsForSolution();
         return numOfRowsForSolution;
@@ -235,34 +230,18 @@ public class Puzzle {
     }
 
     private void verifyAtLeastOneLineAvailable() {
-//        boolean hasLeftZero = false;
-//        boolean hasRightZero = false;
-//        for (int keyInMap : this.availableOptionsForSolution.keySet()){
-//            //Left is 0
-//            if ((keyInMap / 1000) < 0){
-//                hasLeftZero = true;
-//            }
-//            //Right is 0
-//            if (((keyInMap / 10)%10) == 0){
-//                hasRightZero = true;
-//            }
-//            if (hasLeftZero && hasRightZero){
-//                break;
-//            }
-//        }
-
-        if (!(this.availableOptionsForSolution.get(4).size() >0) || !(this.availableOptionsForSolution.get(444).size() >0)){
+        if ((this.availableOptionsForSolution.get(4) == null ) || this.availableOptionsForSolution.get(444) == null ||
+                !(this.availableOptionsForSolution.get(4).size() > 0) || !(this.availableOptionsForSolution.get(444).size() > 0)) {
             String error = prop.getProperty("wrongNumberOfStraighEdges");
             errorsReadingInputFile.add(error);
         }
-
-
     }
+
     /**
-      7 - Top Left Corner
-      77 - Top Right Corner
-      777 - Bottom Left Corner
-      7777 - Bottom Right Corner
+     * 7 - Top Left Corner
+     * 77 - Top Right Corner
+     * 777 - Bottom Left Corner
+     * 7777 - Bottom Right Corner
      */
     private void verifyAllCornersExist() {
         String error = prop.getProperty("missingCorner");
@@ -381,7 +360,7 @@ public class Puzzle {
         }
     }
 
-//reade output file with ids only
+    //reade output file with ids only
     public void readOutputFile(String filePath) throws IOException {
         FileInputStream fis = null;
         try {
@@ -404,7 +383,7 @@ public class Puzzle {
 
         String line;
         Integer lineIndex = 0;
-        List<Integer>list = new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
         while ((line = br.readLine()) != null) {
             System.out.println("line: " + line);
             if (line.trim().length() == 0) {
@@ -419,81 +398,77 @@ public class Puzzle {
                 }
                 try {
                     list.add(Integer.parseInt(str));
-                    puzzleOutput.put(lineIndex,list);
+                    puzzleOutput.put(lineIndex, list);
                 } catch (NumberFormatException e) {
                     //TODO - make it more elegant ...
                     addErrorWrongElementFormat(-9999, line);
                 }
             }
-            puzzleOutput.put(lineIndex,list);
+            puzzleOutput.put(lineIndex, list);
             lineIndex++;
         }
     }
 
-//check if output file is solution for input
+    //check if output file is solution for input
     public boolean isIOSolvable() {
         PuzzleElement elm;
-        int index=0;
+        int index = 0;
         boolean isSolution = false;
         PuzzleElement[][] board = null;
         int row = puzzleOutput.size();
         int col = 0;
-        int i = 0, j=0;
-        if(row != 0) {
+        int i = 0, j = 0;
+        if (row != 0) {
             col = expectedNumOfElementsFromFirstLine / row;
             board = new PuzzleElement[row][col];
         }
 
-        for (Map.Entry<Integer, List<Integer>> ids: puzzleOutput.entrySet()){
-            for(Integer id :ids.getValue()) {
+        for (Map.Entry<Integer, List<Integer>> ids : puzzleOutput.entrySet()) {
+            for (Integer id : ids.getValue()) {
                 elm = getById(id);
 //                if(i>=0 && i<=row && j>=0 && j<=col && (board[i][j-1].getRight()+elm.getLeft()==0)&&(board[i-1][j].getBottom()+elm.getTop()==0)){
-                    if (i == 0 && j == 0) { // first TOP_LEFT_CORNER
-                        board[i][j++] = elm;
-                    }
-                    else if (i == row-1 && j == 0) { // first BOTTOM_LEFT_CORNER
-                        board[i][j++] = elm;
-                    }
-                    else if (i == row -1 && j==col-1) { // last BOTTOM_RIGHT_CORNER
-                        board[i][j++] = elm;
-                    }
-                    else if (i == 0 && j==col-1) { // last TOP_RIGHT_CORNER
-                        board[i][j++] = elm;
-                    }
-                    //check if edge
-                    else if (i == 0) { // first row
-                        if ((board[i][j-1].getRight()+elm.getLeft() == 0))board[i][j++] = elm;
-                    }
-                    else if (j == 0) { // first column
-                        if ((board[i-1][j].getBottom()+elm.getTop() == 0))board[i][j++] = elm;
-                    }
-                    else if (i == row -1) { // last row
-                        if ((board[i-1][j].getBottom()+elm.getTop() == 0)&& (board[i][j-1].getRight()+elm.getLeft() == 0)) board[i][j++] = elm;
-                    }
-                    else if (j==col-1) { // last column
-                        if ((board[i-1][j].getBottom()+elm.getTop() == 0)&& (board[i][j-1].getRight()+elm.getLeft() == 0)) board[i][j++] = elm;
-                    }
-                    else { // middle element
-                        if ((board[i-1][j].getBottom()+elm.getTop() == 0)&& (board[i][j-1].getRight()+elm.getLeft() == 0)) board[i][j++] = elm;
-                    }
-//                    board[i][j++] = elm;
-                    System.out.print(id);
+                if (i == 0 && j == 0) { // first TOP_LEFT_CORNER
+                    board[i][j++] = elm;
+                } else if (i == row - 1 && j == 0) { // first BOTTOM_LEFT_CORNER
+                    board[i][j++] = elm;
+                } else if (i == row - 1 && j == col - 1) { // last BOTTOM_RIGHT_CORNER
+                    board[i][j++] = elm;
+                } else if (i == 0 && j == col - 1) { // last TOP_RIGHT_CORNER
+                    board[i][j++] = elm;
                 }
+                //check if edge
+                else if (i == 0) { // first row
+                    if ((board[i][j - 1].getRight() + elm.getLeft() == 0)) board[i][j++] = elm;
+                } else if (j == 0) { // first column
+                    if ((board[i - 1][j].getBottom() + elm.getTop() == 0)) board[i][j++] = elm;
+                } else if (i == row - 1) { // last row
+                    if ((board[i - 1][j].getBottom() + elm.getTop() == 0) && (board[i][j - 1].getRight() + elm.getLeft() == 0))
+                        board[i][j++] = elm;
+                } else if (j == col - 1) { // last column
+                    if ((board[i - 1][j].getBottom() + elm.getTop() == 0) && (board[i][j - 1].getRight() + elm.getLeft() == 0))
+                        board[i][j++] = elm;
+                } else { // middle element
+                    if ((board[i - 1][j].getBottom() + elm.getTop() == 0) && (board[i][j - 1].getRight() + elm.getLeft() == 0))
+                        board[i][j++] = elm;
+                }
+//                    board[i][j++] = elm;
+                System.out.print(id);
+            }
 //            }
             i++;
-            j=0;
+            j = 0;
         }
 
         return isProperPuzzle(board);
     }
 
     //get puzzle element by id from output file
-    public PuzzleElement getById(int id){
+    public PuzzleElement getById(int id) {
         PuzzleElement puzzleElement = null;
-        int count = puzzleElementList.size()-1;
-        while (count>=0) {
+        int count = puzzleElementList.size() - 1;
+        while (count >= 0) {
             puzzleElement = puzzleElementList.get(count);
-            if(puzzleElement.getId() == id)
+            if (puzzleElement.getId() == id)
                 return puzzleElement;
             count--;
         }
@@ -501,15 +476,15 @@ public class Puzzle {
     }
 
     //check if puzzle have straight edges
-    private boolean isProperPuzzle(PuzzleElement[][] board){
-        for (int i=0;i<board[0].length; i++){
-            for(int j=0;j<board.length; j++) {
+    private boolean isProperPuzzle(PuzzleElement[][] board) {
+        for (int i = 0; i < board[0].length; i++) {
+            for (int j = 0; j < board.length; j++) {
                 if (i == 0) {
                     if (!(board[i][j].getTop() == 0)) {
                         return false;
                     }
                 }
-                if (i == board[0].length-1) {
+                if (i == board[0].length - 1) {
                     if (!(board[i][j].getBottom() == 0)) {
                         return false;
                     }
@@ -519,7 +494,7 @@ public class Puzzle {
                         return false;
                     }
                 }
-                if (j == board[0].length-1) {
+                if (j == board[0].length - 1) {
                     if (!(board[i][j].getRight() == 0)) {
                         return false;
                     }
@@ -528,7 +503,8 @@ public class Puzzle {
         }
         return true;
     }
-//return list of ids from output file
+
+    //return list of ids from output file
     public List<Integer> getIdsList() {
         return idsList;
     }
