@@ -13,7 +13,7 @@ public class PuzzleMain {
         if(args[1].equals("multithreaded")){
             isMultiThread = true;
         }
-     String filePath = System.getProperty("user.dir")+"\\src\\\\main\\resources\\Good4Pieces";
+     String filePath = System.getProperty("user.dir")+"\\src\\\\main\\resources\\Good16Pieces";
      String filePathToSave = System.getProperty("user.dir") + "\\src\\main\\resources\\result.txt";
      PuzzleManager puzzleManager = new PuzzleManager();
      puzzleManager.manage(filePath,filePathToSave, isRotation, isMultiThread);
