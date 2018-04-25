@@ -131,6 +131,7 @@ public class Puzzle {
             //insert element with 0 rotation
             PuzzleElement element = new PuzzleElement(popedLineFromStack, x);
             puzzleMapper.addElementToStructure(element);
+            puzzleElementList.add(element);
             if (element.getSumOfEdges() == 1111 || element.getSumOfEdges() == -1111 || element.getSumOfEdges() == 0){
                 x=0;
             }else if(element.getTop()==element.getBottom()&&element.getLeft()==element.getRight()){
@@ -138,6 +139,7 @@ public class Puzzle {
             }else x=4;
 
             for (int rotate = 1; rotate < x; rotate++) {
+                element = new PuzzleElement(popedLineFromStack, x);
                 puzzleElementList.add(element);
                 puzzleMapper.addElementToStructure(element);
             }
