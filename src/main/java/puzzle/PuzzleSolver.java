@@ -11,6 +11,7 @@ public class PuzzleSolver {
     private Map<Integer, List<PuzzleElement>> puzzleStructure;
     private Map<Rotation, List<Integer>> usedElementIdByRotation;
     private PuzzleElement[][] board;
+    private List<Integer> availableRowsForSolution;
     PuzzleMapper puzzleMapper = new PuzzleMapper();
     private int rows;
     private int columns;
@@ -26,13 +27,14 @@ public class PuzzleSolver {
         this.elements = puzzle1.getPuzzleElementList();
         this.puzzleStructure = puzzle1.getAvailableOptionsForSolution();
         usedElementIdByRotation = new HashMap<>();
+        availableRowsForSolution = puzzle1.getNumOfRowsForSolution();
     }
 
     public PuzzleElement[][] solve() {
-
-        for (int i = 0; i< 2; i++) {
-            int r = 2;//rowOptions.get(i);
-            int c = 2;//elements.size() / r;
+//TODO: create threadePool for available row for solution
+        for (int i = 0; i< availableRowsForSolution.size(); i++) {
+            int r = rowOptions.get(i);
+            int c = elements.size() / r;
             // try to build a puzzle
 
             initPuzzle(c,r);
@@ -159,11 +161,6 @@ public class PuzzleSolver {
         if (c >= columns || r >= rows) // at last position
             return true;
         return false;
-    }
-
-    private boolean fit1(int puzzleElement, PuzzleDirections direction){
-        return positionToElements.get(direction).contains(puzzleElement);
-
     }
 
     private class Position {

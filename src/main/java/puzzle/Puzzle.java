@@ -54,7 +54,7 @@ public class Puzzle {
             initConfiguration();
             readDataFromFile(br);
         }
-        return errorsReadingInputFile.isEmpty();
+        return true;//errorsReadingInputFile.isEmpty();
     }
 
 
@@ -78,32 +78,18 @@ public class Puzzle {
                 extractNumOfElements(line);
                 continue;
             }
-
-
             parseLineFromFileToIntArr(line);
-
-
             int id = splittedLineToInt.get(0);
             if (id < 1) {
                 addErrorWrongElementFormat(id, line);
                 continue;
             }
-
-//TODO: add element with rotation
-
             if (splittedLineToInt.size() == 5) {
                 if (verifyIdInRange(id)) {
                     if (verifyAllEdgesInRange(splittedLineToInt)) {
-
-                        //PuzzleElement element = new PuzzleElement(splittedLineToInt,0);
-                        //puzzleElementListFromInputFile.push(element);
-
-
                         stackOfGoodLines.push(splittedLineToInt);
                         markExistElement(splittedLineToInt.get(0));
                         System.out.println("Check");
-
-
                     }
                     // left, top, right and bottom between -1 to 1
                     else {
@@ -114,7 +100,6 @@ public class Puzzle {
                 else {
                     addIDToNotInRangeList(id);
                 }
-
             }
             //Num of edges is not 4 (id + 4 edges)
             else {
@@ -125,56 +110,39 @@ public class Puzzle {
         if (idsForErrorsNotInRange.size() > 0) {
             addErrorForIDsNotInRange();
         }
-//expectedNumOfElementsFromFirstLine*4 whit rotation
-        //if ((expectedNumOfElementsFromFirstLine) != puzzleElementList.size()) {
         if ((expectedNumOfElementsFromFirstLine) != stackOfGoodLines.size()) {
             addErrorMissingPuzzleElements();
         }
-
-
         if (stackOfGoodLines.size() >0){
             createAndMapPuzzleElements();
         }
-
         this.availableOptionsForSolution = puzzleMapper.getPuzzleStructure();
         System.out.println("availableOptionsForSolution size: "+availableOptionsForSolution.size()+ "  " +availableOptionsForSolution);
         verifyAtLeastOneLineAvailable();
         verifyAllCornersExist();
         verifySumZero();
-
-
-
-
-//        ArrayList<Integer> numOfAvailableRowsForSolution = puzzleMapper.getNumOfRowsForSolution();
-
-//        if (errorsReadingInputFile.size() == 0 && numOfAvailableRowsForSolution != null && puzzleElementList != null && availableOptionsForSolution.get(PuzzleDirections.TOP_LEFT_CORNER).size() > 0) {
-//
-//        } else if (errorsReadingInputFile.size() > 0) {
-//TODO: check if in use
-//        }
-
+        System.out.println("puzzle: "+puzzleMapper.getPuzzleStructure());
     }
 
     private void createAndMapPuzzleElements() {
         while (stackOfGoodLines.size() != 0){
             ArrayList<Integer> popedLineFromStack = stackOfGoodLines.pop();
+            int x = 0;
+            //insert element with 0 rotation
+            PuzzleElement element = new PuzzleElement(popedLineFromStack, x);
+            puzzleMapper.addElementToStructure(element);
+            if (element.getSumOfEdges() == 1111 || element.getSumOfEdges() == -1111 || element.getSumOfEdges() == 0){
+                x=0;
+            }else if(element.getTop()==element.getBottom()&&element.getLeft()==element.getRight()){
+                x=2;
+            }else x=4;
 
-            //ToDo - take the element from the Stack and send it to multi threads....
-            for (int rotate = 0; rotate < 4; rotate++) {
-                //PuzzleElement element2 = new PuzzleElement(splittedLineToInt, rotate);
-                PuzzleElement element = new PuzzleElement(popedLineFromStack, rotate);
+            for (int rotate = 1; rotate < x; rotate++) {
                 puzzleElementList.add(element);
-                //TODO:
                 puzzleMapper.addElementToStructure(element);
-//            markExistElement(element.getId());
-                //TODO - make it a function and add also cases where left = right && top = bottom (only 2 cases)....
-                if (element.getSumOfEdges() == 1111 || element.getSumOfEdges() == -1111 || element.getSumOfEdges() == 0){
-                    break;
-                }
-                continue;
             }
         }
-
+        System.out.println("puz   "+puzzleMapper.getPuzzleStructure().size());
     }
 
     private void addErrorMissingPuzzleElements() {
@@ -235,11 +203,11 @@ public class Puzzle {
             errorsReadingInputFile.add(prop.getProperty("sumOfAllEdgesIsNotZero"));
         }
     }
-
-//    public ArrayList<Integer> getNumOfRowsForSolution() {
-//        numOfRowsForSolution = puzzleMapper.getNumOfRowsForSolution();
-//        return numOfRowsForSolution;
-//    }
+//TODO:new logic for available solution
+    public ArrayList<Integer> getNumOfRowsForSolution() {
+        numOfRowsForSolution = puzzleMapper.getNumOfRowsForSolution();
+        return numOfRowsForSolution;
+    }
 
     public List<PuzzleElement> getPuzzleElementList() {
         return puzzleElementList;
@@ -251,7 +219,6 @@ public class Puzzle {
 
     public void printSolution() {
         if (board != null) {
-
             for (int ii = 0; ii <= board.length - 1; ii++) {
                 for (int jj = 0; jj <= board[0].length - 1; jj++) {
                     System.out.print(board[ii][jj].getId() + " ");
@@ -280,17 +247,13 @@ public class Puzzle {
         String error = prop.getProperty("wrongNumberOfStraighEdges");
         errorsReadingInputFile.add(error);
     }
-
+    /**
+      7 - Top Left Corner
+      77 - Top Right Corner
+      777 - Bottom Left Corner
+      7777 - Bottom Right Corner
+     */
     private void verifyAllCornersExist() {
-
-        /*
-        7 - Top Left Corner
-        77 - Top Right Corner
-        777 - Bottom Left Corner
-        7777 - Bottom Right Corner
-         */
-
-
         String error = prop.getProperty("missingCorner");
         if (this.availableOptionsForSolution.get(7) == null) {
             String errorTopLeftCorner = error.replace("<>", "TL");
@@ -327,8 +290,6 @@ public class Puzzle {
         } else {
             errorsReadingInputFile.add(errorToAdd + line);
         }
-
-
     }
 
     private void markExistElement(int id) {
@@ -352,7 +313,6 @@ public class Puzzle {
         }
     }
 
-
     private boolean verifyAllEdgesInRange(ArrayList<Integer> numFromLine) {
         for (int i = 1; i < numFromLine.size(); i++) {
             if (!(numFromLine.get(i) >= -1 && numFromLine.get(i) <= 1)) {
@@ -361,7 +321,6 @@ public class Puzzle {
         }
         return true;
     }
-
 
     public void printListOfElements() {
         System.out.println("----------------------------------");
@@ -385,7 +344,6 @@ public class Puzzle {
     public int getNumOfElementsFromFirstLine() {
         return expectedNumOfElementsFromFirstLine;
     }
-
 
     public boolean verifyErrorExistInList(String error) {
         return errorsReadingInputFile.contains(error);
@@ -431,7 +389,6 @@ public class Puzzle {
         }
     }
 
-
     private void readDataFromOutputFile(BufferedReader br) throws IOException {
 
         String line;
@@ -461,7 +418,6 @@ public class Puzzle {
             lineIndex++;
         }
     }
-
 
 //check if output file is solution for input
     public boolean isIOSolvable() {
@@ -566,7 +522,4 @@ public class Puzzle {
         return idsList;
     }
 
-//    public Map<PuzzleDirections,List<Integer>> getSolutionMap() {
-//        return puzzleMapper.getSolutionMap();
-//    }
 }
