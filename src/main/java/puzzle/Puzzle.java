@@ -139,7 +139,7 @@ public class Puzzle {
             } else x = 4;
 
             for (int rotate = 1; rotate < x; rotate++) {
-                element = new PuzzleElement(popedLineFromStack, x);
+                element = new PuzzleElement(popedLineFromStack, rotate);
                 puzzleElementList.add(element);
                 puzzleMapper.addElementToStructure(element);
             }
