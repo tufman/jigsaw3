@@ -7,13 +7,13 @@ public class PuzzleManager {
 private PuzzleElement[][] board = null;
 
 
-public void manage(String filePath, String filePathToOutput, boolean isRotation, boolean isMultiThread) throws IOException {
+public void manage(String filePath, String filePathToOutput, boolean isRotation, boolean isMultiThread, int numOfTheads) throws IOException {
 
     Puzzle puzzle1 = new Puzzle();
 
 
     WritePuzzleStatus writePuzzleStatus = new WritePuzzleStatus(filePathToOutput);
-       if(puzzle1.readInputFile(filePath, isRotation, isMultiThread)) {
+       if(puzzle1.readInputFile(filePath, isRotation, isMultiThread, numOfTheads)) {
            PuzzleSolver puzzleSolver = new PuzzleSolver(puzzle1);
            board = puzzleSolver.solve();
            //write puzzle solution to output file

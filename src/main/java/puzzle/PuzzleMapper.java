@@ -11,7 +11,7 @@ public class PuzzleMapper {
 
     private  int counterOfPuzzleElements = 0;
 
-    public void addElementToStructure(PuzzleElement e){
+    public synchronized void addElementToStructure(PuzzleElement e){
         totalSumOfAllEdges += e.getSumOfEdges();
         mapZeroEdges(e);
         mapCorners(e);

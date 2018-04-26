@@ -120,15 +120,41 @@ public class Puzzle {
         if (stackOfGoodLines.size() > 0) {
             createAndMapPuzzleElements();
             this.availableOptionsForSolution = puzzleMapper.getPuzzleStructure();
+<<<<<<< Updated upstream
+//            System.out.println("availableOptionsForSolution size: " + availableOptionsForSolution.size() + "  " + availableOptionsForSolution);
+            verifyAtLeastOneLineAvailable();
+            verifyAllCornersExist();
+            verifySumZero();
+//            System.out.println("puzzle: " + puzzleMapper.getPuzzleStructure());
+=======
             //System.out.println("availableOptionsForSolution size: " + availableOptionsForSolution.size() + "  " + availableOptionsForSolution);
             verifyAtLeastOneLineAvailable();
             verifyAllCornersExist();
             verifySumZero();
             //System.out.println("puzzle: " + puzzleMapper.getPuzzleStructure());
+>>>>>>> Stashed changes
         }
     }
 
     private void createAndMapPuzzleElements() {
+<<<<<<< Updated upstream
+        while (stackOfGoodLines.size() != 0) {
+            ArrayList<Integer> popedLineFromStack = stackOfGoodLines.pop();
+            int x = 0;
+            //insert element with 0 rotation
+            PuzzleElement element = new PuzzleElement(popedLineFromStack, x);
+            puzzleMapper.addElementToStructure(element);
+            puzzleElementList.add(element);
+            if (element.getSumOfEdges() == 1111 || element.getSumOfEdges() == -1111 || element.getSumOfEdges() == 0) {
+                x = 0;
+            } else if (element.getTop() == element.getBottom() && element.getLeft() == element.getRight()) {
+                x = 2;
+            } else x = 4;
+
+            for (int rotate = 1; rotate < x; rotate++) {
+                element = new PuzzleElement(popedLineFromStack, rotate);
+//                puzzleElementList.add(element);
+=======
 
         //stackOfGoodLines.pop() is synchronaized by java....
         // puzzleMapper.addElementToStructure(element) is synchronized - keep it.
@@ -176,6 +202,7 @@ public class Puzzle {
                 int x = 0;
                 //insert element with 0 rotation
                 PuzzleElement element = new PuzzleElement(popedLineFromStack, x);
+>>>>>>> Stashed changes
                 puzzleMapper.addElementToStructure(element);
                 addPuzzleElementToList(element);
                 if (element.getSumOfEdges() == 1111 || element.getSumOfEdges() == -1111 || element.getSumOfEdges() == 0) {
@@ -191,10 +218,14 @@ public class Puzzle {
                 }
             }
         }
+<<<<<<< Updated upstream
+//        System.out.println("puz   " + "\u001B[32m"+ puzzleMapper.getPuzzleStructure().size()+" puzzle element "+ puzzleElementList );
+=======
     }
 
     private synchronized void addPuzzleElementToList(PuzzleElement element) {
         puzzleElementList.add(element);
+>>>>>>> Stashed changes
     }
 
     private void addErrorMissingPuzzleElements() {
