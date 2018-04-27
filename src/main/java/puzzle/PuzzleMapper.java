@@ -164,6 +164,9 @@ public class PuzzleMapper {
 
     }
 
+
+
+
     public  ArrayList<Integer> getNumOfRowsForSolution() {
         int numOfLeft = leftZero.size();
         int numOfRight = rightZero.size();

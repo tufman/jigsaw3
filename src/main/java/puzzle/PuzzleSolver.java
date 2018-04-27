@@ -15,6 +15,7 @@ public class PuzzleSolver {
     private PuzzleElement[][] board;
     private int rows;
     private int columns;
+    private int numOfRowsPerThread;
 
     //TODO: remove - this is for test the logic of the solver by Unit test....
     public PuzzleSolver(List<PuzzleElement> elements, ArrayList<Integer> rowOptions, Map<PuzzleDirections, List<Integer>> positionToElements) {
@@ -27,6 +28,12 @@ public class PuzzleSolver {
     public PuzzleSolver(Puzzle puzzle1) {
         this.elements = puzzle1.getPuzzleElementList();
         this.rowOptions = puzzle1.getNumOfRowsForSolution();
+        this.positionToElements = puzzle1.getAvailableOptionsForSolution();
+    }
+
+    public PuzzleSolver(Puzzle puzzle1, int numOfRowsPerThread) {
+        this.elements = puzzle1.getPuzzleElementList();
+        this.numOfRowsPerThread = numOfRowsPerThread;
         this.positionToElements = puzzle1.getAvailableOptionsForSolution();
     }
 

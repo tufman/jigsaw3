@@ -52,6 +52,13 @@ public class Puzzle {
         return errorsReadingInputFile.isEmpty();
     }
 
+    public  ArrayList<Integer> getNumOfRowsForSolution1() {
+        ArrayList<Integer> retVal = new ArrayList<>();
+        retVal.add(1);
+        retVal.add(2);
+        retVal.add(4);
+        return retVal;
+    }
 
     private void readDataFromFile(BufferedReader br) throws IOException {
         System.out.println("--------------------------------------------");
