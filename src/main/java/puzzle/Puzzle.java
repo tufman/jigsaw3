@@ -276,7 +276,8 @@ public class Puzzle {
         if (board != null) {
             for (int ii = 0; ii <= board.length - 1; ii++) {
                 for (int jj = 0; jj <= board[0].length - 1; jj++) {
-                    System.out.print(board[ii][jj].getId() + " ");
+                    System.out.print(board[ii][jj].toString() + " ");
+
                 }
                 System.out.println();
             }

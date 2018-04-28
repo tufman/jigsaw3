@@ -56,7 +56,10 @@ public class PuzzleSolver {
             return board;
         // Try each remaining piece in this square
         for (PuzzleElement p : elements) {
+            if(inUse(p))
+                continue;
             setAsUsed(p);
+
             if (tryInsert(p, r, c)) {
 //TODO:remove current for debug
                 // It fits: recurse to try the next square
@@ -84,32 +87,39 @@ public class PuzzleSolver {
     private boolean tryInsert(PuzzleElement e, int r, int c) {
         //check if corner
         if (r == 0 && c == 0) { // first TOP_LEFT_CORNER
-            if (isUsed(e) && !fit(e, getPuzzleList(getKey(0, 0, 0, 7)))) return false;
+            if (inUse(e) && !fit(e, getPuzzleList(getKey(0, 0, 0, 7)))) return false;
         }
         else if (r == rows-1 && c == 0) { // first BOTTOM_LEFT_CORNER
-            if (isUsed(e) && !fit(e, getPuzzleList(getKey(0,7,7,7)))) return false;
+            if (inUse(e) && !fit(e, getPuzzleList(getKey(0,7,7,7)))) return false;
         }
         else if (r == rows -1 && c==columns-1) { // last BOTTOM_RIGHT_CORNER
-            if (isUsed(e) && !fit(e, getPuzzleList(getKey(7,7,7,7)))) return false;
+            if (inUse(e) && !fit(e, getPuzzleList(getKey(7,7,7,7)))) return false;
         }
         else if (r == 0 && c==columns-1) { // last TOP_RIGHT_CORNER
-            if (isUsed(e) && !fit(e, getPuzzleList(getKey(0,0,7,7)))) return false;
+            if (inUse(e) && !fit(e, getPuzzleList(getKey(0,0,7,7)))) return false;
         }
         //check if edge
         else if (r == 0) { // first row
-            if (isUsed(e) && !(fit(e, getPuzzleList(getKey(e.getLeft(),0,5,5)))) && (board[r][c-1].getRight()+e.getLeft() == 0)) return false;
+            if (inUse(e) && !(fit(e, getPuzzleList(getKey(e.getLeft(),0,5,5))) && (board[r][c-1].getRight()+e.getLeft() == 0)))
+                return false;
         }
         else if (c == 0) { // first column
-            if (isUsed(e) && !(fit(e, getPuzzleList(getKey(0,e.getTop(),5,5)))) && (board[r-1][c].getBottom()+e.getTop() == 0)) return false;
+            if (inUse(e) && !(fit(e, getPuzzleList(getKey(0,e.getTop(),5,5))) && (board[r-1][c].getBottom()+e.getTop() == 0)))
+                return false;
         }
         else if (r == rows -1) { // last row
-            if (isUsed(e) && !(fit(e, getPuzzleList(getKey(e.getLeft(),e.getTop(),5,0)))) && (board[r-1][c].getBottom()+e.getTop() == 0)&& (board[r][c-1].getRight()+e.getLeft() == 0)) return false;
+            if (inUse(e) && !(fit(e, getPuzzleList(getKey(e.getLeft(),e.getTop(),5,0))) && (board[r-1][c].getBottom()+e.getTop() == 0)
+                    && (board[r][c-1].getRight()+e.getLeft() == 0)))
+                return false;
         }
         else if (c==columns-1) { // last column
-            if (isUsed(e) && !(fit(e, getPuzzleList(getKey(e.getLeft(),e.getTop(),0,5)))) && (board[r-1][c].getBottom()+e.getTop() == 0)&& (board[r][c-1].getRight()+e.getLeft() == 0)) return false;
+            if (inUse(e) && !(fit(e, getPuzzleList(getKey(e.getLeft(),e.getTop(),0,5))) && (board[r-1][c].getBottom()+e.getTop() == 0)
+                    && (board[r][c-1].getRight()+e.getLeft() == 0)))
+                return false;
         }
         else { // middle element
-            if (isUsed(e) && !((board[r-1][c].getBottom()+e.getTop() == 0)&& (board[r][c-1].getRight()+e.getLeft() == 0))) return false;
+            if (inUse(e) && !((board[r-1][c].getBottom()+e.getTop() == 0)&& (board[r][c-1].getRight()+e.getLeft() == 0)))
+                return false;
         }
 
         board[r][c]=e;
@@ -129,14 +139,14 @@ public class PuzzleSolver {
     }
 
     private void setAsUsed(PuzzleElement p) {
-            usedElementById.add(p.getId());
+        usedElementById.add(p.getId());
     }
 
     private void setAsNotUsed(PuzzleElement p) {
         usedElementById.remove(usedElementById.indexOf(p.getId()));
     }
 
-    private boolean isUsed(PuzzleElement p) {
+    private boolean inUse(PuzzleElement p) {
         if(usedElementById==null){
             return false;
         }

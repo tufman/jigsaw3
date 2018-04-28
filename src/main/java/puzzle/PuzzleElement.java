@@ -115,7 +115,7 @@ public class PuzzleElement {
 
     @Override
     public String toString() {
-        return String.format("[ID %d] [ %d] [ %d] [ %d] [ %d] [%s]", id, left, top, right, bottom, rotation);
+        return String.format("[ID %d] [ %d] [ %d] [ %d] [ %d] [%s]", id, left, top, right, bottom, rotation.getMonetaryValue());
     }
 
 

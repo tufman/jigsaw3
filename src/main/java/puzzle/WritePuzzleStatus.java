@@ -31,21 +31,24 @@ public class WritePuzzleStatus {
                 osr.write("Cannot solve puzzle: it seems that there is no proper solution");
             } else {
                 for (int ii = 0; ii <= board.length - 1; ii++) {
-                    String line = "";
+                    StringBuffer line= new StringBuffer();
+                    String line1 = "";
                     for (int jj = 0; jj <= board[0].length - 1; jj++) {
                         if (jj == board[0].length - 1) {
-                            line += board[ii][jj].getId()+board[ii][jj].getRotation().getMonetaryValue();
+                            line.append(board[ii][jj].getId());
+                            line.append(board[ii][jj].getRotation().getMonetaryValue());
                             System.out.println(board[ii][jj].getId()+board[ii][jj].getRotation().getMonetaryValue());
                         } else {
-                            line += board[ii][jj].getId() + " ";
+                            line.append(board[ii][jj].getId());
+                            line.append(board[ii][jj].getRotation().getMonetaryValue()+" ");
                             System.out.println(board[ii][jj].getId()+board[ii][jj].getRotation().getMonetaryValue());
                         }
 
                     }
                     if (ii == board.length - 1) {
-                        osr.write(line);
+                        osr.write(line.toString());
                     } else {
-                        osr.write(line + '\n');
+                        osr.write(line.toString() + '\n');
                     }
 
 
