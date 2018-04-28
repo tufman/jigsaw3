@@ -34,9 +34,11 @@ public class WritePuzzleStatus {
                     String line = "";
                     for (int jj = 0; jj <= board[0].length - 1; jj++) {
                         if (jj == board[0].length - 1) {
-                            line += board[ii][jj].getId();
+                            line += board[ii][jj].getId()+board[ii][jj].getRotation().getMonetaryValue();
+                            System.out.println(board[ii][jj].getId()+board[ii][jj].getRotation().getMonetaryValue());
                         } else {
                             line += board[ii][jj].getId() + " ";
+                            System.out.println(board[ii][jj].getId()+board[ii][jj].getRotation().getMonetaryValue());
                         }
 
                     }

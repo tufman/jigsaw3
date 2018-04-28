@@ -4,26 +4,26 @@ import java.io.IOException;
 
 public class PuzzleMain {
 
-    private static boolean isRotation ;
-    private static boolean isMultiThread ;
+    private static boolean isRotation;
+    private static boolean isMultiThread;
     private static String filePath;
     private static String filePathToSave;
-    private static int numOfTheads;
+    private static int numOfThreads;
 
     public static void main(String[] args) throws IOException {
         extractParameters(args);
 
 
-        if(args[0].equals("rotation")){
-            isRotation = true;
-        }
-        if(args[1].equals("multithreaded")){
-            isMultiThread = true;
-        }
-     //filePath = System.getProperty("user.dir")+"\\src\\\\main\\resources\\Good16Pieces";
-     //filePathToSave = System.getProperty("user.dir") + "\\src\\main\\resources\\result.txt";
+//        if(args[0].equals("rotation")){
+//            isRotation = true;
+//        }
+//        if(args[1].equals("multithreaded")){
+//            isMultiThread = false;
+//        }
+//     filePath = System.getProperty("user.dir")+"\\src\\\\main\\resources\\Good2Pieces";
+//     filePathToSave = System.getProperty("user.dir") + "\\src\\main\\resources\\result.txt";
      PuzzleManager puzzleManager = new PuzzleManager();
-     puzzleManager.manage(filePath,filePathToSave, isRotation, isMultiThread, numOfTheads);
+     puzzleManager.manage(filePath,filePathToSave, isRotation, isMultiThread, numOfThreads);
     }
 
     private static void extractParameters(String[] args) {
@@ -49,10 +49,10 @@ public class PuzzleMain {
             }
             if (arg.equals("-threads")){
                 try{
-                    numOfTheads = Integer.parseInt(args[paramLocation]);
+                    numOfThreads = Integer.parseInt(args[paramLocation]);
                 }
                 catch(NumberFormatException | ArrayIndexOutOfBoundsException e){
-                    numOfTheads = 4;
+                    numOfThreads = 4;
                     isMultiThread = true;
                 }
                 continue;
@@ -71,6 +71,6 @@ public class PuzzleMain {
         System.out.println("-input <path> - full path for the Puzzle input file");
         System.out.println("-output <fileout> - full path for the Puzzle output file");
         System.out.println("-rotate - in case support rotation is required, in case not appear - will be set to false;");
-        System.out.println("-threada <numOfThreads> - in case flag not appear, the default will be 1. In case wrong number, the default is 4");
+        System.out.println("-thread <numOfThreads> - in case flag not appear, the default will be 1. In case wrong number, the default is 4");
     }
 }

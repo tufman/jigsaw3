@@ -9,7 +9,7 @@ public class PuzzleSolver {
     // a map between a location within the board to a list of available elements which fits this position
     private Map<PuzzleDirections, List<Integer>> positionToElements;
     private Map<Integer, List<PuzzleElement>> puzzleStructure;
-    private Map<Rotation, List<PuzzleElement>> usedElementIdByRotation;
+    private List<Integer> usedElementById;
     private PuzzleElement[][] board;
     private List<Integer> availableRowsForSolution;
     PuzzleMapper puzzleMapper = new PuzzleMapper();
@@ -25,8 +25,8 @@ public class PuzzleSolver {
     public PuzzleSolver(Puzzle puzzle1) {
         this.elements = puzzle1.getPuzzleElementList();
         this.puzzleStructure = puzzle1.getAvailableOptionsForSolution();
-        usedElementIdByRotation = new HashMap<>();
         availableRowsForSolution = puzzle1.getNumOfRowsForSolution(puzzle1.getPuzzleElementList().size());
+        usedElementById = new ArrayList<>();
     }
 
     public PuzzleElement[][] solve() {
@@ -35,13 +35,11 @@ public class PuzzleSolver {
             int r = availableRowsForSolution.get(i);
             int c = elements.size() / r;
             // try to build a puzzle
-
             initPuzzle(c,r);
-
             PuzzleElement[][] board = solve(0,0);
-
-            if (board != null)
+            if (board != null){
                 return board;
+            }
         }
         return null;
     }
@@ -56,12 +54,11 @@ public class PuzzleSolver {
 
         if (isSolved(r,c))
             return board;
-
         // Try each remaining piece in this square
         for (PuzzleElement p : elements) {
             setAsUsed(p);
             if (tryInsert(p, r, c)) {
-
+//TODO:remove current for debug
                 // It fits: recurse to try the next square
                 // Create the new list of pieces left
 //                List<PuzzleElement> piecesLeft2 = new ArrayList<PuzzleElement>(piecesLeft);
@@ -83,20 +80,20 @@ public class PuzzleSolver {
         // no solution with this piece
         return null;
     }
-
+//TODO: for all size of puzzle
     private boolean tryInsert(PuzzleElement e, int r, int c) {
         //check if corner
         if (r == 0 && c == 0) { // first TOP_LEFT_CORNER
-            if (isUsed(e) && !fit(e, getPuzzleList(getKey(0,0,5,5)))) return false;
+            if (isUsed(e) && !fit(e, getPuzzleList(getKey(0, 0, 0, 7)))) return false;
         }
         else if (r == rows-1 && c == 0) { // first BOTTOM_LEFT_CORNER
-            if (isUsed(e) && !fit(e, getPuzzleList(getKey(0,e.getTop(),5,0)))) return false;
+            if (isUsed(e) && !fit(e, getPuzzleList(getKey(0,7,7,7)))) return false;
         }
         else if (r == rows -1 && c==columns-1) { // last BOTTOM_RIGHT_CORNER
-            if (isUsed(e) && !fit(e, getPuzzleList(getKey(e.getLeft(),e.getTop(),0,0)))) return false;
+            if (isUsed(e) && !fit(e, getPuzzleList(getKey(7,7,7,7)))) return false;
         }
         else if (r == 0 && c==columns-1) { // last TOP_RIGHT_CORNER
-            if (isUsed(e) && !fit(e, getPuzzleList(getKey(e.getLeft(),0,0,5)))) return false;
+            if (isUsed(e) && !fit(e, getPuzzleList(getKey(0,0,7,7)))) return false;
         }
         //check if edge
         else if (r == 0) { // first row
@@ -132,27 +129,18 @@ public class PuzzleSolver {
     }
 
     private void setAsUsed(PuzzleElement p) {
-        List<PuzzleElement>list;
-        if(usedElementIdByRotation.get(p.getRotation())==null) {
-            list = new ArrayList<>();
-        }else list = new ArrayList<>(usedElementIdByRotation.get(p.getRotation()));
-        list.add(p);
-        usedElementIdByRotation.put(p.getRotation(),list);
+            usedElementById.add(p.getId());
     }
 
     private void setAsNotUsed(PuzzleElement p) {
-        List<PuzzleElement>list;
-        list = new ArrayList<>(usedElementIdByRotation.get(p.getRotation()));
-        list.remove(p);
-        usedElementIdByRotation.put(p.getRotation(),list);
+        usedElementById.remove(usedElementById.indexOf(p.getId()));
     }
 
     private boolean isUsed(PuzzleElement p) {
-        List<PuzzleElement> list = new ArrayList<>();
-        if(usedElementIdByRotation.get(p.getRotation())==null) {
+        if(usedElementById==null){
             return false;
         }
-        else if(usedElementIdByRotation.get(p.getRotation()).contains(p)){
+        else if(usedElementById.contains(p.getId())){
             return true;
         }
         return false;

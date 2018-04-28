@@ -39,10 +39,10 @@ public class Puzzle {
     }
 
 
-    public boolean readInputFile(String filePath, boolean isRotation, boolean isMultiThread, int numOfTheads) throws IOException {
+    public boolean readInputFile(String filePath, boolean isRotation, boolean isMultiThread, int numOfThreads) throws IOException {
         this.isRotation = isRotation;
         this.isMultiThread = isMultiThread;
-        this.numOfTheads = numOfTheads;
+        this.numOfTheads = numOfThreads;
 
         FileInputStream fis = null;
         try {
@@ -159,13 +159,14 @@ public class Puzzle {
                     if (isRotation){
                         for (int rotate = 1; rotate < x; rotate++) {
                             element = new PuzzleElement(popedLineFromStack, x);
-                            addPuzzleElementToList(element);
+//                            addPuzzleElementToList(element);
                             puzzleMapper.addElementToStructure(element);
                         }
                     }
 
                 });
             }
+            System.out.println();
 
             //Consider using invoke all and list of runnables
             executor.shutdown();
@@ -185,12 +186,13 @@ public class Puzzle {
                 } else x = 4;
 
                 for (int rotate = 1; rotate < x; rotate++) {
-                    element = new PuzzleElement(popedLineFromStack, x);
-                    addPuzzleElementToList(element);
+                    element = new PuzzleElement(popedLineFromStack, rotate);
+//                    addPuzzleElementToList(element);
                     puzzleMapper.addElementToStructure(element);
                 }
             }
         }
+        System.out.println("puz   " + "\u001B[32m"+ puzzleMapper.getPuzzleStructure().size()+" puzzle element "+ puzzleElementList );
     }
 
     private synchronized void addPuzzleElementToList(PuzzleElement element) {
