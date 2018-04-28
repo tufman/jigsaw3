@@ -11,18 +11,6 @@ public class PuzzleMain {
 
      String inputFile = args[0];
      String resultFile = args[1];
-
-
-       ExecutorService executor = Executors.newFixedThreadPool(10);
-       for (int i =1 ; i<3 ; i++) {
-           executor.submit(() -> {
-               String threadName = Thread.currentThread().getName();
-               System.out.println("Hello " + threadName);
-           });
-       }
-
-        executor.shutdown();
-
      PuzzleManager puzzleManager = new PuzzleManager();
      puzzleManager.manage(inputFile,resultFile);
     }

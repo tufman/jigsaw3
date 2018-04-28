@@ -12,6 +12,7 @@ public class PuzzleSolver {
     private ArrayList<Integer> rowOptions;
     // a map between a location within the board to a list of available elements which fits this position
     private Map<PuzzleDirections, List<Integer>> positionToElements;
+
     private PuzzleElement[][] board;
     private int rows;
     private int columns;
@@ -33,12 +34,12 @@ public class PuzzleSolver {
 
     public PuzzleSolver(Puzzle puzzle1, int numOfRowsPerThread) {
         this.elements = puzzle1.getPuzzleElementList();
-        this.numOfRowsPerThread = numOfRowsPerThread;
+        this.rowOptions = puzzle1.getNumOfRowsForSolution();
         this.positionToElements = puzzle1.getAvailableOptionsForSolution();
+        this.numOfRowsPerThread= puzzle1.getNumOfRowsForSolution().size();
     }
 
     public PuzzleElement[][] solve() {
-
         for (int i = 0; i< rowOptions.size(); i++) {
             int r = rowOptions.get(i);
             int c = elements.size() / r;
