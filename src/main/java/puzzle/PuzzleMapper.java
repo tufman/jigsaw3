@@ -99,7 +99,8 @@ public class PuzzleMapper {
         ArrayList<Integer> retVal = new ArrayList<>();
 
         if (puzzleStructure.size() >0 && numOfElement!=0 ) {
-            if (puzzleStructure.get(44).size() == puzzleStructure.get(4444).size()) {
+            if ((puzzleStructure.get(44).size() == puzzleStructure.get(4444).size())
+                    && puzzleStructure.get(4444).size()==numOfElement && puzzleStructure.get(44).size() == numOfElement) {
                 retVal.add(1);
             }
             for (int divisor = 2; divisor <= numOfElement / 2; divisor++) {

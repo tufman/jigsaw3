@@ -120,7 +120,7 @@ public class Puzzle {
         if (stackOfGoodLines.size() > 0) {
             createAndMapPuzzleElements();
             this.availableOptionsForSolution = puzzleMapper.getPuzzleStructure();
-            //System.out.println("availableOptionsForSolution size: " + availableOptionsForSolution.size() + "  " + availableOptionsForSolution);
+//            System.out.println("availableOptionsForSolution size: " + availableOptionsForSolution.size() + "  " + availableOptionsForSolution);
             verifyAtLeastOneLineAvailable();
             verifyAllCornersExist();
             verifySumZero();
