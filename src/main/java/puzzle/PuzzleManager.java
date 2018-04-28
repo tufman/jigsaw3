@@ -30,7 +30,7 @@ public class PuzzleManager {
 
             ArrayList<Integer> numOfRowsForSolution = puzzle1.getNumOfRowsForSolution1();
 
-            final int  numOfThreadsToOpen = numOfRowsForSolution.size();
+             int  numOfThreadsToOpen = numOfRowsForSolution.size();
             //TODO: need to delete the print - only for debug!!
             System.out.println("Num of Threads : "+numOfThreadsToOpen);
             ExecutorService executorService = Executors.newFixedThreadPool(numOfThreadsToOpen);
@@ -40,8 +40,8 @@ public class PuzzleManager {
                     public PuzzleElement[][] call() throws Exception {
                         System.out.println("Starting...");
                         System.out.println(Thread.currentThread().getId());
-                        //Todo : need to find a way to insert the numofrows to the inner class.-- DONE!
-                        PuzzleSolver puzzleSolver = new PuzzleSolver(puzzle1, numOfThreadsToOpen);
+                        //Todo : need to find a way to insert the num of rows to the inner class!
+                        PuzzleSolver puzzleSolver = new PuzzleSolver(puzzle1, 4);
                         board = puzzleSolver.solve();
                         Thread.sleep(4000);
                         return board;

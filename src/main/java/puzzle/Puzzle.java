@@ -52,6 +52,7 @@ public class Puzzle {
         return errorsReadingInputFile.isEmpty();
     }
 
+    //TODO: need to change to return the rows value - this is hardcoded only for testing and implementing the mutlithread consept
     public  ArrayList<Integer> getNumOfRowsForSolution1() {
         ArrayList<Integer> retVal = new ArrayList<>();
         retVal.add(1);
