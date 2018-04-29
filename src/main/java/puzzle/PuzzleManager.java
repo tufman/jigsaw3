@@ -12,6 +12,7 @@ import java.util.concurrent.*;
 public class PuzzleManager {
 
     private PuzzleElement[][] board = null;
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("PuzzleManager{");
@@ -30,9 +31,9 @@ public class PuzzleManager {
 
             ArrayList<Integer> numOfRowsForSolution = puzzle1.getNumOfRowsForSolution1();
 
-             int  numOfThreadsToOpen = numOfRowsForSolution.size();
+            int numOfThreadsToOpen = numOfRowsForSolution.size();
             //TODO: need to delete the print - only for debug!!
-            System.out.println("Num of Threads : "+numOfThreadsToOpen);
+            System.out.println("Num of Threads : " + numOfThreadsToOpen);
             ExecutorService executorService = Executors.newFixedThreadPool(numOfThreadsToOpen);
 
             for (int i = 0; i < numOfThreadsToOpen; i++) {
@@ -47,24 +48,28 @@ public class PuzzleManager {
                         return board;
                     }
                 });
-                executorService.shutdown();
-                //todo: consider using thread local
-                if (future.get() == null) {
-                    System.out.println("Result is Empty : " + future.get());
-                }
-                if (!(future.get() == null)) {
+                try {
+                    //todo: consider using thread local
+                    if (future.get() == null) {
+                        System.out.println("Result is Empty : " + future.get());
+                    }
 
-                    System.out.println("Result is : " + future.get());
-                    System.out.println("Is Thread Completed :" + future.isDone());
-                    System.out.println(board);
-                    break;
+                    if (!(future.get() == null)) {
+
+                        System.out.println("Result is : " + future.get());
+                        System.out.println("Is Thread Completed :" + future.isDone());
+                        System.out.println(board);
+                        break;
+
+                    }
+                } catch (InterruptedException e) {
 
                 }
             }
+            executorService.shutdown();
             System.out.println("Solution!!!");
 
-        }
-        else
+        } else
             writePuzzleStatus.WriteResultToFile(board);
         return board;
     }
