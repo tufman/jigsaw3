@@ -13,13 +13,6 @@ public class PuzzleManager {
 
     private PuzzleElement[][] board = null;
 
-    @Override
-    public String toString() {
-        final StringBuffer sb = new StringBuffer("PuzzleManager{");
-        sb.append("board=").append(board == null ? "null" : Arrays.asList(board).toString());
-        sb.append('}');
-        return sb.toString();
-    }
 
     public PuzzleElement[][] manage(String filePath, String filePathToOutput) throws IOException, ExecutionException, InterruptedException {
 
@@ -32,19 +25,15 @@ public class PuzzleManager {
             ArrayList<Integer> numOfRowsForSolution = puzzle1.getNumOfRowsForSolution1();
 
             int numOfThreadsToOpen = numOfRowsForSolution.size();
-            //TODO: need to delete the print - only for debug!!
-            System.out.println("Num of Threads : " + numOfThreadsToOpen);
+
             ExecutorService executorService = Executors.newFixedThreadPool(numOfThreadsToOpen);
 
-            for (int i = 0; i < numOfThreadsToOpen; i++) {
+            for (int i = 0; i < numOfRowsForSolution.size(); i++) {
+                int finalI = i;
                 Future<PuzzleElement[][]> future = executorService.submit(new Callable() {
                     public PuzzleElement[][] call() throws Exception {
-                        System.out.println("Starting...");
-                        System.out.println(Thread.currentThread().getId());
-                        //Todo : need to find a way to insert the num of rows to the inner class!
-                        PuzzleSolver puzzleSolver = new PuzzleSolver(puzzle1, 4);
+                        PuzzleSolver puzzleSolver = new PuzzleSolver(puzzle1, numOfRowsForSolution.get(finalI));
                         board = puzzleSolver.solve();
-                        Thread.sleep(4000);
                         return board;
                     }
                 });
@@ -56,22 +45,31 @@ public class PuzzleManager {
 
                     if (!(future.get() == null)) {
 
-                        System.out.println("Result is : " + future.get());
-                        System.out.println("Is Thread Completed :" + future.isDone());
-                        System.out.println(board);
+                        //System.out.println("Result is : " + future.get());
+                        System.out.println("Result is : " + printBoardResult(future.get()));
                         break;
 
                     }
                 } catch (InterruptedException e) {
 
                 }
+
             }
             executorService.shutdown();
-            System.out.println("Solution!!!");
 
         } else
             writePuzzleStatus.WriteResultToFile(board);
         return board;
+    }
+
+    private String printBoardResult(PuzzleElement[][] puzzleElements) {
+        String retVal = "";
+        for (int i =0; i < puzzleElements.length; i++){
+            for (int j=0; j< puzzleElements[0].length; j++){
+                retVal += "[" + puzzleElements[i][j].getId() + "]";
+            }
+        }
+        return retVal;
     }
 }
 
