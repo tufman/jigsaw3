@@ -7,6 +7,7 @@ package puzzle;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.*;
 
 public class PuzzleManager {
@@ -27,34 +28,32 @@ public class PuzzleManager {
             int numOfThreadsToOpen = numOfRowsForSolution.size();
 
             ExecutorService executorService = Executors.newFixedThreadPool(numOfThreadsToOpen);
-
+            List<Future<PuzzleElement[][]>> future = new ArrayList<>();
             for (int i = 0; i < numOfRowsForSolution.size(); i++) {
                 int finalI = i;
-                Future<PuzzleElement[][]> future = executorService.submit(new Callable() {
+                future.add( executorService.submit(new Callable() {
                     public PuzzleElement[][] call() throws Exception {
                         PuzzleSolver puzzleSolver = new PuzzleSolver(puzzle1, numOfRowsForSolution.get(finalI));
                         board = puzzleSolver.solve();
                         return board;
                     }
-                });
-                try {
-                    //todo: consider using thread local
-                    if (future.get() == null) {
-                        System.out.println("Result is Empty : " + future.get());
-                    }
-
-                    if (!(future.get() == null)) {
-
-                        //System.out.println("Result is : " + future.get());
-                        System.out.println("Result is : " + printBoardResult(future.get()));
-                        break;
-
-                    }
-                } catch (InterruptedException e) {
-
-                }
+                }));
 
             }
+            while (future.size()<numOfRowsForSolution.size()){
+                Thread.sleep(10);
+            }
+
+            for (int k =0; k < future.size(); k++){
+                if (future.get(k) == null){
+                    System.out.println("No Solution.... Result is Empty");
+                }
+                else{
+                    System.out.println("Result is : " + printBoardResult(future.get(k).get()));
+                    break;
+                }
+            }
+
             executorService.shutdown();
 
         } else
