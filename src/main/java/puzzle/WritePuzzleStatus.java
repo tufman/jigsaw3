@@ -36,12 +36,12 @@ public class WritePuzzleStatus {
                     for (int jj = 0; jj <= board[0].length - 1; jj++) {
                         if (jj == board[0].length - 1) {
                             line.append(board[ii][jj].getId());
-                            line.append(board[ii][jj].getRotation().getMonetaryValue());
-                            System.out.println(board[ii][jj].getId()+board[ii][jj].getRotation().getMonetaryValue());
+                            line.append(board[ii][jj].getRotation().getMonetaryValue()+" ");
+                            System.out.println(board[ii][jj].getId()+board[ii][jj].getRotation().getMonetaryValue()+" ");
                         } else {
                             line.append(board[ii][jj].getId());
                             line.append(board[ii][jj].getRotation().getMonetaryValue()+" ");
-                            System.out.println(board[ii][jj].getId()+board[ii][jj].getRotation().getMonetaryValue());
+                            System.out.println(board[ii][jj].getId()+board[ii][jj].getRotation().getMonetaryValue()+" ");
                         }
 
                     }

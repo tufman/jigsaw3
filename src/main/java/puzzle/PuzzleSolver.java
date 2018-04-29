@@ -15,6 +15,7 @@ public class PuzzleSolver {
     PuzzleMapper puzzleMapper = new PuzzleMapper();
     private int rows;
     private int columns;
+    private int counterOfElement;
 
     public PuzzleSolver(List<PuzzleElement> elements, ArrayList<Integer> rowOptions, Map<PuzzleDirections, List<Integer>> positionToElements) {
         this.elements = elements;
@@ -25,17 +26,21 @@ public class PuzzleSolver {
     public PuzzleSolver(Puzzle puzzle1) {
         this.elements = puzzle1.getPuzzleElementList();
         this.puzzleStructure = puzzle1.getAvailableOptionsForSolution();
-        availableRowsForSolution = puzzle1.getNumOfRowsForSolution(puzzle1.getPuzzleElementList().size());
+        counterOfElement = puzzle1.getCounterOfPuzzleElementList();
+        availableRowsForSolution = puzzle1.getNumOfRowsForSolution(counterOfElement);
         usedElementById = new ArrayList<>();
+
     }
 
     public PuzzleElement[][] solve() {
 //TODO: create threadePool for available row for solution
         for (int i = 0; i< availableRowsForSolution.size(); i++) {
             int r = availableRowsForSolution.get(i);
-            int c = elements.size() / r;
+            int c = counterOfElement / r;
             // try to build a puzzle
             initPuzzle(c,r);
+            usedElementById.clear();
+            System.out.println("try the : "+ i + " r "+r+ " c "+c);
             PuzzleElement[][] board = solve(0,0);
             if (board != null){
                 return board;
@@ -59,7 +64,7 @@ public class PuzzleSolver {
             if(inUse(p))
                 continue;
             setAsUsed(p);
-
+            System.out.println(p.toString());
             if (tryInsert(p, r, c)) {
 //TODO:remove current for debug
                 // It fits: recurse to try the next square
@@ -70,7 +75,7 @@ public class PuzzleSolver {
                 // (can stop here and return success if piecesLeft2 is empty)
                 // Find the next position
                 Position next = nextPos(r, c);
-
+                System.out.println("r "+r+" c "+c);
                 // Recurse to try next square
                 PuzzleElement[][] solution = solve(next.row, next.column);
                 if (solution != null) {
@@ -92,11 +97,11 @@ public class PuzzleSolver {
         else if (r == rows-1 && c == 0) { // first BOTTOM_LEFT_CORNER
             if (inUse(e) && !fit(e, getPuzzleList(getKey(0,7,7,7)))) return false;
         }
-        else if (r == rows -1 && c==columns-1) { // last BOTTOM_RIGHT_CORNER
-            if (inUse(e) && !fit(e, getPuzzleList(getKey(7,7,7,7)))) return false;
-        }
         else if (r == 0 && c==columns-1) { // last TOP_RIGHT_CORNER
-            if (inUse(e) && !fit(e, getPuzzleList(getKey(0,0,7,7)))) return false;
+            if (inUse(e) && !(fit(e, getPuzzleList(getKey(0,0,7,7)))&& (board[r][c-1].getRight()+e.getLeft() == 0))) return false;
+        }
+        else if (r == rows -1 && c==columns-1) { // last BOTTOM_RIGHT_CORNER
+            if (inUse(e) && !(fit(e, getPuzzleList(getKey(7,7,7,7)))&& (board[r][c-1].getRight()+e.getLeft() == 0))) return false;
         }
         //check if edge
         else if (r == 0) { // first row
@@ -131,6 +136,7 @@ public class PuzzleSolver {
     }
 
     private boolean fit(PuzzleElement pe, List<PuzzleElement> puzzleList) {
+        if(puzzleList==null) return false;
         return puzzleList.contains(pe);
     }
 

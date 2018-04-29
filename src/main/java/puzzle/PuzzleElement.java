@@ -86,7 +86,7 @@ public class PuzzleElement {
                 ((PuzzleElement) obj).top == this.top &&
                 ((PuzzleElement) obj).right == this.right &&
                 ((PuzzleElement) obj).bottom == this.bottom &&
-                ((PuzzleElement) obj).rotation == this.rotation);
+                ((PuzzleElement) obj).rotation.getMonetaryValue() == this.rotation.getMonetaryValue());
     }
 
     public int getId() {

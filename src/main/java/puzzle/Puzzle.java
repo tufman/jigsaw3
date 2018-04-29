@@ -9,6 +9,7 @@ public class Puzzle {
 
     private int expectedNumOfElementsFromFirstLine;
     private List<PuzzleElement> puzzleElementList = new ArrayList<>();
+    private int countElement=0;
     private Stack<PuzzleElement> puzzleElementListFromInputFile = new Stack<>();
     private Stack<ArrayList<Integer>> stackOfGoodLines = new Stack<>();
 
@@ -150,6 +151,7 @@ public class Puzzle {
                     PuzzleElement element = new PuzzleElement(popedLineFromStack, x);
                     puzzleMapper.addElementToStructure(element);
                     addPuzzleElementToList(element);
+                    countElement++;
                     if (element.getSumOfEdges() == 1111 || element.getSumOfEdges() == -1111 || element.getSumOfEdges() == 0) {
                         x = 0;
                     } else if (element.getTop() == element.getBottom() && element.getLeft() == element.getRight()) {
@@ -159,7 +161,7 @@ public class Puzzle {
                     if (isRotation){
                         for (int rotate = 1; rotate < x; rotate++) {
                             element = new PuzzleElement(popedLineFromStack, x);
-//                            addPuzzleElementToList(element);
+                            addPuzzleElementToList(element);
                             puzzleMapper.addElementToStructure(element);
                         }
                     }
@@ -179,6 +181,7 @@ public class Puzzle {
                 PuzzleElement element = new PuzzleElement(popedLineFromStack, x);
                 puzzleMapper.addElementToStructure(element);
                 addPuzzleElementToList(element);
+                countElement++;
                 if (element.getSumOfEdges() == 1111 || element.getSumOfEdges() == -1111 || element.getSumOfEdges() == 0) {
                     x = 0;
                 } else if (element.getTop() == element.getBottom() && element.getLeft() == element.getRight()) {
@@ -187,7 +190,7 @@ public class Puzzle {
 
                 for (int rotate = 1; rotate < x; rotate++) {
                     element = new PuzzleElement(popedLineFromStack, rotate);
-//                    addPuzzleElementToList(element);
+                    addPuzzleElementToList(element);
                     puzzleMapper.addElementToStructure(element);
                 }
             }
@@ -268,6 +271,9 @@ public class Puzzle {
         return puzzleElementList;
     }
 
+    public int getCounterOfPuzzleElementList() {
+        return countElement;
+    }
     public Map<Integer, List<PuzzleElement>> getAvailableOptionsForSolution() {
         return availableOptionsForSolution;
     }

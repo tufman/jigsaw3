@@ -90,32 +90,32 @@ public class PuzzleMapper {
         return puzzleStructure;
     }
 
-    public  ArrayList<Integer> getNumOfRowsForSolution(int numOfElement) {
+    public  ArrayList<Integer> getNumOfRowsForSolution(int numOfElm) {
         int numOfLeft = puzzleStructure.get(4).size();
         int numOfRight = puzzleStructure.get(444).size();
         int commonLeftZeroAndRightZero = Math.min(numOfLeft, numOfRight);
         boolean isPrime = true;
-        System.out.println("\u001B[31m"+numOfElement);
+        System.out.println("\u001B[31m"+numOfElm);
         ArrayList<Integer> retVal = new ArrayList<>();
 
-        if (puzzleStructure.size() >0 && numOfElement!=0 ) {
-            if ((puzzleStructure.get(44).size() == puzzleStructure.get(4444).size())
-                    && puzzleStructure.get(4444).size()==numOfElement && puzzleStructure.get(44).size() == numOfElement) {
+        if (puzzleStructure.size() >0 && numOfElm!=0 ) {
+            if (puzzleStructure.get(44).size() == puzzleStructure.get(4444).size()
+                    && puzzleStructure.get(4444).size()>=numOfElm && puzzleStructure.get(44).size() >= numOfElm){
                 retVal.add(1);
             }
-            for (int divisor = 2; divisor <= numOfElement / 2; divisor++) {
-                if (numOfElement % divisor == 0) {
+            for (int divisor = 2; divisor <= numOfElm / 2; divisor++) {
+                if (numOfElm % divisor == 0) {
                     isPrime = false;
                     break; // num is not a prime, no reason to continue checking
                 }
             }
-            if (isPrime && puzzleStructure.get(44).size() / numOfElement == puzzleStructure.get(4444).size() / numOfElement) {
-                retVal.add(numOfElement);
+            if (isPrime && puzzleStructure.get(44).size() / numOfElm == puzzleStructure.get(4444).size() / numOfElm) {
+                retVal.add(numOfElm);
                 return retVal;
             }
             for (int i = 2; i < commonLeftZeroAndRightZero; i++) {
-                if ((numOfElement % i) == 0) {
-                    if (puzzleStructure.get(44).size() >= numOfElement / i && puzzleStructure.get(4444).size() >= numOfElement / i) {
+                if ((numOfElm % i) == 0) {
+                    if (puzzleStructure.get(44).size() >= numOfElm / i && puzzleStructure.get(4444).size() >= numOfElm / i) {
                         retVal.add(i);
                     }
                 }
