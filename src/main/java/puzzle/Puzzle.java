@@ -130,73 +130,55 @@ public class Puzzle {
     }
 
     private void createAndMapPuzzleElements() {
+        if (isMultiThread) {
+            ExecutorService executor = Executors.newFixedThreadPool(numOfTheads);
+            while (stackOfGoodLines.size() != 0) {
+                executor.submit(() -> {
+                    indexingPuzzle();
+                });
+            }
+            System.out.println();
+            //Consider using invoke all and list of runnables
+            executor.shutdown();
+        } else {
+            while (stackOfGoodLines.size() != 0) {
+                indexingPuzzle();
+            }
+        }
+        System.out.println("puz   " + "\u001B[32m" + puzzleMapper.getPuzzleStructure().size() + " puzzle element " + puzzleElementList);
+    }
 
+    private void indexingPuzzle() {
         //stackOfGoodLines.pop() is synchronaized by java....
         // puzzleMapper.addElementToStructure(element) is synchronized - keep it.
         // addPuzzleElementToList(element) is synchronized - keep it.
 
+        ArrayList<Integer> popedLineFromStack = stackOfGoodLines.pop();
 
-        if (isMultiThread){
-            ExecutorService executor = Executors.newFixedThreadPool(numOfTheads);
+        //TODO: remove this line - for debug of MultiThread....
+        System.out.println("CreateAndMap line from stack " + popedLineFromStack + " by " + Thread.currentThread().getId());
 
-            while (stackOfGoodLines.size() != 0) {
-                executor.submit(() -> {
-                    ArrayList<Integer> popedLineFromStack = stackOfGoodLines.pop();
+        int x = 0;
+        //insert element with 0 rotation
+        PuzzleElement element = new PuzzleElement(popedLineFromStack, x);
+        puzzleMapper.addElementToStructure(element);
+        addPuzzleElementToList(element);
+        countElement++;
+        if (element.getSumOfEdges() == 1111 || element.getSumOfEdges() == -1111 || element.getSumOfEdges() == 0) {
+            x = 0;
+        } else if (element.getTop() == element.getBottom() && element.getLeft() == element.getRight()) {
+            x = 2;
+        } else x = 4;
 
-                    //TODO: remove this line - for debug of MultiThread....
-                    System.out.println("CreateAndMap line from stack " + popedLineFromStack + " by " + Thread.currentThread().getId());
-
-                    int x = 0;
-                    //insert element with 0 rotation
-                    PuzzleElement element = new PuzzleElement(popedLineFromStack, x);
-                    puzzleMapper.addElementToStructure(element);
-                    addPuzzleElementToList(element);
-                    countElement++;
-                    if (element.getSumOfEdges() == 1111 || element.getSumOfEdges() == -1111 || element.getSumOfEdges() == 0) {
-                        x = 0;
-                    } else if (element.getTop() == element.getBottom() && element.getLeft() == element.getRight()) {
-                        x = 2;
-                    } else x = 4;
-
-                    if (isRotation){
-                        for (int rotate = 1; rotate < x; rotate++) {
-                            element = new PuzzleElement(popedLineFromStack, x);
-                            addPuzzleElementToList(element);
-                            puzzleMapper.addElementToStructure(element);
-                        }
-                    }
-
-                });
-            }
-            System.out.println();
-
-            //Consider using invoke all and list of runnables
-            executor.shutdown();
-        }else{
-            while (stackOfGoodLines.size() != 0) {
-                ArrayList<Integer> popedLineFromStack = stackOfGoodLines.pop();
-
-                int x = 0;
-                //insert element with 0 rotation
-                PuzzleElement element = new PuzzleElement(popedLineFromStack, x);
-                puzzleMapper.addElementToStructure(element);
+        if (isRotation){
+            for (int rotate = 1; rotate < x; rotate++) {
+                element = new PuzzleElement(popedLineFromStack, rotate);
                 addPuzzleElementToList(element);
-                countElement++;
-                if (element.getSumOfEdges() == 1111 || element.getSumOfEdges() == -1111 || element.getSumOfEdges() == 0) {
-                    x = 0;
-                } else if (element.getTop() == element.getBottom() && element.getLeft() == element.getRight()) {
-                    x = 2;
-                } else x = 4;
-
-                for (int rotate = 1; rotate < x; rotate++) {
-                    element = new PuzzleElement(popedLineFromStack, rotate);
-                    addPuzzleElementToList(element);
-                    puzzleMapper.addElementToStructure(element);
-                }
+                puzzleMapper.addElementToStructure(element);
             }
         }
-        System.out.println("puz   " + "\u001B[32m"+ puzzleMapper.getPuzzleStructure().size()+" puzzle element "+ puzzleElementList );
     }
+
 
     private synchronized void addPuzzleElementToList(PuzzleElement element) {
         puzzleElementList.add(element);

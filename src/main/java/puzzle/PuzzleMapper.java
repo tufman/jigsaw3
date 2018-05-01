@@ -100,7 +100,7 @@ public class PuzzleMapper {
 
         if (puzzleStructure.size() >0 && numOfElm!=0 ) {
             if (puzzleStructure.get(44).size() == puzzleStructure.get(4444).size()
-                    && puzzleStructure.get(4444).size()>=numOfElm && puzzleStructure.get(44).size() >= numOfElm){
+                    && puzzleStructure.get(4444).size()/4>=numOfElm && puzzleStructure.get(44).size()/4 >= numOfElm){
                 retVal.add(1);
             }
             for (int divisor = 2; divisor <= numOfElm / 2; divisor++) {
@@ -113,7 +113,7 @@ public class PuzzleMapper {
                 retVal.add(numOfElm);
                 return retVal;
             }
-            for (int i = 2; i < commonLeftZeroAndRightZero; i++) {
+            for (int i = 2; i <= commonLeftZeroAndRightZero; i++) {
                 if ((numOfElm % i) == 0) {
                     if (puzzleStructure.get(44).size() >= numOfElm / i && puzzleStructure.get(4444).size() >= numOfElm / i) {
                         retVal.add(i);
