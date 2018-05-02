@@ -1,6 +1,9 @@
 package puzzle;
 
 import java.io.IOException;
+import java.sql.Time;
+import java.time.LocalDateTime;
+import java.util.concurrent.TimeUnit;
 
 public class PuzzleMain {
 
@@ -10,20 +13,13 @@ public class PuzzleMain {
     private static String filePathToSave;
     private static int numOfThreads;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         extractParameters(args);
-
-
-//        if(args[0].equals("rotation")){
-//            isRotation = true;
-//        }
-//        if(args[1].equals("multithreaded")){
-//            isMultiThread = false;
-//        }
-//     filePath = System.getProperty("user.dir")+"\\src\\\\main\\resources\\Good2Pieces";
-//     filePathToSave = System.getProperty("user.dir") + "\\src\\main\\resources\\result.txt";
-     PuzzleManager puzzleManager = new PuzzleManager();
-     puzzleManager.manage(filePath,filePathToSave, isRotation, isMultiThread, numOfThreads);
+        LocalDateTime timeStart = LocalDateTime.now();
+        PuzzleManager puzzleManager = new PuzzleManager();
+        puzzleManager.manage(filePath, filePathToSave, isRotation, isMultiThread, numOfThreads);
+        LocalDateTime timeEnd = LocalDateTime.now();
+        System.out.println("run time : " + (timeEnd.toString() + " " + timeStart.toString()));
     }
 
     private static void extractParameters(String[] args) {
