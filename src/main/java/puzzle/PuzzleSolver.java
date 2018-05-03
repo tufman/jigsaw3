@@ -41,7 +41,7 @@ public class PuzzleSolver {
             initPuzzle(c,r);
             usedElementById.clear();
             System.out.println("try the : "+ i + " r "+r+ " c "+c +"\u001B[32m");
-            PuzzleElement[][] board = solve(0,0,elements);
+            PuzzleElement[][] board = solve(0,0);
             if (board != null){
                 return board;
             }
@@ -55,29 +55,36 @@ public class PuzzleSolver {
         board = new PuzzleElement[rows][columns];
     }
 
-    private PuzzleElement[][] solve(int r, int c, List<PuzzleElement> piecesLeft) {
+    private PuzzleElement[][] solve(int r, int c) {
         if (isSolved(r,c))
             return board;
 
+        int key= createKey(r,c);
+        List<PuzzleElement> puzzleElements = puzzleStructure.get(key);
+        if(puzzleElements==null){
+            return null;
+        }
         // Try each remaining piece in this square
-        for (PuzzleElement p : piecesLeft) {
-//            System.out.println("p "+ p +" r "+r+" c " + c);
+        for (PuzzleElement p : puzzleElements) {
+
             if(inUse(p))
                 continue;
 
             if (tryInsert(p, r, c)) {
                 setAsUsed(p);
+                System.out.println(usedElementById);
+                System.out.println("p "+ p.getId() +" r "+r+" c " + c);
                 // It fits: recurse to try the next square
                 // Create the new list of pieces left
-                List<PuzzleElement> piecesLeft2 = new ArrayList<PuzzleElement>(piecesLeft);
-                piecesLeft2.remove(p);
+//                List<PuzzleElement> piecesLeft2 = new ArrayList<PuzzleElement>(piecesLeft);
+//                piecesLeft2.remove(p);
 
                 // (can stop here and return success if piecesLeft2 is empty)
                 // Find the next position
                 Position next = nextPos(r, c);
 
                 // Recurse to try next square
-                PuzzleElement[][] solution = solve(next.row, next.column, piecesLeft2);
+                PuzzleElement[][] solution = solve(next.row, next.column);
                 if (solution != null) {
                     // This sequence worked - success!
                     return solution;
@@ -114,6 +121,36 @@ public class PuzzleSolver {
 //        }
 //        // no solution with this piece
 //        return null;
+    }
+
+    private int createKey(int r, int c) {
+        int left,right,top,bottom;
+        if (c == 0) {
+            left = 0;
+        }else{
+            left = 0 - board[r][c - 1].getRight();
+        }
+
+        if (c == board[0].length -1) {
+            right = 0;
+        }else{
+            right = 5;
+        }
+
+        if (r == 0) {
+            top = 0;
+        }else{
+            top = 0 - board[r - 1][c].getBottom();
+        }
+
+        if (r == board.length -1) {
+            bottom = 0;
+        }else{
+            bottom = 5;
+        }
+
+
+        return  left * 1000 + top * 100 + right*10 + bottom;
     }
 
 //    private boolean tryInsert(PuzzleElement e, int r, int c) {
