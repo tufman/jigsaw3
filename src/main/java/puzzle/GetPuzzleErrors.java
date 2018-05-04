@@ -1,15 +1,21 @@
+/**
+ * read config.properties file and get all the relevant errors that can/should appear in the
+ * execution of the program.
+ *
+ * Author:
+ * Shay Tufman
+
+ * */
+
+
 package puzzle;
 
 import java.io.*;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.Properties;
 
 
 public class GetPuzzleErrors {
-
-
-
 
     public Properties getPropValues() throws IOException {
 

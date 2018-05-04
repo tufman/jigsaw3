@@ -1,3 +1,12 @@
+/**
+ * The main logic of reading the input file, and validate it.
+ * Once the file is valid, it will map the input lines to Puzzle Elements by using the PuzzleMapper
+ *
+ * Author:
+ * Shay Tufman
+
+ * */
+
 package puzzle;
 
 import java.io.*;
@@ -10,7 +19,6 @@ public class Puzzle {
     private int expectedNumOfElementsFromFirstLine;
     private List<PuzzleElement> puzzleElementList = new ArrayList<>();
     private int countElement=0;
-    private Stack<PuzzleElement> puzzleElementListFromInputFile = new Stack<>();
     private Stack<ArrayList<Integer>> stackOfGoodLines = new Stack<>();
 
     public List<String> getErrorsReadingInputFile() {
@@ -29,9 +37,7 @@ public class Puzzle {
     private PuzzleMapper puzzleMapper = new PuzzleMapper();
 
     private Properties prop = null;
-    private List<Integer> idsList;
 
-    //ToDo - add if for the rotation
     private boolean isRotation;
     private boolean isMultiThread;
     private int numOfTheads;
@@ -121,11 +127,9 @@ public class Puzzle {
         if (stackOfGoodLines.size() > 0) {
             createAndMapPuzzleElements();
             this.availableOptionsForSolution = puzzleMapper.getPuzzleStructure();
-//            System.out.println("availableOptionsForSolution size: " + availableOptionsForSolution.size() + "  " + availableOptionsForSolution);
             verifyAtLeastOneLineAvailable();
             verifyAllCornersExist();
             verifySumZero();
-            //System.out.println("puzzle: " + puzzleMapper.getPuzzleStructure());
         }
     }
 
@@ -382,25 +386,8 @@ public class Puzzle {
         return errorsReadingInputFile.contains(error);
     }
 
-    public PuzzleElement getElementByIndex(int index) {
-        return puzzleElementList.get(index);
-    }
-
     public int getActualNumOfElementsReadFromInputFile() {
         return puzzleElementList.size();
-    }
-
-    private void WriteErrorsToFile(List<String> errorsReadingInputFile, String filePathToSave) throws IOException {
-
-        File file = new File(filePathToSave + "//results");
-
-        try (FileOutputStream fos = new FileOutputStream(filePathToSave);
-             OutputStreamWriter osr = new OutputStreamWriter(fos)) {
-            for (String err : errorsReadingInputFile) {
-                osr.write(err + '\n');
-            }
-
-        }
     }
 
     //reade output file with ids only
@@ -417,7 +404,6 @@ public class Puzzle {
         }
         try (InputStreamReader isr = new InputStreamReader(fis);
              BufferedReader br = new BufferedReader(isr)) {
-//            initConfiguration();
             readDataFromOutputFile(br);
         }
     }
@@ -545,11 +531,6 @@ public class Puzzle {
             }
         }
         return true;
-    }
-
-    //return list of ids from output file
-    public List<Integer> getIdsList() {
-        return idsList;
     }
 
 }

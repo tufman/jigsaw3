@@ -63,7 +63,7 @@ public class PuzzleManager {
         }
     }
 
-    private static void printUsgae() {
+    private void printUsgae() {
         System.out.println("There were no commandline arguments passed!");
 
         System.out.println("The below parameters should appaer");
