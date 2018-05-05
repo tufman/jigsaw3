@@ -1,3 +1,12 @@
+/**
+ * Manage the Puzzle flow, in case a valid input file, transfer tp Solver the Puzzle.
+ * In case not valid, prints relevant errors to the output file.
+ *
+ * Author:
+ * Yelena Koviar
+ * Shay Tufman - extract parameters
+
+ * */
 package puzzle;
 
 import java.io.IOException;

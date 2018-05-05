@@ -1,3 +1,8 @@
+/*
+Enum for the Rotation - mainly for print the results by their rotation
+
+Author: Yelena Koviar
+ */
 package puzzle;
 
 public enum Rotation {
