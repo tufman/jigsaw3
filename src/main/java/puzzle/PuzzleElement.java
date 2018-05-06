@@ -1,3 +1,12 @@
+/**
+ * Each Puzzle Element has Left, Top, Right and Bottom
+ * Once a Elemnt is created, it gets also the rotation in which it should be created.
+ *
+ * Author:
+ * Yelana Koviar & Shay Tufman
+
+ * */
+
 package puzzle;
 
 import java.util.ArrayList;

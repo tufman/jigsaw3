@@ -4,6 +4,9 @@
  * @param private PuzzleElement[][] board;
  * @param private List<Integer> usedElementById;
  * @param private List<Integer> availableRowsForSolution
+ *
+ * Author: Yelena Koviar
+ *
  * */
 package puzzle;
 
@@ -17,8 +20,6 @@ public class PuzzleSolver {
     private int numOfThreads;
     private List<PuzzleElement> elements = new ArrayList<>();
     private ArrayList<Integer> rowOptions;
-    // a map between a location within the board to a list of available elements which fits this position
-    private Map<PuzzleDirections, List<Integer>> positionToElements;
     private Map<Integer, List<PuzzleElement>> puzzleStructure;
     private List<Integer> usedElementById;
     private PuzzleElement[][] board;
@@ -29,11 +30,6 @@ public class PuzzleSolver {
     private AtomicBoolean myBoolean = new AtomicBoolean(false);
 
 
-    public PuzzleSolver(List<PuzzleElement> elements, ArrayList<Integer> rowOptions, Map<PuzzleDirections, List<Integer>> positionToElements) {
-        this.elements = elements;
-        this.rowOptions = rowOptions;
-        this.positionToElements = positionToElements;
-    }
 
     public PuzzleSolver(Puzzle puzzle1, int numOfThreads) {
         this.elements = puzzle1.getPuzzleElementList();
