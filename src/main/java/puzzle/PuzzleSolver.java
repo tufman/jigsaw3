@@ -10,8 +10,6 @@
  * */
 package puzzle;
 
-import jdk.nashorn.internal.codegen.CompilerConstants;
-
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -27,8 +25,8 @@ public class PuzzleSolver {
     private int rows;
     private int columns;
     private int counterOfElement;
-    private AtomicBoolean myBoolean = new AtomicBoolean(false);
-
+    private static AtomicBoolean resultFound = new AtomicBoolean(false);
+    private PuzzleElement[][] solutionBoard;
 
 
     public PuzzleSolver(Puzzle puzzle1, int numOfThreads) {
@@ -46,15 +44,15 @@ public class PuzzleSolver {
      */
     public PuzzleElement[][] solve() throws ExecutionException, InterruptedException {
 //TODO: create threadPool for available row for solution
-        if (numOfThreads==0 ) {
-            numOfThreads=1;
+        if (numOfThreads == 0) {
+            numOfThreads = 1;
         }
         ExecutorService executorService = Executors.newFixedThreadPool(numOfThreads);
 
-        System.out.println("number of thread :  "+ numOfThreads);
+        System.out.println("number of thread :  " + numOfThreads);
         Future<PuzzleElement[][]> future;
-        Callable<PuzzleElement[][]> puzzleCallable =null;
-        for (int i = 0; i< availableRowsForSolution.size(); i++) {
+        Callable<PuzzleElement[][]> puzzleCallable = null;
+        for (int i = 0; i < availableRowsForSolution.size(); i++) {
             int finalI = i;
             puzzleCallable = () -> {
                 int r = availableRowsForSolution.get(finalI);
@@ -70,26 +68,35 @@ public class PuzzleSolver {
             future = executorService.submit(puzzleCallable);
         }
 
-            for (int i=0; i<numOfThreads ; i++) {
-
-
-            if (myBoolean.get()){
-//                Future<String> future1 = executorService.submit(stringCallable);
-//                System.out.println(future1.get());
-                //executorService.shutdown();
-                return board;
-            }else{
-                System.out.println(Thread.currentThread().getName() +  "Atomic boolean is still false");
-                executorService.shutdown();
-            }
-
+        while (!(resultFound.get())) {
+            System.out.println("Solution was not found...(yet)");
         }
-
-
 
         executorService.shutdown();
-        return null;
-        }
+        return solutionBoard;
+    }
+
+//        for (int i=0; i<numOfThreads ; i++) {
+//
+//
+//            if (resultFound.get()){
+//
+////                Future<String> future1 = executorService.submit(stringCallable);
+////                System.out.println(future1.get());
+//                //executorService.shutdown();
+//                return solutionBoard;
+//            }else{
+//                System.out.println(Thread.currentThread().getName() +  "Atomic boolean is still false");
+//                executorService.shutdown();
+//            }
+//
+//        }
+//
+//
+//
+//        executorService.shutdown();
+//        return null;
+//        }
 
 
 
@@ -108,6 +115,7 @@ public class PuzzleSolver {
      * @return
      */
     private PuzzleElement[][] solve(int r, int c) {
+       // if (isSolved(r,c) && (!(resultFound.get())))
         if (isSolved(r,c))
             return board;
         int key= createKey(r,c);
@@ -126,8 +134,10 @@ public class PuzzleSolver {
                 // Recurse to try next square
                 PuzzleElement[][] solution = solve(next.row, next.column);
                 if (solution != null) {
-                    myBoolean.set(true);
+                    System.out.println("Solution was found by " + Thread.currentThread().getName());
+                    resultFound.set(true);
                 // This sequence worked - success!
+                    solutionBoard = solution;
                     return solution;
                 }
             }else {
