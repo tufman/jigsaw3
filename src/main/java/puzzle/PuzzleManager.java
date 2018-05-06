@@ -1,6 +1,7 @@
 package puzzle;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 public class PuzzleManager {
 
@@ -11,12 +12,13 @@ public class PuzzleManager {
     private static String filePath;
     private static String filePathToSave;
 
-    public void manage() throws IOException {
+
+    public void manage() throws IOException, ExecutionException, InterruptedException {
 
         Puzzle puzzle1 = new Puzzle();
         WritePuzzleStatus writePuzzleStatus = new WritePuzzleStatus(filePathToSave);
         if (puzzle1.readInputFile(filePath, isRotation, isMultiThread, numOfThreads)){
-            PuzzleSolver puzzleSolver = new PuzzleSolver(puzzle1);
+            PuzzleSolver puzzleSolver = new PuzzleSolver(puzzle1, numOfThreads);
             board = puzzleSolver.solve();
             //write puzzle solution to output file
             writePuzzleStatus.WriteResultToFile(board);

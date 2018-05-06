@@ -40,7 +40,8 @@ public class Puzzle {
 
     private boolean isRotation;
     private boolean isMultiThread;
-    private int numOfTheads;
+    private  int numOfTheads;
+
 
     public Puzzle() {
     }

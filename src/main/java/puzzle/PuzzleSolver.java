@@ -7,9 +7,14 @@
  * */
 package puzzle;
 
+import jdk.nashorn.internal.codegen.CompilerConstants;
+
 import java.util.*;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PuzzleSolver {
+    private int numOfThreads;
     private List<PuzzleElement> elements = new ArrayList<>();
     private ArrayList<Integer> rowOptions;
     // a map between a location within the board to a list of available elements which fits this position
@@ -21,6 +26,8 @@ public class PuzzleSolver {
     private int rows;
     private int columns;
     private int counterOfElement;
+    private AtomicBoolean myBoolean = new AtomicBoolean(false);
+
 
     public PuzzleSolver(List<PuzzleElement> elements, ArrayList<Integer> rowOptions, Map<PuzzleDirections, List<Integer>> positionToElements) {
         this.elements = elements;
@@ -28,9 +35,10 @@ public class PuzzleSolver {
         this.positionToElements = positionToElements;
     }
 
-    public PuzzleSolver(Puzzle puzzle1) {
+    public PuzzleSolver(Puzzle puzzle1, int numOfThreads) {
         this.elements = puzzle1.getPuzzleElementList();
         this.puzzleStructure = puzzle1.getAvailableOptionsForSolution();
+        this.numOfThreads = numOfThreads;
         counterOfElement = puzzle1.getCounterOfPuzzleElementList();
         availableRowsForSolution = puzzle1.getNumOfRowsForSolution(counterOfElement);
         usedElementById = new ArrayList<>();
@@ -40,21 +48,56 @@ public class PuzzleSolver {
      * initiate bord for available row solution and start the solver
      * @return
      */
-    public PuzzleElement[][] solve() {
+    public PuzzleElement[][] solve() throws ExecutionException, InterruptedException {
 //TODO: create threadPool for available row for solution
-        for (int i = 0; i< availableRowsForSolution.size(); i++) {
-            int r = availableRowsForSolution.get(i);
-            int c = counterOfElement / r;
-            // try to build a puzzle
-            initPuzzle(c,r);
-            usedElementById.clear();
-            PuzzleElement[][] board = solve(0,0);
-            if (board != null){
-                return board;
-            }
+        if (numOfThreads==0 ) {
+            numOfThreads=1;
         }
+        ExecutorService executorService = Executors.newFixedThreadPool(numOfThreads);
+
+        System.out.println("number of thread :  "+ numOfThreads);
+        Future<PuzzleElement[][]> future;
+        Callable<PuzzleElement[][]> puzzleCallable =null;
+        for (int i = 0; i< availableRowsForSolution.size(); i++) {
+            int finalI = i;
+            puzzleCallable = () -> {
+                int r = availableRowsForSolution.get(finalI);
+                int c = counterOfElement / r;
+                System.out.println("r=" + r);
+                System.out.println("c=" + c);
+                initPuzzle(c, r);
+                usedElementById.clear();
+                System.out.println(Thread.currentThread().getName() + " Try to solve " + r + "X" + c);
+                PuzzleElement[][] board = solve(0, 0);
+                return board;
+            };
+            future = executorService.submit(puzzleCallable);
+        }
+
+            for (int i=0; i<numOfThreads ; i++) {
+
+
+            if (myBoolean.get()){
+//                Future<String> future1 = executorService.submit(stringCallable);
+//                System.out.println(future1.get());
+                //executorService.shutdown();
+                return board;
+            }else{
+                System.out.println(Thread.currentThread().getName() +  "Atomic boolean is still false");
+                executorService.shutdown();
+            }
+
+        }
+
+
+
+        executorService.shutdown();
         return null;
-    }
+        }
+
+
+
+//    }
 
     private void initPuzzle(int columns, int rows) {
         this.columns = columns;
@@ -87,6 +130,7 @@ public class PuzzleSolver {
                 // Recurse to try next square
                 PuzzleElement[][] solution = solve(next.row, next.column);
                 if (solution != null) {
+                    myBoolean.set(true);
                 // This sequence worked - success!
                     return solution;
                 }

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -16,7 +17,7 @@ public class PuzzleSolverTest {
     //@ParameterizedTest //@CsvSource({"SolvePuzzleWith2Pieces_All_Zero"})
     @DisplayName("Find Solution for 2 Puzzle Elements - All Zero")
     @Test
-    public void SolvePuzzleWith2Pieces () throws IOException {
+    public void SolvePuzzleWith2Pieces () throws IOException, ExecutionException, InterruptedException {
         //Create Elements
         ArrayList<Integer> tempElement1 = new ArrayList<>();
         ArrayList<Integer> tempElement2 = new ArrayList<>();
