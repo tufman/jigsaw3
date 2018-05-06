@@ -21,6 +21,7 @@ public class PuzzleSolver {
     private int rows;
     private int columns;
     private int counterOfElement;
+    public static double count=0;
 
     public PuzzleSolver(List<PuzzleElement> elements, ArrayList<Integer> rowOptions, Map<PuzzleDirections, List<Integer>> positionToElements) {
         this.elements = elements;
@@ -47,6 +48,7 @@ public class PuzzleSolver {
             int c = counterOfElement / r;
             // try to build a puzzle
             initPuzzle(c,r);
+            System.out.println("try the : "+ i + " r "+r+ " c "+c +"\u001B[32m");
             usedElementById.clear();
             PuzzleElement[][] board = solve(0,0);
             if (board != null){
@@ -76,12 +78,16 @@ public class PuzzleSolver {
         if(puzzleElements==null){
             return null;
         }
+        System.out.println(puzzleElements);
         // Try each remaining piece in this square
         for (PuzzleElement p : puzzleElements) {
             if(inUse(p))
                 continue;
             if (tryInsert(p, r, c)) {
+                count++;
                 setAsUsed(p);
+//                if(count%1000000==0)
+                    System.out.println(" r: "+ r+ " c: "+ c+"  "+p.getId());
                 // Find the next position
                 Position next = nextPos(r, c);
                 // Recurse to try next square
@@ -155,7 +161,7 @@ public class PuzzleSolver {
         }
         // BOTTOM_LEFT_CORNER 777
         else if (r == rows-1 && c == 0) {
-            if (!(fit(e, getPuzzleList(getKey(0,7,7,7)))&&(board[r-1][c].getBottom()+e.getTop() == 0))) return false;
+            if (!(board[r-1][c].getBottom()+e.getTop() == 0)) return false;
         }
         // TOP_RIGHT_CORNER 77
         else if (r == 0 && c==columns-1) {
@@ -163,38 +169,38 @@ public class PuzzleSolver {
         }
         // BOTTOM_RIGHT_CORNER 7777
         else if (r == rows -1 && c==columns-1) {
-            if (!(fit(e, getPuzzleList(getKey(7,7,7,7)))&& (board[r][c-1].getRight()+e.getLeft() == 0)
+            if (!((board[r][c-1].getRight()+e.getLeft() == 0)
                     && (board[r-1][c].getBottom()+e.getTop() == 0))) return false;
         }
         // one row solution
         else if (r == rows -1 && r == 0) {
-            if ( !(fit(e, getPuzzleList(getKey(e.getLeft(),0,5,0))) && (board[r][c-1].getRight()+e.getLeft() == 0)))
+            if ( !((board[r][c-1].getRight()+e.getLeft() == 0)))
                 return false;
         }
         //check if edge
         else if (r == 0) { // first row
-            if ( !(fit(e, getPuzzleList(getKey(e.getLeft(),0,5,5))) && (board[r][c-1].getRight()+e.getLeft() == 0)))
+            if ( !(board[r][c-1].getRight()+e.getLeft() == 0))
                 return false;
         }
         // last row
         else if (r == rows -1) {
-            if ( !(fit(e, getPuzzleList(getKey(e.getLeft(),e.getTop(),5,0))) && (board[r-1][c].getBottom()+e.getTop() == 0)
+            if ( !((board[r-1][c].getBottom()+e.getTop() == 0)
                     && (board[r][c-1].getRight()+e.getLeft() == 0)))
                 return false;
         }
         //  one column solution
         else if (c == 0 && c==columns-1) {
-            if (!(fit(e, getPuzzleList(getKey(0,e.getTop(),0,5))) && (board[r-1][c].getBottom()+e.getTop() == 0)))
+            if (!(board[r-1][c].getBottom()+e.getTop() == 0))
                 return false;
         }
         // first column
         else if (c == 0) {
-            if ( !(fit(e, getPuzzleList(getKey(0,e.getTop(),5,5))) && (board[r-1][c].getBottom()+e.getTop() == 0)))
+            if ( !(board[r-1][c].getBottom()+e.getTop() == 0))
                 return false;
         }
         // last column
         else if (c==columns-1) {
-            if ( !(fit(e, getPuzzleList(getKey(e.getLeft(),e.getTop(),0,5))) && (board[r-1][c].getBottom()+e.getTop() == 0)
+            if ( !((board[r-1][c].getBottom()+e.getTop() == 0)
                     && (board[r][c-1].getRight()+e.getLeft() == 0)))
                 return false;
         }
