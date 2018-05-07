@@ -59,7 +59,6 @@ public class PuzzleSolver {
                 System.out.println("r=" + r);
                 System.out.println("c=" + c);
                 initPuzzle(c, r);
-            System.out.println("try the : "+ finalI + " r "+r+ " c "+c +"\u001B[32m");
                 usedElementById.clear();
                 System.out.println(Thread.currentThread().getName() + " Try to solve " + r + "X" + c);
                 PuzzleElement[][] board = solve(0, 0);
@@ -98,25 +97,22 @@ public class PuzzleSolver {
         if(puzzleElements==null){
             return null;
         }
-        System.out.println(puzzleElements);
         // Try each remaining piece in this square
         for (PuzzleElement p : puzzleElements) {
             if(inUse(p)){
                 continue;
             }
 
-                board[r][c]=p;
-                setAsUsed(p);
-//                if(count%1000000==0)
-                    System.out.println(" r: "+ r+ " c: "+ c+"  "+p.getId());
-                Position next = nextPos(r, c);
-                PuzzleElement[][] solution = solve(next.row, next.column);
-                if (solution != null && (!(resultFound.get())) ) {
-                    System.out.println("Solution was found by " + Thread.currentThread().getName());
-                    resultFound.set(true);
-                    solutionBoard = solution;
-                    return solution;
-                }
+            board[r][c]=p;
+            setAsUsed(p);
+            Position next = nextPos(r, c);
+            PuzzleElement[][] solution = solve(next.row, next.column);
+            if (solution != null && (!(resultFound.get())) ) {
+                System.out.println("Solution was found by " + Thread.currentThread().getName());
+                resultFound.set(true);
+                solutionBoard = solution;
+                return solution;
+            }
 
             setAsNotUsed(p);
         }
