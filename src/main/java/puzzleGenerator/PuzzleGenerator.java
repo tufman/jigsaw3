@@ -1,3 +1,11 @@
+/**
+ * Puzzle Generator - mainly for generating and testing different kind of puzzles (X * Y)
+ *
+ * Currently, support success puzzles - which have solution
+ *
+ * Author: Shay Tufman
+ */
+
 package puzzleGenerator;
 
 import puzzle.PuzzleElement;

@@ -1,3 +1,18 @@
+/**
+ * A map that keeps the puzzle pieces by their rotation as follow:
+ * 1. Left*1000 + Top*100 + right*10 + bottom
+ * 2. Left*1000 + Top*100 + 50 + bottom
+ * 3. Left*1000 + Top*100 + right*10 + 5
+ * 4. Left*1000 + Top*100 + 55
+ * In addition:
+ * 1. Keeps the Edges Zero by mark 4, 44, 444, 4444
+ * 2. Keeps the corners by 7,77,777,7777
+ *
+ * Author:
+ * Shay Tufman
+
+ * */
+
 package puzzle;
 
 import java.util.ArrayList;
