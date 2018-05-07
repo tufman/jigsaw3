@@ -107,8 +107,12 @@ public class PuzzleSolver {
 
                 board[r][c]=p;
                 setAsUsed(p);
+<<<<<<< HEAD
+=======
 //                if(count%1000000==0)
                     System.out.println(" r: "+ r+ " c: "+ c+"  "+p.getId());
+                // Find the next position
+>>>>>>> 89a691897cd9b4fe874055e34999f975e2a3bfaf
                 Position next = nextPos(r, c);
                 PuzzleElement[][] solution = solve(next.row, next.column);
                 if (solution != null && (!(resultFound.get())) ) {
@@ -156,6 +160,116 @@ public class PuzzleSolver {
         return  left * 1000 + top * 100 + right*10 + bottom;
     }
 
+<<<<<<< HEAD
+=======
+    /**
+     * put piece in to board
+     * @param e
+     * @param r
+     * @param c
+     * @return
+     */
+    private boolean tryInsert(PuzzleElement e, int r, int c) {
+
+        // TOP_LEFT_CORNER for one row solution
+        if (r == 0 && c == 0 && r == rows -1 ) {
+            if (!fit(e, getPuzzleList(getKey(0, 0, 5, 0)))) return false;
+        }
+        //  TOP_LEFT_CORNER for one column solution
+        else if (c == 0 && r == 0 && c==columns-1) {
+            if ( !(fit(e, getPuzzleList(getKey(0,0,0,5)))))
+                return false;
+        }
+        //TOP_LEFT_CORNER 7
+        if (r == 0 && c == 0) {
+            if (!fit(e, getPuzzleList(getKey(0, 0, 0, 7)))) return false;
+        }
+        // BOTTOM_LEFT_CORNER 777
+        else if (r == rows-1 && c == 0) {
+            if (!(board[r-1][c].getBottom()+e.getTop() == 0)) return false;
+        }
+        // TOP_RIGHT_CORNER 77
+        else if (r == 0 && c==columns-1) {
+            if ( !(fit(e, getPuzzleList(getKey(0,0,7,7)))&& (board[r][c-1].getRight()+e.getLeft() == 0))) return false;
+        }
+        // BOTTOM_RIGHT_CORNER 7777
+        else if (r == rows -1 && c==columns-1) {
+            if (!((board[r][c-1].getRight()+e.getLeft() == 0)
+                    && (board[r-1][c].getBottom()+e.getTop() == 0))) return false;
+        }
+        // one row solution
+        else if (r == rows -1 && r == 0) {
+            if ( !((board[r][c-1].getRight()+e.getLeft() == 0)))
+                return false;
+        }
+        //check if edge
+        else if (r == 0) { // first row
+            if ( !(board[r][c-1].getRight()+e.getLeft() == 0))
+                return false;
+        }
+        // last row
+        else if (r == rows -1) {
+            if ( !((board[r-1][c].getBottom()+e.getTop() == 0)
+                    && (board[r][c-1].getRight()+e.getLeft() == 0)))
+                return false;
+        }
+        //  one column solution
+        else if (c == 0 && c==columns-1) {
+            if (!(board[r-1][c].getBottom()+e.getTop() == 0))
+                return false;
+        }
+        // first column
+        else if (c == 0) {
+            if ( !(board[r-1][c].getBottom()+e.getTop() == 0))
+                return false;
+        }
+        // last column
+        else if (c==columns-1) {
+            if ( !((board[r-1][c].getBottom()+e.getTop() == 0)
+                    && (board[r][c-1].getRight()+e.getLeft() == 0)))
+                return false;
+        }
+        // middle element
+        else {
+            if ( !((board[r-1][c].getBottom()+e.getTop() == 0)&& (board[r][c-1].getRight()+e.getLeft() == 0)))
+                return false;
+        }
+        board[r][c]=e;
+        return true;
+    }
+
+    /**
+     * generate key
+     * @param l
+     * @param t
+     * @param r
+     * @param b
+     * @return
+     */
+    private Integer getKey(int l, int t, int r, int b) {
+        return l*1000 + t*100 + r*10 + b;
+    }
+
+    /**
+     * check if element exist on right plaice in Map
+     * @param pe
+     * @param puzzleList
+     * @return
+     */
+    private boolean fit(PuzzleElement pe, List<PuzzleElement> puzzleList) {
+        if(puzzleList==null) return false;
+        return puzzleList.contains(pe);
+    }
+
+    /**
+     * get List of puzzle elements from map by using key
+     * @param key
+     * @return
+     */
+    public List<PuzzleElement> getPuzzleList(Integer key) {
+        return puzzleStructure.get(key);
+    }
+>>>>>>> 89a691897cd9b4fe874055e34999f975e2a3bfaf
 
     /**
      * set element as used to avoid reuse
