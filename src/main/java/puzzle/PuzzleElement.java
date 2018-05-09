@@ -10,6 +10,7 @@
 package puzzle;
 
 import java.util.ArrayList;
+import static puzzle.PuzzleSolver.JOKER;
 
 public class PuzzleElement {
 
@@ -74,13 +75,13 @@ public class PuzzleElement {
         return left*1000 + top*100 + right*10 + bottom;
     }
     public int getSumOfEdgesJokerBottom() {
-        return left*1000 + top*100 + right*10 + 5;
+        return left*1000 + top*100 + right*10 + JOKER;
     }
     public int getSumOfEdgesJokerRight() {
-        return left*1000 + top*100 + 50 + bottom;
+        return left*1000 + top*100 + JOKER*10 + bottom;
     }
     public int getSumOfEdgesJokerRightAndBottom() {
-        return left*1000 + top*100 + 55;
+        return left*1000 + top*100 + JOKER*10 + JOKER;
     }
 
 

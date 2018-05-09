@@ -27,7 +27,7 @@ public class PuzzleSolver {
     private static AtomicBoolean resultFound = new AtomicBoolean(false);
     private PuzzleElement[][] solutionBoard;
 
-    public final static int UNDEFINED = 5;
+    public final static int JOKER = 5;
 
     public PuzzleSolver(Puzzle puzzle1, int numOfThreads) {
         this.elements = puzzle1.getPuzzleElementList();
@@ -225,7 +225,7 @@ public class PuzzleSolver {
         if (c == board[0].length -1) {
             right = 0;
         }else{
-            right = UNDEFINED;
+            right = JOKER;
         }
         if (r == 0) {
             top = 0;
@@ -236,7 +236,7 @@ public class PuzzleSolver {
         if (r == board.length -1) {
             bottom = 0;
         }else{
-            bottom = UNDEFINED;
+            bottom = JOKER;
         }
         return  left * 1000 + top * 100 + right*10 + bottom;
     }
