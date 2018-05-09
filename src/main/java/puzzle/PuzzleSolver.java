@@ -27,6 +27,7 @@ public class PuzzleSolver {
     private static AtomicBoolean resultFound = new AtomicBoolean(false);
     private PuzzleElement[][] solutionBoard;
 
+    public final static int UNDEFINED = 5;
 
     public PuzzleSolver(Puzzle puzzle1, int numOfThreads) {
         this.elements = puzzle1.getPuzzleElementList();
@@ -55,6 +56,7 @@ public class PuzzleSolver {
             int finalI = i;
             puzzleCallable = () -> {
                 int r = availableRowsForSolution.get(finalI);
+                //int r = 10;
                 int c = counterOfElement / r;
                 System.out.println("r=" + r);
                 System.out.println("c=" + c);
@@ -113,9 +115,14 @@ public class PuzzleSolver {
                     resultFound.set(true);
                     solutionBoard = solution;
                     return solution;
-                }else continue;
+                }else {
+                    if (!resultFound.get()){
+                        setAsNotUsed(p);
+                    }
+                    continue;
+                }
             }
-            setAsNotUsed(p);
+
         }
         // no solution with this piece
         return null;
@@ -131,10 +138,12 @@ public class PuzzleSolver {
     private boolean tryInsert(PuzzleElement e, int r, int c) {
 
         // TOP_LEFT_CORNER for one row solution
+        //If (rows ==1 && c ==0)
         if (r == 0 && c == 0 && r == rows -1 ) {
             if (!(e.getLeft()==0 && e.getTop()==0 && e.getBottom()==0)) return false;
         }
         //  TOP_LEFT_CORNER for one column solution
+        //If (columns ==1 && r ==0)
         else if (c == 0 && r == 0 && c==columns-1) {
             if ( !(e.getLeft()==0 && e.getTop()==0 && e.getRight()==0))
                 return false;
@@ -204,6 +213,9 @@ public class PuzzleSolver {
      * @return
      */
     private int createKey(int r, int c) {
+
+
+
         int left,right,top,bottom;
         if (c == 0) {
             left = 0;
@@ -213,7 +225,7 @@ public class PuzzleSolver {
         if (c == board[0].length -1) {
             right = 0;
         }else{
-            right = 5;
+            right = UNDEFINED;
         }
         if (r == 0) {
             top = 0;
@@ -224,7 +236,7 @@ public class PuzzleSolver {
         if (r == board.length -1) {
             bottom = 0;
         }else{
-            bottom = 5;
+            bottom = UNDEFINED;
         }
         return  left * 1000 + top * 100 + right*10 + bottom;
     }
