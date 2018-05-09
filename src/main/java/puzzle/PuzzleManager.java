@@ -27,11 +27,10 @@ public class PuzzleManager {
         Puzzle puzzle1 = new Puzzle();
         WritePuzzleStatus writePuzzleStatus = new WritePuzzleStatus(filePathToSave);
         if (puzzle1.readInputFile(filePath, isRotation, isMultiThread, numOfThreads)){
-            PuzzleSolver puzzleSolver = new PuzzleSolver(puzzle1, numOfThreads);
+            PuzzleSolution puzzleSolver = new PuzzleSolution(puzzle1, numOfThreads);
             board = puzzleSolver.solve();
             //write puzzle solution to output file
             writePuzzleStatus.WriteResultToFile(board);
-            //sout
             puzzle1.printSolution();
         } else{
             writePuzzleStatus.WriteErrorsToFile(puzzle1.getErrorsReadingInputFile());

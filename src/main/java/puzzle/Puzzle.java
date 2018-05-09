@@ -159,10 +159,7 @@ public class Puzzle {
 
         ArrayList<Integer> popedLineFromStack = stackOfGoodLines.pop();
 
-        //TODO: remove this line - for debug of MultiThread....
-        System.out.println("CreateAndMap line from stack " + popedLineFromStack + " by " + Thread.currentThread().getId());
-
-        int x = 0;
+         int x = 0;
         //insert element with 0 rotation
         PuzzleElement element = new PuzzleElement(popedLineFromStack, x);
         puzzleMapper.addElementToStructure(element);
@@ -247,7 +244,6 @@ public class Puzzle {
         }
     }
 
-    //TODO:new logic for available solution
     public ArrayList<Integer> getNumOfRowsForSolution(int numOfElm) {
         numOfRowsForSolution = puzzleMapper.getNumOfRowsForSolution(numOfElm);
         return numOfRowsForSolution;
