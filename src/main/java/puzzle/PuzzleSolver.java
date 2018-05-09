@@ -43,7 +43,6 @@ public class PuzzleSolver {
      * @return
      */
     public PuzzleElement[][] solve() throws ExecutionException, InterruptedException {
-//TODO: create threadPool for available row for solution
         if (numOfThreads == 0) {
             numOfThreads = 1;
         }
@@ -52,6 +51,7 @@ public class PuzzleSolver {
         System.out.println("number of thread :  " + numOfThreads);
         Future<PuzzleElement[][]> future;
         Callable<PuzzleElement[][]> puzzleCallable = null;
+
         for (int i = 0; i < availableRowsForSolution.size(); i++) {
             int finalI = i;
             puzzleCallable = () -> {
@@ -65,6 +65,7 @@ public class PuzzleSolver {
                 System.out.println(Thread.currentThread().getName() + " Try to solve " + r + "X" + c);
                 PuzzleElement[][] board = solve(0, 0);
                 return board;
+
             };
             future = executorService.submit(puzzleCallable);
         }
@@ -104,8 +105,6 @@ public class PuzzleSolver {
             if(inUse(p)){
                 continue;
             }
-//TODO: if
-//            board[r][c]=p;
             if(tryInsert(p,r,c)) {
                 setAsUsed(p);
                 Position next = nextPos(r, c);
@@ -138,13 +137,11 @@ public class PuzzleSolver {
     private boolean tryInsert(PuzzleElement e, int r, int c) {
 
         // TOP_LEFT_CORNER for one row solution
-        //If (rows ==1 && c ==0)
-        if (r == 0 && c == 0 && r == rows -1 ) {
+        if (rows ==1 && c ==0){
             if (!(e.getLeft()==0 && e.getTop()==0 && e.getBottom()==0)) return false;
         }
         //  TOP_LEFT_CORNER for one column solution
-        //If (columns ==1 && r ==0)
-        else if (c == 0 && r == 0 && c==columns-1) {
+        else if (columns ==1 && r ==0) {
             if ( !(e.getLeft()==0 && e.getTop()==0 && e.getRight()==0))
                 return false;
         }
