@@ -68,7 +68,7 @@ public class PuzzleSolver {
         }
 
         while (!(resultFound.get())) {
-            System.out.println("Solution was not found...(yet)");
+//            System.out.println("Solution was not found...(yet)");
         }
 
         executorService.shutdown();
@@ -102,24 +102,101 @@ public class PuzzleSolver {
             if(inUse(p)){
                 continue;
             }
-
-            board[r][c]=p;
-            setAsUsed(p);
-            Position next = nextPos(r, c);
-            PuzzleElement[][] solution = solve(next.row, next.column);
-            if (solution != null && (!(resultFound.get())) ) {
-                System.out.println("Solution was found by " + Thread.currentThread().getName());
-                resultFound.set(true);
-                solutionBoard = solution;
-                return solution;
+//TODO: if
+//            board[r][c]=p;
+            if(tryInsert(p,r,c)) {
+                setAsUsed(p);
+                Position next = nextPos(r, c);
+                PuzzleElement[][] solution = solve(next.row, next.column);
+                if (solution != null && (!(resultFound.get()))) {
+                    System.out.println("Solution was found by " + Thread.currentThread().getName());
+                    resultFound.set(true);
+                    solutionBoard = solution;
+                    return solution;
+                }else continue;
             }
-
             setAsNotUsed(p);
         }
         // no solution with this piece
         return null;
     }
 
+    /**
+     * put piece in to board
+     * @param e
+     * @param r
+     * @param c
+     * @return
+     */
+    private boolean tryInsert(PuzzleElement e, int r, int c) {
+
+        // TOP_LEFT_CORNER for one row solution
+        if (r == 0 && c == 0 && r == rows -1 ) {
+            if (!(e.getLeft()==0 && e.getTop()==0 && e.getBottom()==0)) return false;
+        }
+        //  TOP_LEFT_CORNER for one column solution
+        else if (c == 0 && r == 0 && c==columns-1) {
+            if ( !(e.getLeft()==0 && e.getTop()==0 && e.getRight()==0))
+                return false;
+        }
+        //TOP_LEFT_CORNER 7
+        if (r == 0 && c == 0) {
+            if (!(e.getLeft()==0 && e.getTop()==0 )) return false;
+        }
+        // BOTTOM_LEFT_CORNER 777
+        else if (r == rows-1 && c == 0) {
+            if (!((e.getLeft()==0 && e.getBottom()==0)&&(board[r-1][c].getBottom()+e.getTop() == 0))) return false;
+        }
+        // TOP_RIGHT_CORNER 77
+        else if (r == 0 && c==columns-1) {
+            if ( !(( e.getTop()==0 && e.getRight()==0)&& (board[r][c-1].getRight()+e.getLeft() == 0))) return false;
+        }
+        // BOTTOM_RIGHT_CORNER 7777
+        else if (r == rows -1 && c==columns-1) {
+            if (!((e.getBottom()==0 && e.getRight()==0)&& (board[r][c-1].getRight()+e.getLeft() == 0)
+                    && (board[r-1][c].getBottom()+e.getTop() == 0))) return false;
+        }
+        // one row solution
+        else if (r == rows -1 && r == 0) {
+            if ( !((e.getBottom()==0 && e.getTop()==0) && (board[r][c-1].getRight()+e.getLeft() == 0)))
+                return false;
+        }
+        //check if edge
+        else if (r == 0) { // first row
+            if ( !((e.getTop()==0) && (board[r][c-1].getRight()+e.getLeft() == 0)))
+                return false;
+        }
+        // last row
+        else if (r == rows -1) {
+            if ( !((e.getBottom()==0 ) && (board[r-1][c].getBottom()+e.getTop() == 0)
+                    && (board[r][c-1].getRight()+e.getLeft() == 0)))
+                return false;
+        }
+        //  one column solution
+        else if (c == 0 && c==columns-1) {
+            if (!((e.getLeft()==0 && e.getRight()==0)&&(board[r-1][c].getBottom()+e.getTop() == 0)))
+                return false;
+        }
+        // first column
+        else if (c == 0) {
+            if ( !((e.getLeft()==0 && e.getRight()==0)&&(board[r-1][c].getBottom()+e.getTop() == 0)))
+                return false;
+        }
+        // last column
+        else if (c==columns-1) {
+            if ( !((e.getRight()==0)&&(board[r-1][c].getBottom()+e.getTop() == 0)
+                    && (board[r][c-1].getRight()+e.getLeft() == 0)))
+                return false;
+        }
+        // middle element
+        else {
+            if ( !((board[r-1][c].getBottom()+e.getTop() == 0)&& (board[r][c-1].getRight()+e.getLeft() == 0)))
+                return false;
+        }
+
+        board[r][c]=e;
+        return true;
+    }
     /**
      * create key by using current place in board
      * @param r
