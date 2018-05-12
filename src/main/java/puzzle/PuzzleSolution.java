@@ -5,6 +5,10 @@
  * @param private List<Integer> usedElementById;
  * @param private List<Integer> availableRowsForSolution
  *
+ * By  initating  PuzzleSolver for each rowsXcolumns available option.
+ * Expiring in case no result found by timer.
+ *
+ *
  * Author: Yelena Koviar
  *
  * */
@@ -26,6 +30,7 @@ public class PuzzleSolution {
     private int counterOfElement;
     private static AtomicBoolean resultFound = new AtomicBoolean(false);
     private PuzzleElement[][] solutionBoard;
+    private long startTime;
 
 
 
@@ -35,7 +40,7 @@ public class PuzzleSolution {
         this.numOfThreads = numOfThreads;
         counterOfElement = puzzle1.getCounterOfPuzzleElementList();
         availableRowsForSolution = puzzle1.getNumOfRowsForSolution(counterOfElement);
-        //usedElementById = new HashMap<>();
+        startTime = System.currentTimeMillis();
     }
 
     /**
@@ -69,10 +74,17 @@ public class PuzzleSolution {
 
 
         while (!(resultFound.get())) {
+//        //TODO - replace the "wait time" (120000 = 2 minutes) for solution from hardcoded to configuration
+//
+            if (startTime + 120000 < System.currentTimeMillis()){
+                System.out.println("Timer Expired - Retun null for board ");
+                executorService.shutdown();
+               return null;
+            }
 
-            //TODO for debug - remove
-            System.out.println("Loop in while " + System.currentTimeMillis());
-////            System.out.println("Solution was not found...(yet)");
+
+//            //TODO for debug - remove
+//            System.out.println("Loop in while " + System.currentTimeMillis());
         }
         executorService.shutdown();
         return solutionBoard;
@@ -87,6 +99,11 @@ public class PuzzleSolution {
      * @return
      */
     protected PuzzleElement[][] solve(int r, int c, PuzzleSolver currentThread) {
+
+
+
+
+
         if (isSolved(r,c, currentThread)){
             return currentThread.getBoard();
         }
@@ -122,13 +139,6 @@ public class PuzzleSolution {
         // no solution with this piece
         return null;
     }
-
-
-
-
-
-
-
 
 
     private Position nextPos(int r, int c, PuzzleSolver currentThread) {

@@ -13,6 +13,7 @@ public class PuzzleSolver{
     private int rows;
     private int columns;
 
+
     public final static int JOKER = 5;
 
     public PuzzleSolver(int r, int c, PuzzleSolution puzzleSolution) {
@@ -21,6 +22,7 @@ public class PuzzleSolver{
         this.puzzleSolution = puzzleSolution;
         this.rows = r;
         this.columns = c;
+
     }
 
 
@@ -32,11 +34,6 @@ public class PuzzleSolver{
         //board = puzzleSolution.solve(0, 0, this);
         PuzzleElement[][] solve = puzzleSolution.solve(0, 0, this);
 
-        //TODO for debug - remove
-        if (solve != null){
-            System.out.println("Solution found from solve function " + System.currentTimeMillis());
-        }
-
         return solve;
 
     }
@@ -45,9 +42,6 @@ public class PuzzleSolver{
         return board;
     }
 
-    public List<Integer> getUsedElementById() {
-        return usedElementById;
-    }
 
     /**
      * put piece in to board
