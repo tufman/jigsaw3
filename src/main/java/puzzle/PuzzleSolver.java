@@ -75,6 +75,11 @@ public class PuzzleSolver{
      */
     public int createKey(int r, int c) {
 
+        if (r == 0 && c == 0) {
+
+            return 4;
+        }
+
         int left,right,top,bottom;
         if (c == 0) {
             left = 0;
