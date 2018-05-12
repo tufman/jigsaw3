@@ -10,7 +10,7 @@ public class WritePuzzleStatus {
     String greenColor = "\u001B[32m";
     String redColor = "\u001B[31m";
 
-    public  final String CANNOT_SOLVE_PUZZLE_IT_SEEMS_THAT_THERE_IS_NO_PROPER_SOLUTION = redColor +  "Cannot solve puzzle: it seems that there is no proper solution";
+    public  final String CANNOT_SOLVE_PUZZLE_IT_SEEMS_THAT_THERE_IS_NO_PROPER_SOLUTION = "Cannot solve puzzle: it seems that there is no proper solution";
     private String filePathToSave;
 
 
@@ -48,7 +48,7 @@ public class WritePuzzleStatus {
             if (board == null) {
                 osr.write(CANNOT_SOLVE_PUZZLE_IT_SEEMS_THAT_THERE_IS_NO_PROPER_SOLUTION);
                 if (printToConsole){
-                    System.out.println(CANNOT_SOLVE_PUZZLE_IT_SEEMS_THAT_THERE_IS_NO_PROPER_SOLUTION);
+                    System.out.println(redColor + CANNOT_SOLVE_PUZZLE_IT_SEEMS_THAT_THERE_IS_NO_PROPER_SOLUTION);
                 }
             } else {
                 for (int ii = 0; ii <= board.length - 1; ii++) {

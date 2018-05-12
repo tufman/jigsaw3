@@ -26,6 +26,7 @@ public class PuzzleSolution {
     private static AtomicBoolean resultFound = new AtomicBoolean(false);
     private PuzzleElement[][] solutionBoard;
     private long startTime;
+    private boolean timerExceeded;
 
 
 
@@ -71,7 +72,8 @@ public class PuzzleSolution {
 //        //TODO - replace the "wait time" (120000 = 2 minutes) for solution from hardcoded to configuration
 
             if (startTime + 20000 < System.currentTimeMillis()){
-                System.out.println("Timer Expired - Retun null for board ");
+                System.out.println("Timer Expired - Return null for board ");
+                timerExceeded = true;
                 executorService.shutdown();
                 if (executorService.isShutdown()){
                     return null;
@@ -95,7 +97,9 @@ public class PuzzleSolution {
      */
     protected PuzzleElement[][] solve(int r, int c, PuzzleSolver currentThread) {
 
-
+        if (timerExceeded){
+            return null;
+        }
 
 
 
@@ -110,6 +114,9 @@ public class PuzzleSolution {
         }
         // Try each remaining piece in this square
         for (PuzzleElement p : puzzleElements) {
+
+
+
             if(currentThread.inUse(p)){
                 continue;
             }
