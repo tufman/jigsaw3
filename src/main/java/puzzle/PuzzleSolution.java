@@ -101,8 +101,6 @@ public class PuzzleSolution {
             return null;
         }
 
-
-
         if (isSolved(r,c, currentThread)){
             return currentThread.getBoard();
         }
@@ -115,12 +113,10 @@ public class PuzzleSolution {
         // Try each remaining piece in this square
         for (PuzzleElement p : puzzleElements) {
 
-
-
             if(currentThread.inUse(p)){
                 continue;
             }
-            if(currentThread.tryInsert(p,r,c)) {
+                currentThread.insert(p,r,c);
                 currentThread.setAsUsed(p);
                 Position next = nextPos(r, c,currentThread);
                 PuzzleElement[][] solution = solve(next.row, next.column, currentThread);
@@ -135,8 +131,6 @@ public class PuzzleSolution {
                     }
                     continue;
                 }
-            }
-
         }
         // no solution with this piece
         return null;

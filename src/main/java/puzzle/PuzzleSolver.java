@@ -36,83 +36,6 @@ public class PuzzleSolver{
     }
 
     /**
-     * put piece in to board
-     * @param e
-     * @param currentRow
-     * @param currentColumn
-     * @return
-     */
-    public boolean tryInsert(PuzzleElement e, int currentRow, int currentColumn) {
-
-        // TOP_LEFT_CORNER for one row solution
-        if (rows ==1 && currentColumn ==0){
-            if (!(e.getLeft()==0 && e.getTop()==0 && e.getBottom()==0)) return false;
-        }
-        //  TOP_LEFT_CORNER for one column solution
-        else if (columns ==1 && currentRow ==0) {
-            if ( !(e.getLeft()==0 && e.getTop()==0 && e.getRight()==0))
-                return false;
-        }
-        //TOP_LEFT_CORNER 7
-        if (currentRow == 0 && currentColumn == 0) {
-            if (!(e.getLeft()==0 && e.getTop()==0 )) return false;
-        }
-        // BOTTOM_LEFT_CORNER 777
-        else if (currentRow == rows-1 && currentColumn == 0) {
-            if (!((e.getLeft()==0 && e.getBottom()==0)&&(board[currentRow-1][currentColumn].getBottom()+e.getTop() == 0))) return false;
-        }
-        // TOP_RIGHT_CORNER 77
-        else if (currentRow == 0 && currentColumn==columns-1) {
-            if ( !(( e.getTop()==0 && e.getRight()==0)&& (board[currentRow][currentColumn-1].getRight()+e.getLeft() == 0))) return false;
-        }
-        // BOTTOM_RIGHT_CORNER 7777
-        else if (currentRow == rows -1 && currentColumn==columns-1) {
-            if (!((e.getBottom()==0 && e.getRight()==0)&& (board[currentRow][currentColumn-1].getRight()+e.getLeft() == 0)
-                    && (board[currentRow-1][currentColumn].getBottom()+e.getTop() == 0))) return false;
-        }
-        // one row solution
-        else if (currentRow == rows -1 && currentRow == 0) {
-            if ( !((e.getBottom()==0 && e.getTop()==0) && (board[currentRow][currentColumn-1].getRight()+e.getLeft() == 0)))
-                return false;
-        }
-        //check if edge
-        else if (currentRow == 0) { // first row
-            if ( !((e.getTop()==0) && (board[currentRow][currentColumn-1].getRight()+e.getLeft() == 0)))
-                return false;
-        }
-        // last row
-        else if (currentRow == rows -1) {
-            if ( !((e.getBottom()==0 ) && (board[currentRow-1][currentColumn].getBottom()+e.getTop() == 0)
-                    && (board[currentRow][currentColumn-1].getRight()+e.getLeft() == 0)))
-                return false;
-        }
-        //  one column solution
-        else if (currentColumn == 0 && currentColumn==columns-1) {
-            if (!((e.getLeft()==0 && e.getRight()==0)&&(board[currentRow-1][currentColumn].getBottom()+e.getTop() == 0)))
-                return false;
-        }
-        // first column
-        else if (currentColumn == 0) {
-            if ( !((e.getLeft()==0 && e.getRight()==0)&&(board[currentRow-1][currentColumn].getBottom()+e.getTop() == 0)))
-                return false;
-        }
-        // last column
-        else if (currentColumn==columns-1) {
-            if ( !((e.getRight()==0)&&(board[currentRow-1][currentColumn].getBottom()+e.getTop() == 0)
-                    && (board[currentRow][currentColumn-1].getRight()+e.getLeft() == 0)))
-                return false;
-        }
-        // middle element
-        else {
-            if ( !((board[currentRow-1][currentColumn].getBottom()+e.getTop() == 0)&& (board[currentRow][currentColumn-1].getRight()+e.getLeft() == 0)))
-                return false;
-        }
-
-        board[currentRow][currentColumn]=e;
-        return true;
-    }
-
-    /**
      * set element as used to avoid reuse
      * @param p
      */
@@ -152,8 +75,6 @@ public class PuzzleSolver{
      */
     public int createKey(int r, int c) {
 
-
-
         int left,right,top,bottom;
         if (c == 0) {
             left = 0;
@@ -188,4 +109,7 @@ public class PuzzleSolver{
     }
 
 
+    public void insert(PuzzleElement p, int currentRow, int currentColumn) {
+        board[currentRow][currentColumn]=p;
+    }
 }
