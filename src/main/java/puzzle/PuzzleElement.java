@@ -20,8 +20,7 @@ public class PuzzleElement {
     private int right;
     private int bottom;
     private Rotation rotation;
-    private int key;
-    //public PuzzleElement(int id, int left, int top, int right, int bottom){
+
     public PuzzleElement(ArrayList<Integer> numFromLine){
         this.id = numFromLine.get(0);
         this.left = numFromLine.get(1);

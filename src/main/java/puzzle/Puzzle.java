@@ -32,7 +32,6 @@ public class Puzzle {
     private Map<Integer, List<Integer>> puzzleOutput = new HashMap<>();
 
     private boolean[] puzzleElementIDs;
-    private PuzzleElement[][] board = null;
     private ArrayList<Integer> numOfRowsForSolution;
     private PuzzleMapper puzzleMapper = new PuzzleMapper();
 
@@ -151,7 +150,6 @@ public class Puzzle {
                 indexingPuzzle();
             }
         }
-//        System.out.println("puz   " + "\u001B[32m" + puzzleMapper.getPuzzleStructure().size() + " puzzle element " + puzzleElementList);
     }
 
     private void indexingPuzzle() {

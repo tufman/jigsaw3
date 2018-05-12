@@ -2,9 +2,7 @@ package puzzle;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
-//public class PuzzleSolver implements Runnable{
 public class PuzzleSolver{
 
     private List<Integer> usedElementById;
@@ -26,20 +24,16 @@ public class PuzzleSolver{
     }
 
 
-    //public void run() {
     public PuzzleElement[][] solve() {
         System.out.println("\u001B[34m" + " Try to solve " + rows + "X" + columns + " by thread ID " + Thread.currentThread().getId() + " name " + Thread.currentThread().getName());
-        //board = puzzleSolution.solve(0, 0, this);
         PuzzleElement[][] solve = puzzleSolution.solve(0, 0, this);
-
         return solve;
-
     }
 
     public PuzzleElement[][] getBoard() {
+
         return board;
     }
-
 
     /**
      * put piece in to board

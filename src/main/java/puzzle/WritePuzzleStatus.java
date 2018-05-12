@@ -1,3 +1,7 @@
+/**
+ * Write Puzzle Solution (in case success / no solution) To Result File & Console.
+ */
+
 package puzzle;
 
 import java.io.FileOutputStream;
@@ -16,18 +20,6 @@ public class WritePuzzleStatus {
 
     public WritePuzzleStatus(String filePathToSave) throws IOException {
         this.filePathToSave = filePathToSave;
-    }
-
-    public void printSolution(PuzzleElement[][] board) {
-        if (board != null) {
-            for (int ii = 0; ii <= board.length - 1; ii++) {
-                for (int jj = 0; jj <= board[0].length - 1; jj++) {
-                    System.out.print(board[ii][jj].toString() + " ");
-
-                }
-                System.out.println();
-            }
-        }
     }
 
 
