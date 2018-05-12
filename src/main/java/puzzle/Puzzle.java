@@ -151,7 +151,7 @@ public class Puzzle {
                 indexingPuzzle();
             }
         }
-        System.out.println("puz   " + "\u001B[32m" + puzzleMapper.getPuzzleStructure().size() + " puzzle element " + puzzleElementList);
+//        System.out.println("puz   " + "\u001B[32m" + puzzleMapper.getPuzzleStructure().size() + " puzzle element " + puzzleElementList);
     }
 
     private void indexingPuzzle() {

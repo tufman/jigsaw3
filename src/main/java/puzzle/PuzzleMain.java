@@ -14,6 +14,6 @@ public class PuzzleMain {
         long endTime   = System.currentTimeMillis();
         long totalTime = endTime - startTime;
         System.out.println();
-        System.out.println("Total time (Milliseconds) " + totalTime);
+        System.out.println("\u001B[0m" + "Total time (Milliseconds) " + totalTime);
     }
 }

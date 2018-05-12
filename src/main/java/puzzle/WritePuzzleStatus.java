@@ -7,8 +7,12 @@ import java.util.List;
 
 public class WritePuzzleStatus {
 
-    public static final String CANNOT_SOLVE_PUZZLE_IT_SEEMS_THAT_THERE_IS_NO_PROPER_SOLUTION = "Cannot solve puzzle: it seems that there is no proper solution";
+    String greenColor = "\u001B[32m";
+    String redColor = "\u001B[31m";
+
+    public  final String CANNOT_SOLVE_PUZZLE_IT_SEEMS_THAT_THERE_IS_NO_PROPER_SOLUTION = redColor +  "Cannot solve puzzle: it seems that there is no proper solution";
     private String filePathToSave;
+
 
     public WritePuzzleStatus(String filePathToSave) throws IOException {
         this.filePathToSave = filePathToSave;
@@ -62,15 +66,18 @@ public class WritePuzzleStatus {
                         }
 
                     }
+
+
+
                     if (ii == board.length - 1) {
                         osr.write(line.toString());
                         if (printToConsole){
-                            System.out.print(line.toString());
+                            System.out.print(greenColor + line.toString());
                         }
                     } else {
                         osr.write(line.toString() + '\n');
                         if (printToConsole){
-                            System.out.print(line.toString());
+                            System.out.print(greenColor + line.toString());
                             System.out.println();
                         }
                     }

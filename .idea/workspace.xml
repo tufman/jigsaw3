@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="05587f54-570e-47dc-8c1e-436b90690062" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/puzzle/GetPuzzleErrors.java" afterPath="$PROJECT_DIR$/src/main/java/puzzle/GetPuzzleErrors.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/puzzle/Puzzle.java" afterPath="$PROJECT_DIR$/src/main/java/puzzle/Puzzle.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/puzzle/PuzzleManager.java" afterPath="$PROJECT_DIR$/src/main/java/puzzle/PuzzleManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/puzzle/PuzzleMain.java" afterPath="$PROJECT_DIR$/src/main/java/puzzle/PuzzleMain.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/puzzle/PuzzleSolution.java" afterPath="$PROJECT_DIR$/src/main/java/puzzle/PuzzleSolution.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/puzzle/PuzzleSolver.java" afterPath="$PROJECT_DIR$/src/main/java/puzzle/PuzzleSolver.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/puzzle/WritePuzzleStatus.java" afterPath="$PROJECT_DIR$/src/main/java/puzzle/WritePuzzleStatus.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/result.txt" afterPath="$PROJECT_DIR$/src/main/resources/result.txt" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -18,23 +20,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="PuzzleSolver.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/puzzle/PuzzleSolver.java">
+      <file leaf-file-name="PuzzleSolution.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/puzzle/PuzzleSolution.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="6" selection-end-column="5" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Puzzle.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/puzzle/Puzzle.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="251" column="43" lean-forward="false" selection-start-line="251" selection-start-column="31" selection-end-line="251" selection-end-column="43" />
+            <state relative-caret-position="377">
+              <caret line="126" column="0" lean-forward="false" selection-start-line="126" selection-start-column="0" selection-end-line="126" selection-end-column="0" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="imports" expanded="true" />
@@ -43,23 +33,76 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PuzzleMain.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/puzzle/PuzzleMain.java">
+      <file leaf-file-name="PuzzleManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/puzzle/PuzzleManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="8" column="17" lean-forward="false" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
+            <state relative-caret-position="154">
+              <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
               <folding>
-                <marker date="1525412060109" expanded="true" signature="529:537" ph="{...}" />
+                <element signature="n#!!doc" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PuzzleManager.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/puzzle/PuzzleManager.java">
+      <file leaf-file-name="WritePuzzleStatus.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/puzzle/WritePuzzleStatus.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+            <state relative-caret-position="170">
+              <caret line="88" column="0" lean-forward="false" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PuzzleMain.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/puzzle/PuzzleMain.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PuzzleSolver.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/puzzle/PuzzleSolver.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="850">
+              <caret line="50" column="19" lean-forward="false" selection-start-line="50" selection-start-column="19" selection-end-line="50" selection-end-column="19" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1095#1096#0" expanded="true" />
+                <element signature="e#1123#1124#0" expanded="true" />
+                <element signature="e#4713#4714#0" expanded="true" />
+                <element signature="e#4759#4760#0" expanded="true" />
+                <element signature="e#4889#4890#0" expanded="true" />
+                <element signature="e#4963#4964#0" expanded="true" />
+                <element signature="e#6030#6031#0" expanded="true" />
+                <element signature="e#6057#6058#0" expanded="true" />
+                <element signature="e#6088#6089#0" expanded="true" />
+                <element signature="e#6118#6119#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="result.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/result.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-102">
+              <caret line="0" column="67" lean-forward="false" selection-start-line="0" selection-start-column="67" selection-end-line="0" selection-end-column="67" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PuzzleMapper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/puzzle/PuzzleMapper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="127">
+              <caret line="112" column="38" lean-forward="true" selection-start-line="112" selection-start-column="28" selection-end-line="112" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -83,7 +126,15 @@
       <find>myB</find>
       <find>Puzzle Element List is</find>
       <find>PuzzleMapper</find>
+      <find>System.out.println(&quot;puz</find>
+      <find>\u</find>
+      <find>map</find>
+      <find>this.elements</find>
+      <find>usedElementById</find>
     </findStrings>
+    <dirStrings>
+      <dir>C:\Users\st198j\Desktop\JavaStuff\preparation_for_next_level\jigsaw1\src\main\java\puzzle</dir>
+    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -111,17 +162,22 @@
         <option value="$PROJECT_DIR$/src/main/java/Puzzle.java" />
         <option value="$PROJECT_DIR$/src/main/java/PuzzleMain.java" />
         <option value="$PROJECT_DIR$/src/main/java/puzzle/PuzzleMapper.java" />
-        <option value="$PROJECT_DIR$/src/main/java/puzzle/PuzzleMain.java" />
         <option value="$PROJECT_DIR$/src/test/java/ReadFileContentTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/puzzle/GetPuzzleErrors.java" />
         <option value="$PROJECT_DIR$/src/main/java/puzzle/PuzzleManager.java" />
         <option value="$PROJECT_DIR$/src/main/java/puzzle/Puzzle.java" />
+        <option value="$PROJECT_DIR$/src/main/java/puzzle/WritePuzzleStatus.java" />
+        <option value="$PROJECT_DIR$/src/main/java/puzzle/PuzzleSolver.java" />
+        <option value="$PROJECT_DIR$/src/main/java/puzzle/PuzzleMain.java" />
+        <option value="$PROJECT_DIR$/src/main/java/puzzle/PuzzleSolution.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="width" value="1366" />
-    <option name="height" value="738" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1382" />
+    <option name="height" value="754" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -302,7 +358,39 @@
               <item name="&lt; 1.8 &gt;" type="70bed36:NamedLibraryElementNode" />
               <item name="rt.jar" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="io" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="jigsaw1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; 1.8 &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="rt.jar" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="util" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="jigsaw1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; 1.8 &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="rt.jar" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
+              <item name="concurrent" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="jigsaw1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; 1.8 &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="rt.jar" type="462c0819:PsiDirectoryNode" />
+              <item name="sun" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="jigsaw1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; 1.8 &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="rt.jar" type="462c0819:PsiDirectoryNode" />
+              <item name="sun" type="462c0819:PsiDirectoryNode" />
+              <item name="misc" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="jigsaw1" type="b2602c69:ProjectViewProjectNode" />
@@ -370,10 +458,11 @@
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="gradle.compiler" />
     <property name="extract.method.default.visibility" value="private" />
+    <property name="SONARLINT_ANALYSIS_RESULTS_SCOPE" value="VCS changed files" />
   </component>
   <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\st198j\Desktop\JavaStuff\jigsaw\src\test\java" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\st198j\Desktop\JavaStuff\jigsaw\src\main\resources" />
@@ -382,8 +471,8 @@
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\st198j\Desktop\JavaStuff\jigsaw\src\test\java" />
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -408,7 +497,7 @@
       </extension>
       <option name="MAIN_CLASS_NAME" value="puzzle.PuzzleMain" />
       <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="-input C:\Users\st198j\Desktop\JavaStuff\preparation_for_next_level\jigsaw1\src\main\resources\Good4Pieces -output C:\Users\st198j\Desktop\JavaStuff\preparation_for_next_level\jigsaw1\src\main\resources\result.txt -rotate" />
+      <option name="PROGRAM_PARAMETERS" value="-input C:\Users\st198j\Desktop\JavaStuff\preparation_for_next_level\jigsaw1\src\main\resources\Good100Pieces -output C:\Users\st198j\Desktop\JavaStuff\preparation_for_next_level\jigsaw1\src\main\resources\result.txt -rotate" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -644,28 +733,28 @@
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.043405674" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32888147" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41402337" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2700454" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3839733" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32930845" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32888147" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23539232" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32888147" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20121029" sideWeight="0.5" order="5" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21558245" sideWeight="0.5" order="5" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="combo" />
-      <window_info id="SonarLint" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32819384" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.290469" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="SonarLint" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32888147" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32491767" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26626325" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34390652" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36894825" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -749,16 +838,16 @@
           <option name="timeStamp" value="40" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/puzzle/Puzzle.java</url>
-          <line>141</line>
+          <url>file://$PROJECT_DIR$/src/main/java/puzzle/PuzzleManager.java</url>
+          <line>30</line>
           <properties />
-          <option name="timeStamp" value="46" />
+          <option name="timeStamp" value="53" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/puzzle/PuzzleMain.java</url>
-          <line>16</line>
+          <url>file://$PROJECT_DIR$/src/main/java/puzzle/PuzzleSolution.java</url>
+          <line>76</line>
           <properties />
-          <option name="timeStamp" value="48" />
+          <option name="timeStamp" value="54" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-field">
           <url>file://$PROJECT_DIR$/src/main/java/Puzzle.java</url>
@@ -767,20 +856,11 @@
           <option name="timeStamp" value="39" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="49" />
+      <option name="time" value="55" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="514">
-          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/PuzzleElement.java" />
     <entry file="file://$PROJECT_DIR$/src/main/resources/inputFile" />
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_144/src.zip!/java/io/Writer.java" />
     <entry file="jar://$MAVEN_REPOSITORY$/org/junit/platform/junit-platform-commons/1.1.0/junit-platform-commons-1.1.0.jar!/org/junit/platform/commons/util/ReflectionUtils.class">
@@ -911,15 +991,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/result.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="5" lean-forward="true" selection-start-line="0" selection-start-column="5" selection-end-line="0" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/puzzle/PuzzleMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="97" column="34" lean-forward="false" selection-start-line="97" selection-start-column="34" selection-end-line="97" selection-end-column="34" />
+        <state relative-caret-position="-102">
+          <caret line="0" column="67" lean-forward="false" selection-start-line="0" selection-start-column="67" selection-end-line="0" selection-end-column="67" />
           <folding />
         </state>
       </provider>
@@ -954,7 +1027,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -962,17 +1034,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="107">
           <caret line="92" column="0" lean-forward="false" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
-          <folding>
-            <marker date="1525412060105" expanded="true" signature="3557:3565" ph="{...}" />
-            <marker date="1525412060105" expanded="false" signature="3605:3616" ph=" { " />
-            <marker date="1525412060105" expanded="false" signature="3651:3657" ph=" }" />
-            <marker date="1525412060105" expanded="false" signature="3697:3708" ph=" { " />
-            <marker date="1525412060105" expanded="false" signature="3744:3750" ph=" }" />
-            <marker date="1525412060105" expanded="false" signature="3792:3803" ph=" { " />
-            <marker date="1525412060105" expanded="false" signature="3841:3847" ph=" }" />
-            <marker date="1525412060105" expanded="false" signature="3890:3901" ph=" { " />
-            <marker date="1525412060105" expanded="false" signature="3940:3946" ph=" }" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -980,7 +1042,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="16" selection-end-column="11" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -995,42 +1056,77 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/puzzle/PuzzleMain.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/puzzle/PuzzleMapper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="8" column="17" lean-forward="false" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
-          <folding>
-            <marker date="1525412060109" expanded="true" signature="529:537" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/puzzle/PuzzleManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+        <state relative-caret-position="127">
+          <caret line="112" column="38" lean-forward="true" selection-start-line="112" selection-start-column="28" selection-end-line="112" selection-end-column="38" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/puzzle/PuzzleSolver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="6" selection-end-column="5" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/puzzle/Puzzle.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="251" column="43" lean-forward="false" selection-start-line="251" selection-start-column="31" selection-end-line="251" selection-end-column="43" />
+        <state relative-caret-position="109">
+          <caret line="28" column="46" lean-forward="false" selection-start-line="28" selection-start-column="46" selection-end-line="28" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/puzzle/WritePuzzleStatus.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="88" column="0" lean-forward="false" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/puzzle/PuzzleManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="30" column="0" lean-forward="false" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/puzzle/PuzzleSolution.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="377">
+          <caret line="126" column="0" lean-forward="false" selection-start-line="126" selection-start-column="0" selection-end-line="126" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/puzzle/PuzzleSolver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="850">
+          <caret line="50" column="19" lean-forward="false" selection-start-line="50" selection-start-column="19" selection-end-line="50" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1095#1096#0" expanded="true" />
+            <element signature="e#1123#1124#0" expanded="true" />
+            <element signature="e#4713#4714#0" expanded="true" />
+            <element signature="e#4759#4760#0" expanded="true" />
+            <element signature="e#4889#4890#0" expanded="true" />
+            <element signature="e#4963#4964#0" expanded="true" />
+            <element signature="e#6030#6031#0" expanded="true" />
+            <element signature="e#6057#6058#0" expanded="true" />
+            <element signature="e#6088#6089#0" expanded="true" />
+            <element signature="e#6118#6119#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/puzzle/PuzzleMain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>

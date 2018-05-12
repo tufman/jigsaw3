@@ -70,10 +70,14 @@ public class PuzzleSolution {
         while (!(resultFound.get())) {
 //        //TODO - replace the "wait time" (120000 = 2 minutes) for solution from hardcoded to configuration
 
-            if (startTime + 120000 < System.currentTimeMillis()){
+            if (startTime + 20000 < System.currentTimeMillis()){
                 System.out.println("Timer Expired - Retun null for board ");
                 executorService.shutdown();
-               return null;
+                if (executorService.isShutdown()){
+                    return null;
+                }
+                //break;
+
             }
 
         }

@@ -28,9 +28,7 @@ public class PuzzleSolver{
 
     //public void run() {
     public PuzzleElement[][] solve() {
-        System.out.println("rows=" + rows);
-        System.out.println("columns=" + columns);
-        System.out.println(" Try to solve " + rows + "X" + columns + " by thread ID " + Thread.currentThread().getId() + " name " + Thread.currentThread().getName());
+        System.out.println("\u001B[34m" + " Try to solve " + rows + "X" + columns + " by thread ID " + Thread.currentThread().getId() + " name " + Thread.currentThread().getName());
         //board = puzzleSolution.solve(0, 0, this);
         PuzzleElement[][] solve = puzzleSolution.solve(0, 0, this);
 
