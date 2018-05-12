@@ -13,6 +13,7 @@ public class PuzzleMain {
         puzzleManager.manage();
         long endTime   = System.currentTimeMillis();
         long totalTime = endTime - startTime;
+        System.out.println();
         System.out.println("Total time (Milliseconds) " + totalTime);
     }
 }

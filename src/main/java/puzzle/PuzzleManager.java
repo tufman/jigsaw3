@@ -29,9 +29,7 @@ public class PuzzleManager {
         if (puzzle1.readInputFile(filePath, isRotation, isMultiThread, numOfThreads)){
             PuzzleSolution puzzleSolver = new PuzzleSolution(puzzle1, numOfThreads);
             board = puzzleSolver.solve();
-            //write puzzle solution to output file
-            writePuzzleStatus.WriteResultToFile(board);
-            puzzle1.printSolution();
+            writePuzzleStatus.WriteResultToFile(board, true);
         } else{
             writePuzzleStatus.WriteErrorsToFile(puzzle1.getErrorsReadingInputFile());
         }
