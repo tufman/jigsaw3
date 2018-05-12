@@ -135,6 +135,7 @@ public class Puzzle {
 
     private void createAndMapPuzzleElements() {
         if (isMultiThread) {
+            System.out.println("Indexing by multiThread");
             ExecutorService executor = Executors.newFixedThreadPool(numOfTheads);
             while (stackOfGoodLines.size() != 0) {
                 executor.submit(() -> {
@@ -145,6 +146,7 @@ public class Puzzle {
             //Consider using invoke all and list of runnables
             executor.shutdown();
         } else {
+            System.out.println("Indexing by Single Thread");
             while (stackOfGoodLines.size() != 0) {
                 indexingPuzzle();
             }
@@ -249,9 +251,6 @@ public class Puzzle {
         return numOfRowsForSolution;
     }
 
-    public List<PuzzleElement> getPuzzleElementList() {
-        return puzzleElementList;
-    }
 
     public int getCounterOfPuzzleElementList() {
         return countElement;
@@ -434,6 +433,7 @@ public class Puzzle {
         }
     }
 
+    //TODO - add support in rotation
     //check if output file is solution for input
     public boolean isIOSolvable() {
         PuzzleElement elm;

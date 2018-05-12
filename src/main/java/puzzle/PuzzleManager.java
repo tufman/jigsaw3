@@ -62,8 +62,8 @@ public class PuzzleManager {
                     numOfThreads = Integer.parseInt(args[paramLocation]);
                 } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
                     numOfThreads = 4;
-                    isMultiThread = true;
                 }
+                isMultiThread = true;
                 continue;
             }
         }

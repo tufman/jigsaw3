@@ -20,13 +20,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PuzzleSolution {
     private int numOfThreads;
-    private List<PuzzleElement> elements = new ArrayList<>();
     private Map<Integer, List<PuzzleElement>> puzzleStructure;
-    //private Map<Long, List<Integer>> usedElementById;
-    //private PuzzleElement[][] board;
     private List<Integer> availableRowsForSolution;
-    private int rows;
-    private int columns;
     private int counterOfElement;
     private static AtomicBoolean resultFound = new AtomicBoolean(false);
     private PuzzleElement[][] solutionBoard;
@@ -35,7 +30,6 @@ public class PuzzleSolution {
 
 
     public PuzzleSolution(Puzzle puzzle1, int numOfThreads) {
-        this.elements = puzzle1.getPuzzleElementList();
         this.puzzleStructure = puzzle1.getAvailableOptionsForSolution();
         this.numOfThreads = numOfThreads;
         counterOfElement = puzzle1.getCounterOfPuzzleElementList();
@@ -75,16 +69,13 @@ public class PuzzleSolution {
 
         while (!(resultFound.get())) {
 //        //TODO - replace the "wait time" (120000 = 2 minutes) for solution from hardcoded to configuration
-//
+
             if (startTime + 120000 < System.currentTimeMillis()){
                 System.out.println("Timer Expired - Retun null for board ");
                 executorService.shutdown();
                return null;
             }
 
-
-//            //TODO for debug - remove
-//            System.out.println("Loop in while " + System.currentTimeMillis());
         }
         executorService.shutdown();
         return solutionBoard;
