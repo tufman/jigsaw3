@@ -26,7 +26,7 @@ public class PuzzleManager {
         //WritePuzzleStatus writePuzzleStatus = new WritePuzzleStatus(filePathToSave);
         //TODO change to be the result file tht already exist in the code tree
         WritePuzzleStatus writePuzzleStatus = new WritePuzzleStatus("C:\\Test\\Json\\result.txt");
-        puzzle1.extractDataFromJson();
+        //puzzle1.extractDataFromJson();
         //ClientHandler clientHandler = new ClientHandler();
         puzzle1.run(serverPort);
         if (puzzle1.readInputFile(isMultiThread, numOfThreads)){
@@ -40,7 +40,7 @@ public class PuzzleManager {
 
     public void extractParameters(String[] args) {
         if (args.length == 0) {
-            printUsgae();
+            serverPort = 7095;
         }
         int paramLocation = 0;
 
