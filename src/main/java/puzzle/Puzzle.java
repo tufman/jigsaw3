@@ -569,22 +569,26 @@ public class Puzzle {
             try {
                 String msg = "";
                 BufferedReader inputStream;
+                PrintStream outputStream;
                 System.out.println("new client connected...");
                 inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                outputStream = new PrintStream(socket.getOutputStream());
                 while (!msg.equals("bye")) {
                     msg = inputStream.readLine();
-                    // old code before chat:
-                    // outputStream.println("Server Got the Message..." + line);
-                    //server.broadcast(id, msg);
-                //TODO add to log
-                System.out.println("Server got the following Json " + msg);
+
+                    String response = handlePuzzle(msg);
+                    System.out.println("Server Sends response: " + response);
+                    outputStream.println(response);
+                    Thread.sleep(5000);
+                    System.out.println("sleep 5000 completed...");
                 }
             } catch (Exception e) {
-                System.out.println("client disconnected during !");
+                System.out.println("client disconnected during bye");
             }
             finally {
                 try {
-                    //server.unregister(this);
+                    //TODO add to log
+                    System.out.println("Bye from client - Server close the socket.");
                     socket.close();
                     //TODO add to log
                     System.out.println("Server socket closed...");
@@ -592,6 +596,14 @@ public class Puzzle {
                     // ignore
                 }
             }
+        }
+
+        private String handlePuzzle(String msg) throws InterruptedException {
+            //TODO add to log
+            System.out.println("Server got the following Json " + msg);
+            System.out.println("Server will sleep for 5 sec.... - Simulate the reponse");
+            Thread.sleep(5000);
+            return "Should answer with solution / errors / no sulution";
         }
 
         public void sendMessage(int id, String msg) {
