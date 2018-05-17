@@ -9,14 +9,15 @@
 
 package puzzle.puzzleClient;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import puzzle.GetPuzzleErrors;
 import puzzle.PuzzleElement;
 import puzzle.PuzzleMapper;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.net.ConnectException;
+import java.net.Socket;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 
@@ -59,8 +60,9 @@ public class PuzzleClient {
         return allClientParamsExist;
     }
 
-    public boolean readInputFile(String filePath, boolean isRotation, boolean isMultiThread, int numOfThreads) throws IOException {
-        this.isRotation = isRotation;
+    //public boolean readInputFile(String filePath, boolean isRotation, boolean isMultiThread, int numOfThreads) throws IOException {
+        public boolean readInputFile() throws IOException {
+        //this.isRotation = isRotation;
 
 
         FileInputStream fis = null;
@@ -136,13 +138,13 @@ public class PuzzleClient {
         if ((expectedNumOfElementsFromFirstLine) != stackOfGoodLines.size()) {
             addErrorMissingPuzzleElements();
         }
-        if (stackOfGoodLines.size() > 0) {
-            createAndMapPuzzleElements();
-            this.availableOptionsForSolution = puzzleMapper.getPuzzleStructure();
-            verifyAtLeastOneLineAvailable();
-            verifyAllCornersExist();
-            verifySumZero();
-        }
+//        if (stackOfGoodLines.size() > 0) {
+//            createAndMapPuzzleElements();
+//            this.availableOptionsForSolution = puzzleMapper.getPuzzleStructure();
+//            verifyAtLeastOneLineAvailable();
+//            verifyAllCornersExist();
+//            verifySumZero();
+//        }
     }
 
     private void createAndMapPuzzleElements() {
@@ -569,15 +571,16 @@ public class PuzzleClient {
         System.out.println("-rotate (Optional) - in case support rotation is required, in case not appear - will be set to false;");
     }
 
-    public void sendJsonToServer() {
+    public void sendJsonToServer() throws IOException{
         System.out.println("About to send to Server Json withh all Parameters from File");
         if (serverIp == null || serverIp.length() == 0){
             serverIp = "127.0.0.1";
         }
         if (serverPort == null || serverPort.length() == 0){
             //TODO change from Hard coded to be the Server port....
-            serverPort = "4500";
+            serverPort = "7095";
         }
+        //TODO add log
         System.out.println("====================================");
         System.out.println("==        CONNECTION DETAILS      ==");
         System.out.println("====================================");
@@ -585,6 +588,7 @@ public class PuzzleClient {
         System.out.println("Server IP: " + serverIp);
         System.out.println("Server Port: " + serverPort);
 
+        //TODO add log
         System.out.println("====================================");
         System.out.println("==        OTHER DETAILS      ==");
         System.out.println("====================================");
@@ -594,5 +598,61 @@ public class PuzzleClient {
         System.out.println("Result File: " + filePathToSave);
         System.out.println("Rotation: " + isRotation);
 
+        Puzzle puzzle = new Puzzle("PuzzleName",false, stackOfGoodLines);
+
+        try (Writer writer = new FileWriter("C:\\Test\\Json\\Output.json")) {
+            Gson gson = new GsonBuilder().create();
+            gson.toJson(puzzle, writer);
+
+            try (Socket socket = new Socket("localhost", Integer.valueOf(serverPort))) {
+
+                // server listener thread
+                new Thread(() -> {
+                    try {
+                        BufferedReader bufferedReader =
+                                new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+                        //sendPuzzleToServer(puzzle, socket);
+
+                        boolean stop = false;
+                        String line;
+                        while (!stop && (line = bufferedReader.readLine()) != null) {
+                        //while (!stop) { // && (line = bufferedReader.readLine()) != null) {
+                            //System.out.println(line);
+                            System.out.println("Client waiting...");
+                        }
+                    } catch (IOException e) {
+                        System.out.println("disconnected from server");
+                        // TODO: close the client
+
+                    }
+                }).start();
+
+                //Send the Puzzle as Json to the Server
+                PrintStream outputStream = new PrintStream(socket.getOutputStream());
+                outputStream.println(gson.toJson(puzzle));
+                outputStream.println(gson.toJson("What should i do after json sent?"));
+
+            }catch (ConnectException e){
+                //TODO log
+                System.out.println("Can not connect to Puzzle Server");
+            }
+
+
+
+        }
+
+
+    }
+
+    private void sendPuzzleToServer(Puzzle puzzle, Socket socket) throws IOException {
+        try (Writer writer = new FileWriter("C:\\Test\\Json\\Output.json")) {
+            Gson gson = new GsonBuilder().create();
+            gson.toJson(puzzle, writer);
+            PrintStream outputStream = new PrintStream(socket.getOutputStream());
+            outputStream.println(gson.toJson(puzzle));
+            outputStream.println(gson.toJson("What should i do after json sent?"));
+
+        }
     }
 }

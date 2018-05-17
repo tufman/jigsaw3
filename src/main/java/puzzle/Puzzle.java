@@ -10,6 +10,8 @@
 package puzzle;
 
 import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -45,21 +47,23 @@ public class Puzzle {
     }
 
 
-    public boolean readInputFile(String filePath, boolean isRotation, boolean isMultiThread, int numOfThreads) throws IOException {
+    public boolean readInputFile(boolean isRotation, int numOfThreads) throws IOException {
         this.isRotation = isRotation;
         this.isMultiThread = isMultiThread;
         this.numOfTheads = numOfThreads;
 
         FileInputStream fis = null;
-        try {
-            fis = new FileInputStream(filePath);
-        } catch (IOException e) {
-            e.getMessage();
-            System.out.println("Puzzle Fail to Init");
-        }
-        if (fis == null) {
-            return false;
-        }
+        //TODO move to Cient side
+//        try {
+//            fis = new FileInputStream(filePath);
+//        } catch (IOException e) {
+//            e.getMessage();
+//            System.out.println("Puzzle Fail to Init");
+//        }
+//        //TODO move to Cient side
+//        if (fis == null) {
+//            return false;
+//        }
         try (InputStreamReader isr = new InputStreamReader(fis);
              BufferedReader br = new BufferedReader(isr)) {
             initConfiguration();
@@ -521,5 +525,84 @@ public class Puzzle {
         }
         return true;
     }
+
+    public void extractDataFromJson() {
+
+    }
+
+    public void run(int port) {
+        try (ServerSocket serverSocket = new ServerSocket(port)) {
+            boolean stop = false;
+            int counter = 1;
+            while (!stop) {
+                Socket socket = serverSocket.accept(); //blocking...
+                try {
+                    Puzzle.ClientHandler clientHandler = new Puzzle.ClientHandler(this, socket, counter++);
+                    //clientHandlers.add(clientHandler);
+                    clientHandler.start();
+                }
+                catch (IOException e) {
+                    // TODO: log
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private static class ClientHandler extends Thread {
+        private Puzzle server;
+        private Socket socket;
+        private final int id;
+        private PrintStream outputStream;
+
+        public ClientHandler(Puzzle server, Socket socket, int id) throws IOException {
+            this.server = server;
+            this.socket = socket;
+            this.id = id;
+            outputStream = new PrintStream(socket.getOutputStream());
+        }
+
+        @Override
+        public void run() {
+            try {
+                String msg = "";
+                BufferedReader inputStream;
+                System.out.println("new client connected...");
+                inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                while (!msg.equals("bye")) {
+                    msg = inputStream.readLine();
+                    // old code before chat:
+                    // outputStream.println("Server Got the Message..." + line);
+                    //server.broadcast(id, msg);
+                //TODO add to log
+                System.out.println("Server got the following Json " + msg);
+                }
+            } catch (Exception e) {
+                System.out.println("client disconnected during !");
+            }
+            finally {
+                try {
+                    //server.unregister(this);
+                    socket.close();
+                    //TODO add to log
+                    System.out.println("Server socket closed...");
+                } catch (IOException e) {
+                    // ignore
+                }
+            }
+        }
+
+        public void sendMessage(int id, String msg) {
+            if(id != this.id) {
+                outputStream.println("" + id + ": " + msg);
+            }
+        }
+
+    } // end of inner class ClientHandler
+
+
+
 
 }
