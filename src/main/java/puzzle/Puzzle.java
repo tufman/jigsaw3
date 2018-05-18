@@ -573,28 +573,27 @@ public class Puzzle {
                 System.out.println("new client connected...");
                 inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 outputStream = new PrintStream(socket.getOutputStream());
-                while (!msg.equals("bye")) {
-                    msg = inputStream.readLine();
+                outputStream.println("Welcome");
+                while (true) {
 
-                    String response = handlePuzzle(msg);
-                    System.out.println("Server Sends response: " + response);
-                    outputStream.println(response);
-                    Thread.sleep(5000);
-                    System.out.println("sleep 5000 completed...");
+                    String input = inputStream.readLine();
+                    if (input == null || input.equals("bye")) {
+
+                        outputStream.println("bye was recieved");
+                        System.out.println("Recived: bye");
+                        break;
+                    }
+                    if (input == null || input.equals("ClientSendPuzzle")) {
+                        outputStream.println("Got Puzzle... Sould Solve...");
+                        System.out.println("Recived: Got Puzzle... Sould Solve...");
+                    }
+
+                    outputStream.println(input.toUpperCase());
                 }
-            } catch (Exception e) {
-                System.out.println("client disconnected during bye");
-            }
-            finally {
-                try {
-                    //TODO add to log
-                    System.out.println("Bye from client - Server close the socket.");
-                    socket.close();
-                    //TODO add to log
-                    System.out.println("Server socket closed...");
-                } catch (IOException e) {
-                    // ignore
-                }
+
+        } catch (IOException e) {
+                //TODO log for socket exception
+                e.printStackTrace();
             }
         }
 

@@ -10,7 +10,8 @@ public class PuzzleClientMain {
         if (puzzleClient.isAllClientParamsExist()){
             try {
                 if(puzzleClient.readInputFile()){
-                    puzzleClient.sendJsonToServer();
+                    puzzleClient.connectToServer();
+//                    puzzleClient.sendJsonToServer();
                 }
             } catch (IOException e) {
                 //TODO add log
