@@ -605,18 +605,29 @@ public class PuzzleClient {
                     while(!stop && (line = bufferedReader.readLine()) != null){
                         if (line.contains("Welcome")){
                             System.out.println("Client got response from Server ==>>" + line);
-                            outputStream.println("ClientSendPuzzle");
+
+                            Puzzle puzzle = new Puzzle("PuzzleName", false, stackOfGoodLines);
+                            Gson gson = null;
+                            try (Writer writer = new FileWriter("C:\\Test\\Json\\Output.json")) {
+                                gson = new GsonBuilder().create();
+                                gson.toJson(puzzle, writer);
+                            }
+                            outputStream.println(gson.toJson(puzzle));
+                            continue;
                         }
-                        if (line.contains("Got Puzzle... Sould Solve...")){
+                        if (line.contains("Got Puzzle")){
                             System.out.println("Client got response from Server " + line);
+                            System.out.println("Client sends bye");
                             outputStream.println("bye");
-                            System.exit(0);
+                            break;
+                            //System.exit(0);
                             //printWriter.write("ClientSendPuzzle");
                         }
 
                     }
                 } catch (IOException e) {
                     //TODO add log - Exception for socket.getInputStream()
+                    //TODO verify exception for file C:\Test\Json\Output.json
                     e.printStackTrace();
                 }
             }).start();
@@ -627,7 +638,7 @@ public class PuzzleClient {
         }
         finally {
             try {
-                Thread.sleep(3000);
+                Thread.sleep(15000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -636,10 +647,6 @@ public class PuzzleClient {
 
 
 
-
-//        while (true) {
-//            response = in.readLine();
-//            if (response.startsWith("VALID_MOVE")) {
     }
 
     public void sendJsonToServer() throws IOException {

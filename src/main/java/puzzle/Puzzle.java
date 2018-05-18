@@ -579,17 +579,18 @@ public class Puzzle {
                     String input = inputStream.readLine();
                     if (input == null || input.equals("bye")) {
 
-                        outputStream.println("bye was recieved");
-                        System.out.println("Recived: bye");
+                        outputStream.println("Server Recieved: " + input);
+                        System.out.println("Server Recieved: " + input);
                         break;
                     }
-                    if (input == null || input.equals("ClientSendPuzzle")) {
-                        outputStream.println("Got Puzzle... Sould Solve...");
-                        System.out.println("Recived: Got Puzzle... Sould Solve...");
+                    if (input == null || input.contains("PuzzleName")) {
+                        outputStream.println("Got Puzzle... " + input);
+                        System.out.println("Server Recieved: " + input);
                     }
-
-                    outputStream.println(input.toUpperCase());
                 }
+
+                outputStream.println("Server Recieved: " + "bye");
+                System.out.println("Server Recieved: " + "bye");
 
         } catch (IOException e) {
                 //TODO log for socket exception
