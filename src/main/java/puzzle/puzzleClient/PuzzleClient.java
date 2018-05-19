@@ -9,11 +9,16 @@
 
 package puzzle.puzzleClient;
 
+
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import puzzle.GetPuzzleErrors;
 import puzzle.PuzzleElement;
 import puzzle.PuzzleMapper;
+import puzzle.PuzzleServerMain;
 
 import java.io.*;
 import java.net.ConnectException;
@@ -23,6 +28,8 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 
 public class PuzzleClient {
+
+    private static Logger logger = LogManager.getLogger(PuzzleServerMain.class);
 
     private int expectedNumOfElementsFromFirstLine;
     private List<PuzzleElement> puzzleElementList = new ArrayList<>();
@@ -583,17 +590,24 @@ public class PuzzleClient {
             serverPort = "7095";
         }
         //TODO add log
-        System.out.println("====================================");
-        System.out.println("==        CONNECTION DETAILS      ==");
-        System.out.println("====================================");
+        //System.out.println("====================================");
+        //System.out.println("==        CONNECTION DETAILS      ==");
+        //System.out.println("====================================");
+        logger.info("INFO - ====================================");
+        logger.info("INFO - ==        CONNECTION DETAILS      ==");
+        logger.info("INFO - ====================================");
 
-        System.out.println("Server IP: " + serverIp);
-        System.out.println("Server Port: " + serverPort);
+
+        //System.out.println("Server IP: " + serverIp);
+        //System.out.println("Server Port: " + serverPort);
+        logger.info("INFO - Server IP: " + serverIp);
+        logger.info("INFO - Server Port: " + serverPort);
 
         Socket socket = null;
         try {
             socket = new Socket("localhost", Integer.valueOf(serverPort));
-            System.out.println("Client Connected to Server "+ serverIp+":"+ serverPort);
+            //System.out.println("Client Connected to Server "+ serverIp+":"+ serverPort);
+            logger.info("INFO - Client Connected to Server "+ serverIp+":"+ serverPort);
             Socket finalSocket = socket;
             new Thread(() -> {
                 try (BufferedReader bufferedReader =
@@ -604,20 +618,24 @@ public class PuzzleClient {
                     String line;
                     while(!stop && (line = bufferedReader.readLine()) != null){
                         if (line.contains("Welcome")){
-                            System.out.println("Client got response from Server ==>>" + line);
-
+                            //System.out.println("Client recived from  Server ==>>" + line);
+                            logger.info("INFO - Client recived from  Server ==>>" + line);
                             Puzzle puzzle = new Puzzle("PuzzleName", false, stackOfGoodLines);
                             Gson gson = null;
                             try (Writer writer = new FileWriter("C:\\Test\\Json\\Output.json")) {
                                 gson = new GsonBuilder().create();
                                 gson.toJson(puzzle, writer);
                             }
+                            //System.out.println("Client -> Server: Send Puzzle");
+                            logger.info("INFO - Client -> Server: Send Puzzle");
                             outputStream.println(gson.toJson(puzzle));
                             continue;
                         }
                         if (line.contains("Got Puzzle")){
-                            System.out.println("Client got response from Server " + line);
-                            System.out.println("Client sends bye");
+                            //System.out.println("Client recived from  Server Server " + line);
+                            logger.info("INFO - Client recived from  Server ==>>" + line);
+                            //System.out.println("Client -> Server : bye");
+                            logger.info("INFO - Client -> Server : bye");
                             outputStream.println("bye");
                             break;
                             //System.exit(0);

@@ -9,6 +9,9 @@
 
 package puzzle;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -17,6 +20,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Puzzle {
+    private static Logger logger = LogManager.getLogger(PuzzleServerMain.class);
 
     private int expectedNumOfElementsFromFirstLine;
     private List<PuzzleElement> puzzleElementList = new ArrayList<>();
@@ -574,18 +578,24 @@ public class Puzzle {
                 inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 outputStream = new PrintStream(socket.getOutputStream());
                 outputStream.println("Welcome");
+                //System.out.println("Server -> Client: Welcome");
+                logger.info("INFO - Server -> Client: Welcome");
                 while (true) {
 
                     String input = inputStream.readLine();
                     if (input == null || input.equals("bye")) {
 
                         outputStream.println("Server Recieved: " + input);
-                        System.out.println("Server Recieved: " + input);
+                        //System.out.println("Server Recieved: " + input);
+                        logger.info("Server Recieved: " + input);
                         break;
                     }
                     if (input == null || input.contains("PuzzleName")) {
                         outputStream.println("Got Puzzle... " + input);
-                        System.out.println("Server Recieved: " + input);
+                        //System.out.println("Server Recieved: " + input);
+                        logger.info("Server Recieved: " + input);
+                        //System.out.println("Server -> Client: " + input);
+                        logger.info("Server -> Got Puzzle... " + input);
                     }
                 }
 
