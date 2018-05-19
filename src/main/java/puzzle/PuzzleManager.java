@@ -29,13 +29,13 @@ public class PuzzleManager {
         //puzzle1.extractDataFromJson();
         //ClientHandler clientHandler = new ClientHandler();
         puzzle1.run(serverPort);
-        if (puzzle1.readInputFile(isMultiThread, numOfThreads)){
-            PuzzleSolution puzzleSolver = new PuzzleSolution(puzzle1, numOfThreads);
-            board = puzzleSolver.solve();
-            writePuzzleStatus.WriteResultToFile(board, true);
-        } else{
-            writePuzzleStatus.WriteErrorsToFile(puzzle1.getErrorsReadingInputFile());
-        }
+//        if (puzzle1.readInputFile(isMultiThread, numOfThreads)){
+//            PuzzleSolution puzzleSolver = new PuzzleSolution(puzzle1, numOfThreads);
+//            board = puzzleSolver.solve();
+//            writePuzzleStatus.WriteResultToFile(board, true);
+//        } else{
+//            writePuzzleStatus.WriteErrorsToFile(puzzle1.getErrorsReadingInputFile());
+//        }
     }
 
     public void extractParameters(String[] args) {

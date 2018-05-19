@@ -16,6 +16,7 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -592,6 +593,24 @@ public class Puzzle {
                     }
                     if (input == null || input.contains("PuzzleName")) {
                         outputStream.println("Got Puzzle... " + input);
+                        //TODO verify that the flow works as expected for 1 & multiple Puzzles...
+
+                        Puzzle puzzle = new Puzzle();
+                        WritePuzzleStatus writePuzzleStatus = new WritePuzzleStatus("C:\\Test\\Json\\puzzleStatus.txt");
+                        if (puzzle.readInputFile(false, 1)){
+                            PuzzleSolution puzzleSolver = new PuzzleSolution(puzzle, 1);
+                            PuzzleElement[][] board = null;
+                            try {
+                                board = puzzleSolver.solve();
+                            } catch (ExecutionException e) {
+                                e.printStackTrace();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            writePuzzleStatus.WriteResultToFile(board, true);
+                        } else{
+                            writePuzzleStatus.WriteErrorsToFile(puzzle.getErrorsReadingInputFile());
+                        }
                         //System.out.println("Server Recieved: " + input);
                         logger.info("Server Recieved: " + input);
                         //System.out.println("Server -> Client: " + input);
