@@ -9,8 +9,11 @@
 
 package puzzle;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import puzzle.puzzleClient.PuzzlePiece;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -58,17 +61,7 @@ public class Puzzle {
         this.numOfTheads = numOfThreads;
 
         FileInputStream fis = null;
-        //TODO move to Cient side
-//        try {
-//            fis = new FileInputStream(filePath);
-//        } catch (IOException e) {
-//            e.getMessage();
-//            System.out.println("Puzzle Fail to Init");
-//        }
-//        //TODO move to Cient side
-//        if (fis == null) {
-//            return false;
-//        }
+
         try (InputStreamReader isr = new InputStreamReader(fis);
              BufferedReader br = new BufferedReader(isr)) {
             initConfiguration();
@@ -77,6 +70,77 @@ public class Puzzle {
         return true;//errorsReadingInputFile.isEmpty();
     }
 
+    private void readDataFromPuzzleObj(puzzle.puzzleClient.Puzzle puzzleObj) throws IOException {
+        String name = puzzleObj.getName();
+        Boolean rotation = puzzleObj.getRotation();
+        List<PuzzlePiece> puzzlePieces1 = puzzleObj.getPuzzlePieces1();
+
+        logger.info("SERVER readDataFromPuzzleObj: ");
+        logger.info("SERVER name: " + name);
+        logger.info("SERVER rotation: " + rotation);
+        logger.info("SERVER puzzlePieces1: " + puzzlePieces1);
+
+        //TODO - Continue to Solve the Puzzle... :)
+
+        String line;
+        BufferedReader br = null;
+        while ((line = br.readLine()) != null) {
+            splittedLineToInt = new ArrayList<>();
+            System.out.println("line: " + line);
+            if (line.trim().length() == 0) {
+                continue;
+            }
+
+            if (line.charAt(0) == '#') {
+                continue;
+            }
+
+            if (line.contains("NumElements")) {
+                extractNumOfElements(line);
+                continue;
+            }
+            parseLineFromFileToIntArr(line);
+            int id = splittedLineToInt.get(0);
+            if (id < 1) {
+                addErrorWrongElementFormat(id, line);
+                continue;
+            }
+            if (splittedLineToInt.size() == 5) {
+                if (verifyIdInRange(id)) {
+                    if (verifyAllEdgesInRange(splittedLineToInt)) {
+                        stackOfGoodLines.push(splittedLineToInt);
+                        markExistElement(splittedLineToInt.get(0));
+                    }
+                    // left, top, right and bottom between -1 to 1
+                    else {
+                        addErrorWrongElementFormat(id, line);
+                    }
+                }
+                //ID is not in range
+                else {
+                    addIDToNotInRangeList(id);
+                }
+            }
+            //Num of edges is not 4 (id + 4 edges)
+            else {
+                addErrorWrongElementFormat(id, line);
+            }
+        }
+
+        if (idsForErrorsNotInRange.size() > 0) {
+            addErrorForIDsNotInRange();
+        }
+        if ((expectedNumOfElementsFromFirstLine) != stackOfGoodLines.size()) {
+            addErrorMissingPuzzleElements();
+        }
+        if (stackOfGoodLines.size() > 0) {
+            createAndMapPuzzleElements();
+            this.availableOptionsForSolution = puzzleMapper.getPuzzleStructure();
+            verifyAtLeastOneLineAvailable();
+            verifyAllCornersExist();
+            verifySumZero();
+        }
+    }
 
     private void readDataFromFile(BufferedReader br) throws IOException {
         System.out.println("--------------------------------------------");
@@ -531,11 +595,9 @@ public class Puzzle {
         return true;
     }
 
-    public void extractDataFromJson() {
 
-    }
 
-    public void run(int port) {
+    public void run(int port, int numOfThreads) {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             boolean stop = false;
             int counter = 1;
@@ -567,6 +629,7 @@ public class Puzzle {
             this.socket = socket;
             this.id = id;
             outputStream = new PrintStream(socket.getOutputStream());
+            outputStream.println("Welcome Puzzle Client # " + id);
         }
 
         @Override
@@ -578,7 +641,8 @@ public class Puzzle {
                 System.out.println("new client connected...");
                 inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 outputStream = new PrintStream(socket.getOutputStream());
-                outputStream.println("Welcome");
+                String jsonFromClient = "";
+                //outputStream.println("Welcome");
                 //System.out.println("Server -> Client: Welcome");
                 logger.info("INFO - Server -> Client: Welcome");
                 while (true) {
@@ -591,40 +655,49 @@ public class Puzzle {
                         logger.info("Server Recieved: " + input);
                         break;
                     }
-                    if (input == null || input.contains("PuzzleName")) {
+                    if (input == null || input.contains("PuzzleName"))
+                        jsonFromClient = input;
                         outputStream.println("Got Puzzle... " + input);
                         //TODO verify that the flow works as expected for 1 & multiple Puzzles...
-
+                        logger.info("Server jsonFromClient = " + jsonFromClient);
                         Puzzle puzzle = new Puzzle();
                         WritePuzzleStatus writePuzzleStatus = new WritePuzzleStatus("C:\\Test\\Json\\puzzleStatus.txt");
-                        if (puzzle.readInputFile(false, 1)){
-                            PuzzleSolution puzzleSolver = new PuzzleSolution(puzzle, 1);
-                            PuzzleElement[][] board = null;
-                            try {
-                                board = puzzleSolver.solve();
-                            } catch (ExecutionException e) {
-                                e.printStackTrace();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            writePuzzleStatus.WriteResultToFile(board, true);
-                        } else{
-                            writePuzzleStatus.WriteErrorsToFile(puzzle.getErrorsReadingInputFile());
-                        }
+                    try {
+                        puzzle.initConfiguration();
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                        Gson gson = new Gson();
+                        puzzle.puzzleClient.Puzzle puzzleObj = gson.fromJson(jsonFromClient,puzzle.puzzleClient.Puzzle.class );
+                        puzzle.readDataFromPuzzleObj(puzzleObj);
+                        //                        puzzle.readInputFile(false, 1);
+//                        if (puzzle.readInputFile(false, 1)){
+//                            PuzzleSolution puzzleSolver = new PuzzleSolution(puzzle, 1);
+//                            PuzzleElement[][] board = null;
+//                            try {
+//                                board = puzzleSolver.solve();
+//                            } catch (ExecutionException e) {
+//                                e.printStackTrace();
+//                            } catch (InterruptedException e) {
+//                                e.printStackTrace();
+//                            }
+//                            writePuzzleStatus.WriteResultToFile(board, true);
+//                        } else{
+//                            writePuzzleStatus.WriteErrorsToFile(puzzle.getErrorsReadingInputFile());
+//                        }
                         //System.out.println("Server Recieved: " + input);
                         logger.info("Server Recieved: " + input);
                         //System.out.println("Server -> Client: " + input);
                         logger.info("Server -> Got Puzzle... " + input);
                     }
-                }
+                } catch (IOException e1) {
+                e1.printStackTrace();
+            }
 
-                outputStream.println("Server Recieved: " + "bye");
+            outputStream.println("Server Recieved: " + "bye");
                 System.out.println("Server Recieved: " + "bye");
 
-        } catch (IOException e) {
-                //TODO log for socket exception
-                e.printStackTrace();
-            }
+        }
         }
 
         private String handlePuzzle(String msg) throws InterruptedException {
@@ -633,17 +706,7 @@ public class Puzzle {
             System.out.println("Server will sleep for 5 sec.... - Simulate the reponse");
             Thread.sleep(5000);
             return "Should answer with solution / errors / no sulution";
-        }
-
-        public void sendMessage(int id, String msg) {
-            if(id != this.id) {
-                outputStream.println("" + id + ": " + msg);
-            }
-        }
-
-    } // end of inner class ClientHandler
-
-
+        }// end of inner class ClientHandler
 
 
 }

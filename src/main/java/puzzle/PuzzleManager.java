@@ -28,7 +28,7 @@ public class PuzzleManager {
         WritePuzzleStatus writePuzzleStatus = new WritePuzzleStatus("C:\\Test\\Json\\result.txt");
         //puzzle1.extractDataFromJson();
         //ClientHandler clientHandler = new ClientHandler();
-        puzzle1.run(serverPort);
+        puzzle1.run(serverPort, numOfThreads);
 //        if (puzzle1.readInputFile(isMultiThread, numOfThreads)){
 //            PuzzleSolution puzzleSolver = new PuzzleSolution(puzzle1, numOfThreads);
 //            board = puzzleSolver.solve();

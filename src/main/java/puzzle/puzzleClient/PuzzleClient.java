@@ -627,7 +627,7 @@ public class PuzzleClient {
                                 gson.toJson(puzzle, writer);
                             }
                             //System.out.println("Client -> Server: Send Puzzle");
-                            logger.info("INFO - Client -> Server: Send Puzzle");
+                            logger.info("INFO - Client -> Server: " + gson.toJson(puzzle));
                             outputStream.println(gson.toJson(puzzle));
                             continue;
                         }

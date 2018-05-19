@@ -19,6 +19,10 @@ public class Puzzle {
         fillArrayOfPuzzlePieces(puzzlePieces1);
     }
 
+    public Puzzle() {
+
+    }
+
     private void fillArrayOfPuzzlePieces(Stack<ArrayList<Integer>> puzzlePiecesStack) {
         while (puzzlePiecesStack.size() != 0){
             ArrayList<Integer> popedPuzzleElement = puzzlePiecesStack.pop();

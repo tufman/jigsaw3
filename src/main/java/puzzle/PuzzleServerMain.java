@@ -12,14 +12,9 @@ public class PuzzleServerMain {
 
     public static void main(String[] args) throws IOException, InterruptedException, ExecutionException {
 
-        logger.info("INFO - Main From Puzzle Server - Before Loop");
-        logger.error("ERROR - Main From Puzzle Server - Before Loop");
-        logger.fatal("FATAL - Main From Puzzle Server - Before Loop");
-        for (int i =0; i < 1000; i++){
-            logger.info("INFO - Main From Puzzle Server");
-            logger.error("ERROR - Main From Puzzle Server");
-            logger.fatal("FATAL - Main From Puzzle Server");
-        }
+//        logger.info("INFO - Main From Puzzle Server - Demo");
+//        logger.error("ERROR - Main From Puzzle Server - Demo");
+//        logger.fatal("FATAL - Main From Puzzle Server - Demo");
 
 
         PuzzleManager puzzleManager = new PuzzleManager();
@@ -29,6 +24,8 @@ public class PuzzleServerMain {
         long endTime   = System.currentTimeMillis();
         long totalTime = endTime - startTime;
         System.out.println();
-        System.out.println("\u001B[0m" + "Total time (Milliseconds) " + totalTime);
+        logger.info("======= TOTAL TIME ==========");
+        logger.info("\u001B[0m" + "Total time (Milliseconds) " + totalTime);
+        logger.info("=============================");
     }
 }
