@@ -76,6 +76,12 @@ public class PuzzleManager {
         System.out.println("-thread (Optional) <numOfThreads> - in case flag not appear, the default will be 1. In case wrong number, the default is 4");
     }
 
+    public int getNumOfThreads() {
+        return numOfThreads;
+    }
 
+    public int getServerPort() {
+        return serverPort;
+    }
 }
 

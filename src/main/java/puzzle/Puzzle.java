@@ -55,22 +55,9 @@ public class Puzzle {
     }
 
 
-    public boolean readInputFile(boolean isRotation, int numOfThreads) throws IOException {
-        this.isRotation = isRotation;
-        this.isMultiThread = isMultiThread;
-        this.numOfTheads = numOfThreads;
 
-        FileInputStream fis = null;
 
-        try (InputStreamReader isr = new InputStreamReader(fis);
-             BufferedReader br = new BufferedReader(isr)) {
-            initConfiguration();
-            readDataFromFile(br);
-        }
-        return true;//errorsReadingInputFile.isEmpty();
-    }
-
-    private void readDataFromPuzzleObj(puzzle.puzzleClient.Puzzle puzzleObj) throws IOException {
+    private void parseJSONAndValidate(puzzle.puzzleClient.Puzzle puzzleObj) throws IOException {
         String name = puzzleObj.getName();
         Boolean rotation = puzzleObj.getRotation();
         List<PuzzlePiece> puzzlePiecesFromJSON = puzzleObj.getPuzzlePieces1();
@@ -79,57 +66,54 @@ public class Puzzle {
         logger.info("SERVER name: " + name);
         logger.info("SERVER rotation: " + rotation);
         logger.info("SERVER puzzlePieces1: " + puzzlePiecesFromJSON);
+        expectedNumOfElementsFromFirstLine = puzzlePiecesFromJSON.size();
+        logger.info("SERVER expected: " + puzzlePiecesFromJSON.size() + " pieces");
+        puzzleElementIDs = new boolean[expectedNumOfElementsFromFirstLine];
 
         //TODO - Continue to Solve the Puzzle... :)
 
         for (PuzzlePiece puzzlePiece : puzzlePiecesFromJSON){
             ArrayList<Integer> splittedLineToInt = new ArrayList<>();
             splittedLineToInt = puzzlePiece.getPuzzlePiecesAsArrList();
-            System.out.println("MyBreak");
-            //TODO add some validations... commented out below...
+
+            int id = splittedLineToInt.get(0);
+            String line = splittedLineToInt.get(0) + " " + splittedLineToInt.get(1) + " " + splittedLineToInt.get(2) + " " + splittedLineToInt.get(3) + " " + splittedLineToInt.get(4);
+
+            //Verify id is bigger than Zero.
+            if(id < 1){
+                addErrorWrongElementFormat(id, line);
+                continue;
+            }
+            if (verifyIdInRange(id)) {
+                if (verifyAllEdgesInRange(splittedLineToInt)) {
+                    stackOfGoodLines.push(splittedLineToInt);
+                    markExistElement(splittedLineToInt.get(0));
+                }
+                // left, top, right and bottom between -1 to 1
+                else {
+                    addErrorWrongElementFormat(id, line);
+                }
+            }
+                //ID is not in range
+            else {
+                addIDToNotInRangeList(id);
+            }
         }
 
-//        parseLineFromFileToIntArr(line);
-//        int id = splittedLineToInt.get(0);
-//        if (id < 1) {
-//            addErrorWrongElementFormat(id, line);
-//            continue;
-//        }
-//        if (splittedLineToInt.size() == 5) {
-//            if (verifyIdInRange(id)) {
-//                if (verifyAllEdgesInRange(splittedLineToInt)) {
-//                    stackOfGoodLines.push(splittedLineToInt);
-//                    markExistElement(splittedLineToInt.get(0));
-//                }
-//                // left, top, right and bottom between -1 to 1
-//                else {
-//                    addErrorWrongElementFormat(id, line);
-//                }
-//            }
-//            //ID is not in range
-//            else {
-//                addIDToNotInRangeList(id);
-//            }
-//        }
-//        //Num of edges is not 4 (id + 4 edges)
-//        else {
-//            addErrorWrongElementFormat(id, line);
-//        }
-//
-//
-//        if (idsForErrorsNotInRange.size() > 0) {
-//            addErrorForIDsNotInRange();
-//        }
-//        if ((expectedNumOfElementsFromFirstLine) != stackOfGoodLines.size()) {
-//            addErrorMissingPuzzleElements();
-//        }
-//        if (stackOfGoodLines.size() > 0) {
-//            createAndMapPuzzleElements();
-//            this.availableOptionsForSolution = puzzleMapper.getPuzzleStructure();
-//            verifyAtLeastOneLineAvailable();
-//            verifyAllCornersExist();
-//            verifySumZero();
-//        }
+
+        if (idsForErrorsNotInRange.size() > 0) {
+            addErrorForIDsNotInRange();
+        }
+        if ((expectedNumOfElementsFromFirstLine) != stackOfGoodLines.size()) {
+            addErrorMissingPuzzleElements();
+        }
+        if (stackOfGoodLines.size() > 0) {
+            createAndMapPuzzleElements();
+            this.availableOptionsForSolution = puzzleMapper.getPuzzleStructure();
+            verifyAtLeastOneLineAvailable();
+            verifyAllCornersExist();
+            verifySumZero();
+        }
     }
 
     private void readDataFromFile(BufferedReader br) throws IOException {
@@ -594,7 +578,7 @@ public class Puzzle {
             while (!stop) {
                 Socket socket = serverSocket.accept(); //blocking...
                 try {
-                    Puzzle.ClientHandler clientHandler = new Puzzle.ClientHandler(this, socket, counter++);
+                    Puzzle.ClientHandler clientHandler = new Puzzle.ClientHandler(this, socket, counter++,numOfThreads);
                     //clientHandlers.add(clientHandler);
                     clientHandler.start();
                 }
@@ -612,12 +596,14 @@ public class Puzzle {
         private Puzzle server;
         private Socket socket;
         private final int id;
+        private int numOfThreads;
         private PrintStream outputStream;
 
-        public ClientHandler(Puzzle server, Socket socket, int id) throws IOException {
+        public ClientHandler(Puzzle server, Socket socket, int id, int numOfThreads) throws IOException {
             this.server = server;
             this.socket = socket;
             this.id = id;
+            this.numOfThreads = numOfThreads;
             outputStream = new PrintStream(socket.getOutputStream());
             outputStream.println("Welcome Puzzle Client # " + id);
             logger.info("INFO - Server sends: Welcome");
@@ -658,9 +644,11 @@ public class Puzzle {
                     }
                         Gson gson = new Gson();
                         puzzle.puzzleClient.Puzzle puzzleObj = gson.fromJson(jsonFromClient,puzzle.puzzleClient.Puzzle.class );
-                        puzzle.readDataFromPuzzleObj(puzzleObj);
+                        puzzle.parseJSONAndValidate(puzzleObj);
+                        PuzzleSolution puzzleSolver = new PuzzleSolution(puzzle, 1);
+                        System.out.println("MyBreak");
                         //                        puzzle.readInputFile(false, 1);
-//                        if (puzzle.readInputFile(false, 1)){
+//                       if (puzzle.readInputFile(false, 1)){
 //                            PuzzleSolution puzzleSolver = new PuzzleSolution(puzzle, 1);
 //                            PuzzleElement[][] board = null;
 //                            try {
@@ -689,6 +677,21 @@ public class Puzzle {
         }
         }
 
+    public boolean readInputFile(boolean isRotation, int numOfThreads) throws IOException {
+        this.isRotation = isRotation;
+        this.isMultiThread = isMultiThread;
+        this.numOfTheads = numOfThreads;
+
+        FileInputStream fis = null;
+
+        try (InputStreamReader isr = new InputStreamReader(fis);
+             BufferedReader br = new BufferedReader(isr)) {
+            initConfiguration();
+            readDataFromFile(br);
+        }
+        return true;//errorsReadingInputFile.isEmpty();
+    }
+
         private String handlePuzzle(String msg) throws InterruptedException {
             //TODO add to log
             System.out.println("Server got the following Json " + msg);
@@ -696,6 +699,4 @@ public class Puzzle {
             Thread.sleep(5000);
             return "Should answer with solution / errors / no sulution";
         }// end of inner class ClientHandler
-
-
 }
