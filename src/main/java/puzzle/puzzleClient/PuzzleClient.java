@@ -593,9 +593,9 @@ public class PuzzleClient {
         //System.out.println("====================================");
         //System.out.println("==        CONNECTION DETAILS      ==");
         //System.out.println("====================================");
-        logger.info("INFO - ====================================");
-        logger.info("INFO - ==        CONNECTION DETAILS      ==");
-        logger.info("INFO - ====================================");
+        logger.info("INFO - ===========================================");
+        logger.info("INFO - ==        CLIENT CONNECTION DETAILS      ==");
+        logger.info("INFO - ===========================================");
 
 
         //System.out.println("Server IP: " + serverIp);
@@ -619,7 +619,7 @@ public class PuzzleClient {
                     while(!stop && (line = bufferedReader.readLine()) != null){
                         if (line.contains("Welcome")){
                             //System.out.println("Client recived from  Server ==>>" + line);
-                            logger.info("INFO - Client recived from  Server ==>>" + line);
+                            logger.info("INFO - Client recived  ==>>" + line);
                             Puzzle puzzle = new Puzzle("PuzzleName", false, stackOfGoodLines);
                             Gson gson = null;
                             try (Writer writer = new FileWriter("C:\\Test\\Json\\Output.json")) {
@@ -627,15 +627,15 @@ public class PuzzleClient {
                                 gson.toJson(puzzle, writer);
                             }
                             //System.out.println("Client -> Server: Send Puzzle");
-                            logger.info("INFO - Client -> Server: " + gson.toJson(puzzle));
+                            logger.info("INFO - Client sends: " + gson.toJson(puzzle));
                             outputStream.println(gson.toJson(puzzle));
                             continue;
                         }
                         if (line.contains("Got Puzzle")){
                             //System.out.println("Client recived from  Server Server " + line);
-                            logger.info("INFO - Client recived from  Server ==>>" + line);
+                            logger.info("INFO - Client recived  ==>>" + line);
                             //System.out.println("Client -> Server : bye");
-                            logger.info("INFO - Client -> Server : bye");
+                            logger.info("INFO - Client sends: bye");
                             outputStream.println("bye");
                             break;
                             //System.exit(0);

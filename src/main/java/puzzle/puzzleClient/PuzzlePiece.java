@@ -24,6 +24,15 @@ public class PuzzlePiece {
         }
     }
 
+    public ArrayList<Integer> getPuzzlePiecesAsArrList(){
+        ArrayList<Integer> retVal = new ArrayList<>();
+        retVal.add(this.id);
+        for (int i=0; i < piece.length; i++){
+            retVal.add(piece[i]);
+        }
+        return retVal;
+    }
+
     @Override
     public String toString() {
         return "PuzzlePiece{" +

@@ -73,73 +73,63 @@ public class Puzzle {
     private void readDataFromPuzzleObj(puzzle.puzzleClient.Puzzle puzzleObj) throws IOException {
         String name = puzzleObj.getName();
         Boolean rotation = puzzleObj.getRotation();
-        List<PuzzlePiece> puzzlePieces1 = puzzleObj.getPuzzlePieces1();
+        List<PuzzlePiece> puzzlePiecesFromJSON = puzzleObj.getPuzzlePieces1();
 
         logger.info("SERVER readDataFromPuzzleObj: ");
         logger.info("SERVER name: " + name);
         logger.info("SERVER rotation: " + rotation);
-        logger.info("SERVER puzzlePieces1: " + puzzlePieces1);
+        logger.info("SERVER puzzlePieces1: " + puzzlePiecesFromJSON);
 
         //TODO - Continue to Solve the Puzzle... :)
 
-        String line;
-        BufferedReader br = null;
-        while ((line = br.readLine()) != null) {
-            splittedLineToInt = new ArrayList<>();
-            System.out.println("line: " + line);
-            if (line.trim().length() == 0) {
-                continue;
-            }
-
-            if (line.charAt(0) == '#') {
-                continue;
-            }
-
-            if (line.contains("NumElements")) {
-                extractNumOfElements(line);
-                continue;
-            }
-            parseLineFromFileToIntArr(line);
-            int id = splittedLineToInt.get(0);
-            if (id < 1) {
-                addErrorWrongElementFormat(id, line);
-                continue;
-            }
-            if (splittedLineToInt.size() == 5) {
-                if (verifyIdInRange(id)) {
-                    if (verifyAllEdgesInRange(splittedLineToInt)) {
-                        stackOfGoodLines.push(splittedLineToInt);
-                        markExistElement(splittedLineToInt.get(0));
-                    }
-                    // left, top, right and bottom between -1 to 1
-                    else {
-                        addErrorWrongElementFormat(id, line);
-                    }
-                }
-                //ID is not in range
-                else {
-                    addIDToNotInRangeList(id);
-                }
-            }
-            //Num of edges is not 4 (id + 4 edges)
-            else {
-                addErrorWrongElementFormat(id, line);
-            }
+        for (PuzzlePiece puzzlePiece : puzzlePiecesFromJSON){
+            ArrayList<Integer> splittedLineToInt = new ArrayList<>();
+            splittedLineToInt = puzzlePiece.getPuzzlePiecesAsArrList();
+            System.out.println("MyBreak");
+            //TODO add some validations... commented out below...
         }
 
-        if (idsForErrorsNotInRange.size() > 0) {
-            addErrorForIDsNotInRange();
-        }
-        if ((expectedNumOfElementsFromFirstLine) != stackOfGoodLines.size()) {
-            addErrorMissingPuzzleElements();
-        }
-        if (stackOfGoodLines.size() > 0) {
-            createAndMapPuzzleElements();
-            this.availableOptionsForSolution = puzzleMapper.getPuzzleStructure();
-            verifyAtLeastOneLineAvailable();
-            verifyAllCornersExist();
-            verifySumZero();
-        }
+//        parseLineFromFileToIntArr(line);
+//        int id = splittedLineToInt.get(0);
+//        if (id < 1) {
+//            addErrorWrongElementFormat(id, line);
+//            continue;
+//        }
+//        if (splittedLineToInt.size() == 5) {
+//            if (verifyIdInRange(id)) {
+//                if (verifyAllEdgesInRange(splittedLineToInt)) {
+//                    stackOfGoodLines.push(splittedLineToInt);
+//                    markExistElement(splittedLineToInt.get(0));
+//                }
+//                // left, top, right and bottom between -1 to 1
+//                else {
+//                    addErrorWrongElementFormat(id, line);
+//                }
+//            }
+//            //ID is not in range
+//            else {
+//                addIDToNotInRangeList(id);
+//            }
+//        }
+//        //Num of edges is not 4 (id + 4 edges)
+//        else {
+//            addErrorWrongElementFormat(id, line);
+//        }
+//
+//
+//        if (idsForErrorsNotInRange.size() > 0) {
+//            addErrorForIDsNotInRange();
+//        }
+//        if ((expectedNumOfElementsFromFirstLine) != stackOfGoodLines.size()) {
+//            addErrorMissingPuzzleElements();
+//        }
+//        if (stackOfGoodLines.size() > 0) {
+//            createAndMapPuzzleElements();
+//            this.availableOptionsForSolution = puzzleMapper.getPuzzleStructure();
+//            verifyAtLeastOneLineAvailable();
+//            verifyAllCornersExist();
+//            verifySumZero();
+//        }
     }
 
     private void readDataFromFile(BufferedReader br) throws IOException {
@@ -630,6 +620,7 @@ public class Puzzle {
             this.id = id;
             outputStream = new PrintStream(socket.getOutputStream());
             outputStream.println("Welcome Puzzle Client # " + id);
+            logger.info("INFO - Server sends: Welcome");
         }
 
         @Override
@@ -642,9 +633,7 @@ public class Puzzle {
                 inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 outputStream = new PrintStream(socket.getOutputStream());
                 String jsonFromClient = "";
-                //outputStream.println("Welcome");
-                //System.out.println("Server -> Client: Welcome");
-                logger.info("INFO - Server -> Client: Welcome");
+
                 while (true) {
 
                     String input = inputStream.readLine();
@@ -688,7 +677,7 @@ public class Puzzle {
                         //System.out.println("Server Recieved: " + input);
                         logger.info("Server Recieved: " + input);
                         //System.out.println("Server -> Client: " + input);
-                        logger.info("Server -> Got Puzzle... " + input);
+                        logger.info("Server sends: " + input);
                     }
                 } catch (IOException e1) {
                 e1.printStackTrace();
