@@ -9,6 +9,9 @@
  * */
 package puzzle;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
@@ -16,8 +19,10 @@ public class PuzzleManager {
 
     private PuzzleElement[][] board = null;
     private boolean isMultiThread;
-    private int numOfThreads;
-    private int serverPort;
+    private static int numOfThreads;
+    private static int serverPort;
+
+    private static Logger logger = LogManager.getLogger(PuzzleServerMain.class);
 
 
     public void manage() throws IOException, ExecutionException, InterruptedException {
@@ -28,7 +33,7 @@ public class PuzzleManager {
         WritePuzzleStatus writePuzzleStatus = new WritePuzzleStatus("C:\\Test\\Json\\result.txt");
         //puzzle1.extractDataFromJson();
         //ClientHandler clientHandler = new ClientHandler();
-        puzzle1.run(serverPort, numOfThreads);
+        puzzle1.run(serverPort);
 //        if (puzzle1.readInputFile(isMultiThread, numOfThreads)){
 //            PuzzleSolution puzzleSolver = new PuzzleSolution(puzzle1, numOfThreads);
 //            board = puzzleSolver.solve();
@@ -37,6 +42,7 @@ public class PuzzleManager {
 //            writePuzzleStatus.WriteErrorsToFile(puzzle1.getErrorsReadingInputFile());
 //        }
     }
+
 
     public void extractParameters(String[] args) {
         if (args.length == 0) {
@@ -66,6 +72,18 @@ public class PuzzleManager {
                 serverPort = 7095;
             }
         }
+
+        printServertParameters(args);
+    }
+
+    private void printServertParameters(String[] args) {
+        logger.info("========== Server Configuration =============");
+        logger.info("Client Parameters from command line: " + args);
+        logger.info("Client Final Parameters for Execution:");
+        logger.info("Server Port = " + serverPort);
+        logger.info("MultiThread = " + isMultiThread);
+        logger.info("Number of Threads = " + numOfThreads + (" in case of 0 - Changed on solver to 1"));
+        logger.info("=============================================");
     }
 
     private void printUsgae() {
@@ -76,7 +94,7 @@ public class PuzzleManager {
         System.out.println("-thread (Optional) <numOfThreads> - in case flag not appear, the default will be 1. In case wrong number, the default is 4");
     }
 
-    public int getNumOfThreads() {
+    public static int getNumOfThreads() {
         return numOfThreads;
     }
 

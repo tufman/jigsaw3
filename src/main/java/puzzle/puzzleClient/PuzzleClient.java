@@ -564,8 +564,29 @@ public class PuzzleClient {
         if ((filePath == null) || (filePathToSave == null)) {
             printUsgae();
         }else{
+            if (serverPort == null){
+                serverPort = "7095";
+            }
+            if (serverIp == null){
+                serverIp = "127.0.0.1";
+            }
             allClientParamsExist = true;
         }
+
+        printClientParameters(args);
+    }
+
+    private void printClientParameters(String[] args) {
+        logger.info("========== Client Configuration =============");
+        logger.info("Client Parameters from command line: " + args);
+        logger.info("Client Final Parameters for Execution:");
+        logger.info("Server IP = " + serverIp);
+        logger.info("Server Port = " + serverPort);
+        logger.info("Input File = " + filePath);
+        logger.info("Output File = " + filePathToSave);
+        logger.info("Rotation = " + isRotation);
+        logger.info("=============================================");
+
     }
 
     private void printUsgae() {
@@ -620,7 +641,7 @@ public class PuzzleClient {
                         if (line.contains("Welcome")){
                             //System.out.println("Client recived from  Server ==>>" + line);
                             logger.info("INFO - Client recived  ==>>" + line);
-                            Puzzle puzzle = new Puzzle("PuzzleName", false, stackOfGoodLines);
+                            Puzzle puzzle = new Puzzle("PuzzleName", isRotation, stackOfGoodLines);
                             Gson gson = null;
                             try (Writer writer = new FileWriter("C:\\Test\\Json\\Output.json")) {
                                 gson = new GsonBuilder().create();
@@ -638,8 +659,6 @@ public class PuzzleClient {
                             logger.info("INFO - Client sends: bye");
                             outputStream.println("bye");
                             break;
-                            //System.exit(0);
-                            //printWriter.write("ClientSendPuzzle");
                         }
 
                     }
@@ -679,51 +698,6 @@ public class PuzzleClient {
         System.out.println("Result File: " + filePathToSave);
         System.out.println("Rotation: " + isRotation);
 
-//        Puzzle puzzle = new Puzzle("PuzzleName", false, stackOfGoodLines);
-//        Gson gson = null;
-//        try (Writer writer = new FileWriter("C:\\Test\\Json\\Output.json")) {
-//            gson = new GsonBuilder().create();
-//            gson.toJson(puzzle, writer);
-//        }
-//
-//
-//
-//
-//            // server listener thread
-//            new Thread(() -> {
-//                try (BufferedReader bufferedReader =
-//                             new BufferedReader(new InputStreamReader(socket.getInputStream()))){
-//                    boolean stop = false;
-//                    String line;
-//                    while(!stop && (line = bufferedReader.readLine()) != null){
-//                        if (line.contains("Should")){
-//                            System.out.println("Client gor response from Server " + line);
-//
-//                        }
-//
-//                    }
-//                } catch (IOException e) {
-//                    //TODO add log - Exception for socket.getInputStream()
-//                    e.printStackTrace();
-//                }
-//            }).start();
-//
-//
-//            PrintStream outputStream = new PrintStream(socket.getOutputStream());
-//            String msg = "Hello to Server";
-//            do {
-//                //System.out.println("Send Hello To Server");
-//                //outputStream.println(System.currentTimeMillis() + " Hello to Server");
-//
-//                System.out.println("Client sends Json to Server");
-//                outputStream.println(gson.toJson(puzzle));
-//                try {
-//                    Thread.sleep(2500);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }while(!msg.equals("!"));
-//
     }
 
 
