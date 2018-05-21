@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import puzzle.puzzleClient.PuzzlePiece;
+import puzzle.puzzleClient.WritePuzzleStatus;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -570,6 +571,7 @@ public class Puzzle {
         private final int id;
         private int numOfThreads;
         private PrintStream outputStream;
+        Puzzle puzzle = new Puzzle();
 
         public ClientHandler(Puzzle server, Socket socket, int id) throws IOException {
             this.server = server;
@@ -579,6 +581,7 @@ public class Puzzle {
             outputStream = new PrintStream(socket.getOutputStream());
             outputStream.println("Welcome Puzzle Client # " + id);
             logger.info("INFO - Server sends: Welcome");
+
         }
 
         @Override
@@ -609,10 +612,12 @@ public class Puzzle {
                         outputStream.println("Got Puzzle... " + input);
 
                         logger.info("Server jsonFromClient = " + jsonFromClient);
-                        Puzzle puzzle = new Puzzle();
+//                        Puzzle puzzle = new Puzzle();
 
 
                         puzzle.initConfiguration();
+
+                        //From Json to Puzzle Object
                         Gson gson = new Gson();
                         puzzle.puzzleClient.Puzzle puzzleObj = gson.fromJson(jsonFromClient, puzzle.puzzleClient.Puzzle.class);
                         puzzle.parseJSONAndValidate(puzzleObj);
@@ -621,8 +626,9 @@ public class Puzzle {
                         //TODO verify that the flow works as expected for 1 & multiple Puzzles...
                         PuzzleSolution puzzleSolver = new PuzzleSolution(puzzle, PuzzleManager.getNumOfThreads());
                         PuzzleElement[][] board = puzzleSolver.solve();
-                        WritePuzzleStatus writePuzzleStatus = new WritePuzzleStatus("C:\\Test\\Json\\puzzleStatus.txt");
-                        writePuzzleStatus.WriteResultToFile(board, true);
+
+                        PuzzleSolutionAsArrayForJsonObj resultToClientAsJson = new PuzzleSolutionAsArrayForJsonObj(board);
+                        outputStream.println("Result=" + gson.toJson(resultToClientAsJson));
                     }
                 }
             } catch (IOException e1) {

@@ -2,7 +2,9 @@
  * Write Puzzle Solution (in case success / no solution) To Result File & Console.
  */
 
-package puzzle;
+package puzzle.puzzleClient;
+
+import puzzle.PuzzleElement;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

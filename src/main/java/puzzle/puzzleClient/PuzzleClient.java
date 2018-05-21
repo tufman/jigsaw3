@@ -15,10 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import puzzle.GetPuzzleErrors;
-import puzzle.PuzzleElement;
-import puzzle.PuzzleMapper;
-import puzzle.PuzzleServerMain;
+import puzzle.*;
 
 import java.io.*;
 import java.net.ConnectException;
@@ -600,7 +597,7 @@ public class PuzzleClient {
         System.out.println("-rotate (Optional) - in case support rotation is required, in case not appear - will be set to false;");
     }
 
-    public void connectToServer() throws IOException {
+    public void negotiateWithServer() throws IOException {
         //TODO Log
         //System.out.println("About to send to Server Json withh all Parameters from File");
         if (serverIp == null || serverIp.length() == 0) {
@@ -647,17 +644,28 @@ public class PuzzleClient {
                                 gson = new GsonBuilder().create();
                                 gson.toJson(puzzle, writer);
                             }
-                            //System.out.println("Client -> Server: Send Puzzle");
                             logger.info("INFO - Client sends: " + gson.toJson(puzzle));
                             outputStream.println(gson.toJson(puzzle));
                             continue;
                         }
                         if (line.contains("Got Puzzle")){
-                            //System.out.println("Client recived from  Server Server " + line);
-                            logger.info("INFO - Client recived  ==>>" + line);
-                            //System.out.println("Client -> Server : bye");
-                            logger.info("INFO - Client sends: bye");
+                            logger.info("INFO - Client recived  ==>>" + " Server try to find solution");
+                            continue;
+                        }
+                        if (line.contains("Result=")){
+                            logger.info("INFO - Client recived  Result ==>>" + line);
+
+                            //WritePuzzleStatus writePuzzleStatus = new WritePuzzleStatus("C:\\Test\\Json\\puzzleStatus.txt");
+                            WritePuzzleStatus writePuzzleStatus = new WritePuzzleStatus(filePathToSave);
+                            String result = line.replace("Result=","");
+                            Gson gson = new Gson();
+                            PuzzleSolutionAsArrayForJsonObj boardResult = gson.fromJson(result, PuzzleSolutionAsArrayForJsonObj.class);
+
+                            writePuzzleStatus.WriteResultToFile(boardResult.getBoard(), true);
+
+
                             outputStream.println("bye");
+                            logger.info("INFO - Client sends: bye");
                             break;
                         }
 

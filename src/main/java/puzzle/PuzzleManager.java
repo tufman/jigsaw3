@@ -11,6 +11,7 @@ package puzzle;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import puzzle.puzzleClient.WritePuzzleStatus;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;

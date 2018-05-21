@@ -10,7 +10,7 @@ public class PuzzleClientMain {
         if (puzzleClient.isAllClientParamsExist()){
             try {
                 if(puzzleClient.readInputFile()){
-                    puzzleClient.connectToServer();
+                    puzzleClient.negotiateWithServer();
 //                    puzzleClient.sendJsonToServer();
                 }
             } catch (IOException e) {
