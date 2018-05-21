@@ -48,6 +48,7 @@ public class PuzzleSolution {
         }
 
         System.out.println("number of thread :  " + numOfThreads);
+        System.out.println("resultFound is: " + resultFound);
 
         ExecutorService executorService = Executors.newFixedThreadPool(numOfThreads);
         Future future;
@@ -64,14 +65,12 @@ public class PuzzleSolution {
             }
         }
 
-        //TODO for debug - remove
-        System.out.println("Loop for futures " + System.currentTimeMillis());
-
 
         while (!(resultFound.get())) {
-//        //TODO - replace the "wait time" (120000 = 2 minutes) for solution from hardcoded to configuration
+//        //TODO - replace the "wait time" (20000 = 20 seconds) for solution from hardcoded to configuration
 
-            if (startTime + 20000 < System.currentTimeMillis()){
+            //if (startTime + 20000 < System.currentTimeMillis()){
+            if (startTime + 200000 < System.currentTimeMillis()){
                 System.out.println("Timer Expired - Return null for board ");
                 timerExceeded = true;
                 executorService.shutdown();
@@ -84,6 +83,9 @@ public class PuzzleSolution {
 
         }
         executorService.shutdown();
+        //TODO - handle this false - it is in order to be able to handle the next puzzle
+        //TODO Need to think how to make it work for parallel puzzles....
+        resultFound.set(false);
         return solutionBoard;
     }
 

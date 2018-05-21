@@ -553,6 +553,7 @@ public class Puzzle {
                 Socket socket = serverSocket.accept(); //blocking...
                 try {
                     Puzzle.ClientHandler clientHandler = new Puzzle.ClientHandler(this, socket, counter++);
+                    System.out.println("New ClientHandler created " + clientHandler);
                     //clientHandlers.add(clientHandler);
                     clientHandler.start();
                 } catch (IOException e) {
@@ -572,6 +573,7 @@ public class Puzzle {
         private int numOfThreads;
         private PrintStream outputStream;
         Puzzle puzzle = new Puzzle();
+        PuzzleSolution puzzleSolution;
 
         public ClientHandler(Puzzle server, Socket socket, int id) throws IOException {
             this.server = server;
@@ -624,8 +626,9 @@ public class Puzzle {
                         //puzzle.createAndMapPuzzleElements();
 
                         //TODO verify that the flow works as expected for 1 & multiple Puzzles...
-                        PuzzleSolution puzzleSolver = new PuzzleSolution(puzzle, PuzzleManager.getNumOfThreads());
-                        PuzzleElement[][] board = puzzleSolver.solve();
+                        //PuzzleSolution puzzleSolver = new PuzzleSolution(puzzle, PuzzleManager.getNumOfThreads());
+                        puzzleSolution = new PuzzleSolution(puzzle, PuzzleManager.getNumOfThreads());
+                        PuzzleElement[][] board = puzzleSolution.solve();
 
                         PuzzleSolutionAsArrayForJsonObj resultToClientAsJson = new PuzzleSolutionAsArrayForJsonObj(board);
                         outputStream.println("Result=" + gson.toJson(resultToClientAsJson));
@@ -640,7 +643,7 @@ public class Puzzle {
             }
 
             outputStream.println("Server Recieved: " + "bye");
-            System.out.println("Server Recieved: " + "bye");
+            logger.info("Server Recieved: " + "bye");
 
         }
     }
@@ -660,13 +663,6 @@ public class Puzzle {
         return true;//errorsReadingInputFile.isEmpty();
     }
 
-    private String handlePuzzle(String msg) throws InterruptedException {
-        //TODO add to log
-        System.out.println("Server got the following Json " + msg);
-        System.out.println("Server will sleep for 5 sec.... - Simulate the reponse");
-        Thread.sleep(5000);
-        return "Should answer with solution / errors / no sulution";
-    }// end of inner class ClientHandler
 
 
 }
