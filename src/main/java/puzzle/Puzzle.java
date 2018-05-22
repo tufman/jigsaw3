@@ -582,7 +582,7 @@ public class Puzzle {
             this.numOfThreads = numOfThreads;
             outputStream = new PrintStream(socket.getOutputStream());
             outputStream.println("Welcome Puzzle Client # " + id);
-            logger.info("INFO - Server sends: Welcome");
+            logger.info("INFO - Server sends: Welcome Puzzle Client # " + id);
 
         }
 

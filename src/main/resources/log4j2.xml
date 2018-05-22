@@ -17,6 +17,7 @@
 
         <Async name="Async">
             <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFileAppender"/>
         </Async>
 
         <Console name="Console" target="SYSTEM_OUT">
@@ -30,11 +31,9 @@
     <Loggers>
 
         <logger name="puzzle.PuzzleServerMain" level="INFO" additivity="false">
-            <!--<logger name="puzzle.PuzzleServerMain" level="FATAL">-->
-            <AppenderRef ref="Console"/>
-            <!--<AppenderRef ref="aFileAppender"/>-->
-            <AppenderRef ref="RollingFileAppender"/>
-            <!--<AppenderRef ref="Async"/>-->
+            <!--<AppenderRef ref="Console"/>-->
+            <!--<AppenderRef ref="RollingFileAppender"/>-->
+            <AppenderRef ref="Async"/>
         </logger>
 
 
