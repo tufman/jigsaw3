@@ -36,7 +36,7 @@ public class PuzzleSolution {
         this.numOfThreads = numOfThreads;
         counterOfElement = puzzle1.getCounterOfPuzzleElementList();
         availableRowsForSolution = puzzle1.getNumOfRowsForSolution(counterOfElement);
-        startTime = System.currentTimeMillis();
+
     }
 
     public Boolean getResultFound() {
@@ -70,28 +70,13 @@ public class PuzzleSolution {
             }
         }
 
-
-        while (!resultFound) {
-//        //TODO - replace the "wait time" (20000 = 20 seconds) for solution from hardcoded to configuration
-
-            //if (startTime + 20000 < System.currentTimeMillis()){
-            if (startTime + 200000 < System.currentTimeMillis()){
-                System.out.println("Timer Expired - Return null for board ");
-                timerExceeded = true;
-                executorService.shutdown();
-                if (executorService.isShutdown()){
-                    return null;
-                }
-                //break;
-
-            }
-
-        }
+        startTime = System.currentTimeMillis();
         executorService.shutdown();
+        if (!executorService.awaitTermination(20000, TimeUnit.MILLISECONDS)){
+            System.err.println("Threads didn't finish in 20000 seconds!");
+        }
 
-        //TODO - handle this false - it is in order to be able to handle the next puzzle
-        //TODO Need to think how to make it work for parallel puzzles....
-        //resultFound.set(false);
+
         return solutionBoard;
     }
 
