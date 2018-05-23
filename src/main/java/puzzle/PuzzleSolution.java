@@ -23,7 +23,8 @@ public class PuzzleSolution {
     private Map<Integer, List<PuzzleElement>> puzzleStructure;
     private List<Integer> availableRowsForSolution;
     private int counterOfElement;
-    private static AtomicBoolean resultFound = new AtomicBoolean(false);
+    //private static AtomicBoolean resultFound = new AtomicBoolean(false);
+    private  Boolean resultFound = false;
     private PuzzleElement[][] solutionBoard;
     private long startTime;
     private boolean timerExceeded;
@@ -36,6 +37,10 @@ public class PuzzleSolution {
         counterOfElement = puzzle1.getCounterOfPuzzleElementList();
         availableRowsForSolution = puzzle1.getNumOfRowsForSolution(counterOfElement);
         startTime = System.currentTimeMillis();
+    }
+
+    public Boolean getResultFound() {
+        return resultFound;
     }
 
     /**
@@ -55,7 +60,7 @@ public class PuzzleSolution {
 
         for (int i = 0; i < availableRowsForSolution.size(); i++) {
 
-            if (resultFound.get() == false){
+            if (!resultFound){
 
                 int r = availableRowsForSolution.get(i);
                 int c = counterOfElement / r;
@@ -66,7 +71,7 @@ public class PuzzleSolution {
         }
 
 
-        while (!(resultFound.get())) {
+        while (!resultFound) {
 //        //TODO - replace the "wait time" (20000 = 20 seconds) for solution from hardcoded to configuration
 
             //if (startTime + 20000 < System.currentTimeMillis()){
@@ -86,7 +91,7 @@ public class PuzzleSolution {
 
         //TODO - handle this false - it is in order to be able to handle the next puzzle
         //TODO Need to think how to make it work for parallel puzzles....
-        resultFound.set(false);
+        //resultFound.set(false);
         return solutionBoard;
     }
 
@@ -123,13 +128,13 @@ public class PuzzleSolution {
                 currentThread.setAsUsed(p);
                 Position next = nextPos(r, c,currentThread);
                 PuzzleElement[][] solution = solve(next.row, next.column, currentThread);
-                if (solution != null && (!(resultFound.get()))) {
+                if (solution != null && (!resultFound)) {
                     System.out.println("Solution was found by " + Thread.currentThread().getName() + " @ " + System.currentTimeMillis());
-                    resultFound.set(true);
+                    resultFound = true;
                     solutionBoard = solution;
                     return solution;
                 }else {
-                    if (!resultFound.get()){
+                    if (!resultFound){
                         currentThread.setAsNotUsed(p);
                     }
                     continue;
