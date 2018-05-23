@@ -530,33 +530,30 @@ public class PuzzleClient {
             printUsgae();
             return;
         }
-        int paramLocation = 0;
 
-        for (String arg : args) {
-            paramLocation++;
-            if (arg.equals("-ip")){
-                serverIp = args[paramLocation];
+        for (int i=0; i < args.length; i++){
+            if (args[i].equals("-ip")){
+                serverIp = args[++i];
                 continue;
             }
-
-            if (arg.equals("-port")){
-                serverPort = args[paramLocation];
+            if (args[i].equals("-port")){
+                serverPort = args[++i];
                 continue;
             }
-
-            if (arg.equals("-input")) {
-                filePath = args[paramLocation];
+            if (args[i].equals("-input")){
+                filePath = args[++i];
                 continue;
             }
-            if (arg.equals("-output")) {
-                filePathToSave = args[paramLocation];
+            if (args[i].equals("-output")){
+                filePathToSave = args[++i];
                 continue;
             }
-            if (arg.equals("-rotate")) {
+            if (args[i].equals("-rotate")){
                 isRotation = true;
                 continue;
             }
         }
+
 
         if ((filePath == null) || (filePathToSave == null)) {
             printUsgae();
