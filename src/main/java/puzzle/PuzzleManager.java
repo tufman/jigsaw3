@@ -27,21 +27,8 @@ public class PuzzleManager {
 
 
     public void manage() throws IOException, ExecutionException, InterruptedException {
-
         Puzzle puzzle1 = new Puzzle();
-        //WritePuzzleStatus writePuzzleStatus = new WritePuzzleStatus(filePathToSave);
-        //TODO change to be the result file tht already exist in the code tree
-        WritePuzzleStatus writePuzzleStatus = new WritePuzzleStatus("C:\\Test\\Json\\result.txt");
-        //puzzle1.extractDataFromJson();
-        //ClientHandler clientHandler = new ClientHandler();
         puzzle1.run(serverPort);
-//        if (puzzle1.readInputFile(isMultiThread, numOfThreads)){
-//            PuzzleSolution puzzleSolver = new PuzzleSolution(puzzle1, numOfThreads);
-//            board = puzzleSolver.solve();
-//            writePuzzleStatus.WriteResultToFile(board, true);
-//        } else{
-//            writePuzzleStatus.WriteErrorsToFile(puzzle1.getErrorsReadingInputFile());
-//        }
     }
 
 

@@ -553,7 +553,9 @@ public class Puzzle {
                 Socket socket = serverSocket.accept(); //blocking...
                 try {
                     Puzzle.ClientHandler clientHandler = new Puzzle.ClientHandler(this, socket, counter++);
-                    System.out.println("New ClientHandler created " + clientHandler);
+                    logger.info("=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+");
+                    logger.info("New ClientHandler created " + clientHandler);
+                    logger.info("=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+");
                     //clientHandlers.add(clientHandler);
                     clientHandler.start();
                 } catch (IOException e) {
@@ -628,6 +630,9 @@ public class Puzzle {
                         //TODO verify that the flow works as expected for 1 & multiple Puzzles...
                         //PuzzleSolution puzzleSolver = new PuzzleSolution(puzzle, PuzzleManager.getNumOfThreads());
                         puzzleSolution = new PuzzleSolution(puzzle, PuzzleManager.getNumOfThreads());
+                        logger.info("=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+");
+                        logger.info("New PuzzleSolution was created " + puzzleSolution);
+                        logger.info("=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+");
                         PuzzleElement[][] board = puzzleSolution.solve();
 
                         PuzzleSolutionAsArrayForJsonObj resultToClientAsJson = new PuzzleSolutionAsArrayForJsonObj(board);

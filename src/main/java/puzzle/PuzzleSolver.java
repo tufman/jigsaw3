@@ -117,4 +117,6 @@ public class PuzzleSolver{
     public void insert(PuzzleElement p, int currentRow, int currentColumn) {
         board[currentRow][currentColumn]=p;
     }
+
+
 }

@@ -83,6 +83,7 @@ public class PuzzleSolution {
 
         }
         executorService.shutdown();
+
         //TODO - handle this false - it is in order to be able to handle the next puzzle
         //TODO Need to think how to make it work for parallel puzzles....
         resultFound.set(false);
