@@ -1,12 +1,11 @@
 /**
  * Manage the Puzzle flow, in case a valid input file, transfer tp Solver the Puzzle.
  * In case not valid, prints relevant errors to the output file.
- *
+ * <p>
  * Author:
  * Yelena Koviar
  * Shay Tufman - extract parameters
-
- * */
+ */
 package puzzle;
 
 import org.apache.logging.log4j.LogManager;
@@ -21,7 +20,7 @@ public class PuzzleManager {
     private PuzzleElement[][] board = null;
     private boolean isMultiThread;
     private static int numOfThreads;
-    private static int serverPort;
+    private int serverPort;
 
     private static Logger logger = LogManager.getLogger(PuzzleServerMain.class);
 
@@ -38,35 +37,39 @@ public class PuzzleManager {
         }
         int paramLocation = 0;
 
-        for (String arg : args) {
-            paramLocation++;
-            if (arg.equals("-port")) {
+//        for (String arg : args) {
+
+        for (int i = 0; i < args.length; i++) {
+            if (args[i].equals("-threads")) {
                 try {
-                    serverPort = Integer.parseInt(args[paramLocation]);
-                } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                    serverPort = 7095;
-                }
-            }
-            if (arg.equals("-threads")) {
-                try {
-                    numOfThreads = Integer.parseInt(args[paramLocation]);
+                    numOfThreads = Integer.parseInt(args[++i]);
                 } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
                     numOfThreads = 4;
                 }
                 isMultiThread = true;
                 continue;
             }
-            if (serverPort == 0){
-                serverPort = 7095;
+            if (args[i].equals("-port")) {
+                try {
+                    serverPort = Integer.parseInt(args[++i]);
+                } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                    serverPort = 7095;
+                }
+                continue;
             }
+
         }
 
+        if (serverPort == 0) {
+            serverPort = 7095;
+        }
         printServertParameters(args);
     }
 
+
     private void printServertParameters(String[] args) {
         logger.info("========== Server Configuration =============");
-        logger.info("Client Parameters from command line: " + args);
+        logger.info("Client Parameters from command line: " + args.toString());
         logger.info("Client Final Parameters for Execution:");
         logger.info("Server Port = " + serverPort);
         logger.info("MultiThread = " + isMultiThread);
